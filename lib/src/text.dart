@@ -43,5 +43,6 @@ extension TextExtension on Text {
 
   Text textAlign(TextAlign align) => this.copyWith(textAlign: align);
 
-  Text textDirection(TextDirection direction) => this.copyWith(textDirection: direction);
+  Text textDirection(TextDirection direction) =>
+      this.copyWith(textDirection: direction);
 }

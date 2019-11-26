@@ -70,5 +70,6 @@ extension WidgetExtension on Widget {
               maxHeight: maxHeight),
           child: this);
 
-  Widget semanticsLabel(String label) => Semantics.fromProperties(properties: SemanticsProperties(label: label), child: this);
+  Widget semanticsLabel(String label) => Semantics.fromProperties(
+      properties: SemanticsProperties(label: label), child: this);
 }

@@ -1,8 +1,9 @@
 name: styled_widget
 description: Simplifying widget style with the use of dart extentions
 version: 0.0.1
-author: Rein Gundersen Bentdal
+author: Rein Gundersen Bentdal<rein.bent@gmail.com>
 homepage: https://github.com/ReinBentdal/styled_widget
+repository: https://github.com/ReinBentdal/styled_widget
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
