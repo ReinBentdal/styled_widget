@@ -1,7 +1,6 @@
 name: styled_widget
-description: Simplifying widget style with the use of dart extentions. Inspired by SwiftUI syntax.
-version: 0.0.1
-author: Rein Gundersen Bentdal<rein.bent@gmail.com>
+description: Simplifying your widget tree structure by using a method based widget tree structure, inspired by SwiftUI.
+version: 0.0.1+2
 homepage: https://github.com/ReinBentdal/styled_widget
 repository: https://github.com/ReinBentdal/styled_widget
 
