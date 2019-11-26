@@ -81,4 +81,4 @@ to this
 
 ### Result
 
-<img width="300" src="./example/assets/code_demo.png">
+<img width="300" src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/code_demo.png">
