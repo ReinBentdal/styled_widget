@@ -38,6 +38,10 @@ extension TextExtension on Text {
   Text fontWeight(FontWeight fontWeight) => this.copyWith(
       style: (this.style ?? TextStyle()).copyWith(fontWeight: fontWeight));
 
-  Text textColor(Color color) =>
+  Text color(Color color) =>
       this.copyWith(style: (this.style ?? TextStyle()).copyWith(color: color));
+
+  Text textAlign(TextAlign align) => this.copyWith(textAlign: align);
+
+  Text textDirection(TextDirection direction) => this.copyWith(textDirection: direction);
 }

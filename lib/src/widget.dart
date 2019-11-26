@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 /*
@@ -68,4 +69,6 @@ extension WidgetExtension on Widget {
               minHeight: minHeight,
               maxHeight: maxHeight),
           child: this);
+
+  Widget semanticsLabel(String label) => Semantics.fromProperties(properties: SemanticsProperties(label: label), child: this);
 }
