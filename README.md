@@ -55,7 +55,6 @@ to this
   final Widget textWidget = Text('some text')
       .textColor(Colors.white)
       .bold()
-      .alignment(Alignment.center)
       .constraints(width: 100, height: 100)
       .backgroundColor(Colors.blue)
       .borderRadius(all: 10)
