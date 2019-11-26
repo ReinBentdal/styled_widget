@@ -16,7 +16,7 @@ extension IconExtension on Icon {
           semanticLabel: semanticLabel ?? this.semanticLabel,
           textDirection: textDirection ?? this.textDirection);
 
-  Icon size(double size) => this.copyWith(size: size);
+  Icon iconSize(double size) => this.copyWith(size: size);
 
-  Icon color(Color color) => this.copyWith(color: color);
+  Icon iconColor(Color color) => this.copyWith(color: color);
 }

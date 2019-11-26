@@ -41,14 +41,13 @@ extension WidgetExtension on Widget {
           double topRight,
           double bottomLeft,
           double bottomRight}) =>
-      DecoratedBox(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+      ClipRRect(
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(topLeft ?? all ?? 0.0),
             topRight: Radius.circular(topRight ?? all ?? 0.0),
             bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
             bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-          )),
+          ),
           child: this);
 
   Widget circle() => DecoratedBox(
@@ -57,19 +56,32 @@ extension WidgetExtension on Widget {
   // Widget elevation(double elevation) => PhysicalShape(elevation: elevation, child: this);
 
   Widget constraints({
+    double width,
+    double height,
     double minWidth = 0.0,
     double maxWidth = double.infinity,
     double minHeight = 0.0,
     double maxHeight = double.infinity,
-  }) =>
-      ConstrainedBox(
-          constraints: BoxConstraints(
-              minWidth: minWidth,
-              maxWidth: maxWidth,
-              minHeight: minHeight,
-              maxHeight: maxHeight),
-          child: this);
+  }) {
+    BoxConstraints constraints = BoxConstraints(
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+    );
+    constraints = (width != null || height != null)
+        ? constraints?.tighten(width: width, height: height) ??
+            BoxConstraints.tightFor(width: width, height: height)
+        : constraints;
+    return ConstrainedBox(
+      constraints: constraints,
+      child: this,
+    );
+  }
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
       properties: SemanticsProperties(label: label), child: this);
+
+  // TODO: support for implicit animations possible?
+  // .animate(int duration, Curve curve)
 }
