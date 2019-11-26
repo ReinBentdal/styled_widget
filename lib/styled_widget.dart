@@ -1,7 +1,9 @@
 library styled_widget;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+/*
+A styled widget should have its own respective file
+
+*/
+
+export 'src/widget.dart';
+export 'src/text.dart';
