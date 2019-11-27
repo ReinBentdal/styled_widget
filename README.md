@@ -3,7 +3,7 @@
 
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
-  - [Observables](#observables)
+  - [Widget Tree](#observables)
 - **[Contributing](#contributing)**
 
 ## Introduction
@@ -21,6 +21,40 @@ final styledWidget = (Widget child) => Styled.widget(child)
 @override
 Widget build(BuildContext context) => styledWidget(FlutterLogo());
 ```
+<details>
+  <summary>Native Flutter equivilent</summary>
+
+  ```dart
+  Align(
+    alignment: Alignment.center,
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x55000000),
+            offset: Offset(0, 10),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints.tightFor(width: 100, height: 100),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: FlutterLogo(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
+  ```
+</details>
+
 #### Result
 <img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/example_1.jpg">
 
@@ -42,11 +76,51 @@ Icon(Icons.portable_wifi_off)
   .padding(all: 30)
   .backgroundColor(Colors.amber),
 ```
+
+<details>
+  <summary>Native Flutter equivilent</summary>
+
+  ```dart
+  Align(
+    alignment: Alignment.center,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(width: 100, height: 100),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              'some text',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
+  DecoratedBox(
+    decoration: BoxDecoration(color: Colors.amber),
+    child: Padding(
+      padding: EdgeInsets.all(30),
+      child: Icon(
+        Icons.portable_wifi_off,
+        size: 24,
+        color: Colors.yellow,
+      ),
+    ),
+  ),
+  ```
+</details>
+
 #### Result
 <img width="300" src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/code_demo.png">
 
 ## Core Concepts
-### Widget tree
-### 
+### Widget Tree
 
 ## Contributing
