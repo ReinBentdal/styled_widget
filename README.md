@@ -37,10 +37,10 @@ Widget build(BuildContext context) => styledWidget(FlutterLogo());
           ),
         ],
       ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints.tightFor(width: 100, height: 100),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(width: 100, height: 100),
           child: DecoratedBox(
             decoration: BoxDecoration(color: Colors.blue),
             child: Padding(
