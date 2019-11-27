@@ -52,28 +52,27 @@ Widget build(BuildContext context) {
 ```
 to this
 ```dart
-  final Widget textWidget = Text('some text')
-      .textColor(Colors.white)
-      .bold()
-      .alignment(Alignment.center)
-      .constraints(width: 100, height: 100)
-      .backgroundColor(Colors.blue)
-      .borderRadius(all: 10)
-      .alignment(Alignment.center);
-
-  final Widget iconWidget = Icon(Icons.portable_wifi_off)
-    .iconColor(Colors.yellow)
-    .iconSize(24)
-    .padding(all: 30)
-    .backgroundColor(Colors.amber);
-
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        textWidget,
-        iconWidget,
+      
+        Text('some text')
+          .textColor(Colors.white)
+          .bold()
+          .alignment(Alignment.center)
+          .constraints(width: 100, height: 100)
+          .backgroundColor(Colors.blue)
+          .borderRadius(all: 10)
+          .alignment(Alignment.center),
+
+        Icon(Icons.portable_wifi_off)
+          .iconColor(Colors.yellow)
+          .iconSize(24)
+          .padding(all: 30)
+          .backgroundColor(Colors.amber),
+        
       ],
     );
   }
