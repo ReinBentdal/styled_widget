@@ -16,6 +16,8 @@ extension StyledIcon on Icon {
           semanticLabel: semanticLabel ?? this.semanticLabel,
           textDirection: textDirection ?? this.textDirection);
 
+  // static Icon icon(IconData icon) => Icon(icon);
+
   Icon iconSize(double size) => this.copyWith(size: size);
 
   Icon iconColor(Color color) => this.copyWith(color: color);
