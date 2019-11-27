@@ -6,7 +6,6 @@ repository: https://github.com/ReinBentdal/styled_widget
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
-  flutter: ^1.12.13
 
 dependencies:
   flutter:
@@ -15,3 +14,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+analyzer:
+  enable-experiment: extension-methods
