@@ -7,8 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../styled/styled.dart';
-
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
 extension Styled on Widget {
