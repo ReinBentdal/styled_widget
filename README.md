@@ -1,12 +1,39 @@
 # styled_widget
 
 ## Notise
-This package is an experimental package and is not in its current state ment to be used in a project.
+This package is an experimental package at its current state.
 This package is based on dart version 2.6.0 which is not currently supported by the current stable flutter version (1.9.1). Therefore you will have to move to the dev branch to use this package.
 As this is a early consept package contributions to the idea is very welcome.
 
 ## Example
-Make you code go from this
+Write this
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+      
+        Text('some text')
+          .textColor(Colors.white)
+          .bold()
+          .alignment(Alignment.center)
+          .constraints(width: 100, height: 100)
+          .backgroundColor(Colors.blue)
+          .borderRadius(all: 10)
+          .alignment(Alignment.center),
+
+        Icon(Icons.portable_wifi_off)
+          .iconColor(Colors.yellow)
+          .iconSize(24)
+          .padding(all: 30)
+          .backgroundColor(Colors.amber),
+        
+      ],
+    );
+  }
+```
+instead of this
 ```dart
 @override
 Widget build(BuildContext context) {
@@ -50,34 +77,6 @@ Widget build(BuildContext context) {
   );
 }
 ```
-to this
-```dart
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-      
-        Text('some text')
-          .textColor(Colors.white)
-          .bold()
-          .alignment(Alignment.center)
-          .constraints(width: 100, height: 100)
-          .backgroundColor(Colors.blue)
-          .borderRadius(all: 10)
-          .alignment(Alignment.center),
-
-        Icon(Icons.portable_wifi_off)
-          .iconColor(Colors.yellow)
-          .iconSize(24)
-          .padding(all: 30)
-          .backgroundColor(Colors.amber),
-        
-      ],
-    );
-  }
-```
-
 ### Result
 
 <img width="300" src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/code_demo.png">
