@@ -10,8 +10,9 @@ import 'package:flutter/rendering.dart';
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
 extension Styled on Widget {
-
-  static Widget widget([Widget child]) => child ?? LimitedBox(
+  static Widget widget([Widget child]) =>
+      child ??
+      LimitedBox(
         maxWidth: 0.0,
         maxHeight: 0.0,
         child: ConstrainedBox(constraints: const BoxConstraints.expand()),
@@ -112,10 +113,11 @@ extension Styled on Widget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              color: color.withOpacity(calculatedOpacity),
-              blurRadius: elevation,
-              spreadRadius: 0.0,
-              offset: Offset(sin(angle) * elevation, cos(angle) * elevation)),
+            color: color.withOpacity(calculatedOpacity),
+            blurRadius: elevation,
+            spreadRadius: 0.0,
+            offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
+          ),
         ],
       ),
       child: this,
