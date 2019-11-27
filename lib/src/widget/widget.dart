@@ -11,7 +11,14 @@ import '../styled/styled.dart';
 
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
-extension WidgetExtension on Widget {
+extension Styled on Widget {
+
+  static Widget widget([Widget child]) => child ?? LimitedBox(
+        maxWidth: 0.0,
+        maxHeight: 0.0,
+        child: ConstrainedBox(constraints: const BoxConstraints.expand()),
+      );
+
   EdgeInsetsGeometry _padding(double all, double horizontal, double vertical,
           double top, double bottom, double left, double right) =>
       EdgeInsets.only(
@@ -235,6 +242,6 @@ extension WidgetExtension on Widget {
         child: this,
       );
 
-  // TODO: support for implicit animations possible?
+  // TODO: support for implicit animations
   // .animate(int duration, Curve curve)
 }
