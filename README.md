@@ -1,4 +1,5 @@
 # Styled_widget
+**This package requires Dart 2.6.0 or newer**
 
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
