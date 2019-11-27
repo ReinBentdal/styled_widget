@@ -59,19 +59,19 @@ to this
       children: <Widget>[
       
         Text('some text')
-        .textColor(Colors.white)
-        .bold()
-        .alignment(Alignment.center)
-        .constraints(width: 100, height: 100)
-        .backgroundColor(Colors.blue)
-        .borderRadius(all: 10)
-        .alignment(Alignment.center),
+          .textColor(Colors.white)
+          .bold()
+          .alignment(Alignment.center)
+          .constraints(width: 100, height: 100)
+          .backgroundColor(Colors.blue)
+          .borderRadius(all: 10)
+          .alignment(Alignment.center),
 
-      Icon(Icons.portable_wifi_off)
-        .iconColor(Colors.yellow)
-        .iconSize(24)
-        .padding(all: 30)
-        .backgroundColor(Colors.amber),
+        Icon(Icons.portable_wifi_off)
+          .iconColor(Colors.yellow)
+          .iconSize(24)
+          .padding(all: 30)
+          .backgroundColor(Colors.amber),
         
       ],
     );
