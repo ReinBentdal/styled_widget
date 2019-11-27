@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 Style methods specific for the [Text] widget should be applied here
 */
 
-extension TextExtension on Text {
+extension StyledText on Text {
   Text copyWith({
     TextStyle style,
     StrutStyle strutStyle,

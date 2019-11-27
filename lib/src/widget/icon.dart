@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 Style methods specific for the [Icon] widget should be applied here
 */
 
-extension IconExtension on Icon {
+extension StyledIcon on Icon {
   Icon copyWith({
     double size,
     Color color,
