@@ -1,9 +1,11 @@
 # Styled_widget
+<img src="https://img.shields.io/pub/v/styled_widget">
+
 **This package requires Dart 2.6.0 or newer**
 
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
-  - [Widget Tree](#observables)
+  - [Widget Tree](#widget-tree)
 - **[Contributing](#contributing)**
 
 ## Introduction
