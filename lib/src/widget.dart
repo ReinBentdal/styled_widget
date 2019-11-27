@@ -7,6 +7,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'animated.dart';
+
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
 extension Styled on Widget {
@@ -33,54 +35,55 @@ extension Styled on Widget {
           double top,
           double bottom,
           double left,
-          double right}) =>
-      Padding(
-          padding:
-              _padding(all, horizontal, vertical, top, bottom, left, right),
-          child: this);
-
-  Widget animatedPadding(
-          {double all,
-          double horizontal,
-          double vertical,
-          double top,
-          double bottom,
-          double left,
           double right,
-          @required Duration duration,
-          @required Curve curve}) =>
-      AnimatedPadding(
-        duration: duration,
-        curve: curve,
-        padding: _padding(all, horizontal, vertical, top, bottom, left, right),
-        child: this,
-      );
+          Duration duration,
+          Curve curve = Curves.linear}) =>
+      duration == null
+          ? Padding(
+              padding:
+                  _padding(all, horizontal, vertical, top, bottom, left, right),
+              child: this,
+            )
+          : AnimatedPadding(
+              duration: duration,
+              curve: curve,
+              padding:
+                  _padding(all, horizontal, vertical, top, bottom, left, right),
+              child: this,
+            );
 
-  Widget opacity(double opacity) => Opacity(opacity: opacity, child: this);
+  Widget opacity(double opacity,
+          {Duration duration, Curve curve = Curves.linear}) =>
+      duration == null
+          ? Opacity(opacity: opacity, child: this)
+          : AnimatedOpacity(
+              duration: duration,
+              curve: curve,
+              opacity: opacity,
+              child: this,
+            );
 
-  Widget animatedOpacity(double opacity,
-          {@required Duration duration, @required Curve curve}) =>
-      AnimatedOpacity(
-        duration: duration,
-        curve: curve,
-        opacity: opacity,
-        child: this,
-      );
+  Widget alignment(AlignmentGeometry alignment,
+          {Duration duration, Curve curve = Curves.linear}) =>
+      duration == null
+          ? Align(alignment: alignment, child: this)
+          : AnimatedAlign(
+              alignment: alignment,
+              duration: duration,
+              curve: curve,
+              child: this,
+            );
 
-  Widget alignment(AlignmentGeometry alignment) =>
-      Align(alignment: alignment, child: this);
-
-  Widget animatedAlignment(AlignmentGeometry alignment,
-          {@required Duration duration, @required Curve curve}) =>
-      AnimatedAlign(
-        alignment: alignment,
-        duration: duration,
-        curve: curve,
-        child: this,
-      );
-
-  Widget backgroundColor(Color color) =>
-      DecoratedBox(decoration: BoxDecoration(color: color), child: this);
+  Widget backgroundColor(Color color,
+          {Duration duration, Curve curve = Curves.linear}) =>
+      duration == null
+          ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
+          : AnimatedDecorationBox(
+              decoration: BoxDecoration(color: color),
+              duration: duration,
+              curve: curve,
+              child: this,
+            );
 
   // Widget animatedBackgroundColor(Color color, {@required Duration duration,
   //         @required Curve curve}) =>
@@ -100,38 +103,59 @@ extension Styled on Widget {
           ),
           child: this);
 
-  Widget circle() => DecoratedBox(
-      decoration: BoxDecoration(shape: BoxShape.circle), child: this);
+  Widget circle({Duration duration, Curve curve = Curves.linear}) =>
+      duration == null
+          ? DecoratedBox(
+              decoration: BoxDecoration(shape: BoxShape.circle), child: this)
+          : AnimatedDecorationBox(
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: this,
+              duration: duration,
+              curve: curve,
+            );
 
   Widget elevation(double elevation,
       {double angle = 0.0,
       Color color = const Color(0x33000000),
-      double opacity = 1.0}) {
+      double opacity = 1.0,
+      Duration duration,
+      Curve curve = Curves.linear}) {
     double calculatedOpacity = (0.5 - (sqrt(elevation) / 19)) * opacity;
     if (calculatedOpacity <= 0.0) return this;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(calculatedOpacity),
-            blurRadius: elevation,
-            spreadRadius: 0.0,
-            offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
-          ),
-        ],
-      ),
-      child: this,
+    BoxDecoration decoration = BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: color.withOpacity(calculatedOpacity),
+          blurRadius: elevation,
+          spreadRadius: 0.0,
+          offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
+        ),
+      ],
     );
+    if (duration == null) {
+      return DecoratedBox(
+        decoration: decoration,
+        child: this,
+      );
+    } else {
+      return AnimatedDecorationBox(
+        decoration: decoration,
+        child: this,
+        duration: duration,
+        curve: curve,
+      );
+    }
   }
 
-  Widget constraints({
-    double width,
-    double height,
-    double minWidth = 0.0,
-    double maxWidth = double.infinity,
-    double minHeight = 0.0,
-    double maxHeight = double.infinity,
-  }) {
+  Widget constraints(
+      {double width,
+      double height,
+      double minWidth = 0.0,
+      double maxWidth = double.infinity,
+      double minHeight = 0.0,
+      double maxHeight = double.infinity,
+      Duration duration,
+      Curve curve = Curves.linear}) {
     BoxConstraints constraints = BoxConstraints(
       minWidth: minWidth,
       maxWidth: maxWidth,
@@ -142,10 +166,19 @@ extension Styled on Widget {
         ? constraints?.tighten(width: width, height: height) ??
             BoxConstraints.tightFor(width: width, height: height)
         : constraints;
-    return ConstrainedBox(
-      constraints: constraints,
-      child: this,
-    );
+    if (duration == null) {
+      return ConstrainedBox(
+        constraints: constraints,
+        child: this,
+      );
+    } else {
+      return AnimatedConstrainedBox(
+        constraints: constraints,
+        duration: duration,
+        curve: curve,
+        child: this,
+      );
+    }
   }
 
   Widget ripple() => Material(
