@@ -1,3 +1,6 @@
+## [0.0.3] "work in progress"
+* Added [decoration], [width], [height]
+
 ## [0.0.2]
 * Added more basic widgets
 * Added some animated widgets
