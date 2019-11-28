@@ -17,27 +17,39 @@ extension Styled on Widget {
       LimitedBox(
         maxWidth: 0.0,
         maxHeight: 0.0,
-        child: ConstrainedBox(constraints: const BoxConstraints.expand()),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+        ),
       );
 
-  EdgeInsetsGeometry _padding(double all, double horizontal, double vertical,
-          double top, double bottom, double left, double right) =>
+  bool _mergeDown<T>() => this is T ? true : false;
+
+  EdgeInsetsGeometry _padding(
+    double all,
+    double horizontal,
+    double vertical,
+    double top,
+    double bottom,
+    double left,
+    double right,
+  ) =>
       EdgeInsets.only(
           top: top ?? vertical ?? all ?? 0.0,
           bottom: bottom ?? vertical ?? all ?? 0.0,
           left: left ?? horizontal ?? all ?? 0.0,
           right: right ?? horizontal ?? all ?? 0.0);
 
-  Widget padding(
-          {double all,
-          double horizontal,
-          double vertical,
-          double top,
-          double bottom,
-          double left,
-          double right,
-          Duration duration,
-          Curve curve = Curves.linear}) =>
+  Widget padding({
+    double all,
+    double horizontal,
+    double vertical,
+    double top,
+    double bottom,
+    double left,
+    double right,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
       duration == null
           ? Padding(
               padding:
@@ -52,8 +64,11 @@ extension Styled on Widget {
               child: this,
             );
 
-  Widget opacity(double opacity,
-          {Duration duration, Curve curve = Curves.linear}) =>
+  Widget opacity(
+    double opacity, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
       duration == null
           ? Opacity(opacity: opacity, child: this)
           : AnimatedOpacity(
@@ -63,8 +78,11 @@ extension Styled on Widget {
               child: this,
             );
 
-  Widget alignment(AlignmentGeometry alignment,
-          {Duration duration, Curve curve = Curves.linear}) =>
+  Widget alignment(
+    AlignmentGeometry alignment, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
       duration == null
           ? Align(alignment: alignment, child: this)
           : AnimatedAlign(
@@ -74,26 +92,32 @@ extension Styled on Widget {
               child: this,
             );
 
-  Widget backgroundColor(Color color,
-          {Duration duration, Curve curve = Curves.linear}) =>
-      duration == null
-          ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
-          : AnimatedDecorationBox(
-              decoration: BoxDecoration(color: color),
-              duration: duration,
-              curve: curve,
-              child: this,
-            );
+  Widget backgroundColor(
+    Color color, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) {
+    if (this._mergeDown<DecoratedBox>()) print('Should merge with previous widget');
+    return duration == null
+        ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
+        : AnimatedDecorationBox(
+            decoration: BoxDecoration(color: color),
+            duration: duration,
+            curve: curve,
+            child: this,
+          );
+  }
 
   // Widget animatedBackgroundColor(Color color, {@required Duration duration,
   //         @required Curve curve}) =>
 
-  Widget borderRadius(
-          {double all,
-          double topLeft,
-          double topRight,
-          double bottomLeft,
-          double bottomRight}) =>
+  Widget borderRadius({
+    double all,
+    double topLeft,
+    double topRight,
+    double bottomLeft,
+    double bottomRight,
+  }) =>
       ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(topLeft ?? all ?? 0.0),
@@ -114,12 +138,58 @@ extension Styled on Widget {
               curve: curve,
             );
 
-  Widget elevation(double elevation,
-      {double angle = 0.0,
-      Color color = const Color(0x33000000),
-      double opacity = 1.0,
-      Duration duration,
-      Curve curve = Curves.linear}) {
+  Widget decoration({
+    Color color,
+    DecorationImage image,
+    BoxBorder border,
+    BorderRadius borderRadius,
+    List<BoxShadow> boxShadow,
+    Gradient gradient,
+    BlendMode backgroundBlendMode,
+    BoxShape shape = BoxShape.rectangle,
+    DecorationPosition position = DecorationPosition.background,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? DecoratedBox(
+              child: this,
+              position: position,
+              decoration: BoxDecoration(
+                backgroundBlendMode: backgroundBlendMode,
+                border: border,
+                borderRadius: borderRadius,
+                boxShadow: boxShadow,
+                color: color,
+                gradient: gradient,
+                image: image,
+                shape: shape,
+              ),
+            )
+          : AnimatedDecorationBox(
+              child: this,
+              decoration: BoxDecoration(
+                backgroundBlendMode: backgroundBlendMode,
+                border: border,
+                borderRadius: borderRadius,
+                boxShadow: boxShadow,
+                color: color,
+                gradient: gradient,
+                image: image,
+                shape: shape,
+              ),
+              duration: duration,
+              curve: curve,
+            );
+
+  Widget elevation(
+    double elevation, {
+    double angle = 0.0,
+    Color color = const Color(0x33000000),
+    double opacity = 1.0,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) {
     double calculatedOpacity = (0.5 - (sqrt(elevation) / 19)) * opacity;
     if (calculatedOpacity <= 0.0) return this;
     BoxDecoration decoration = BoxDecoration(
@@ -147,15 +217,16 @@ extension Styled on Widget {
     }
   }
 
-  Widget constraints(
-      {double width,
-      double height,
-      double minWidth = 0.0,
-      double maxWidth = double.infinity,
-      double minHeight = 0.0,
-      double maxHeight = double.infinity,
-      Duration duration,
-      Curve curve = Curves.linear}) {
+  Widget constraints({
+    double width,
+    double height,
+    double minWidth = 0.0,
+    double maxWidth = double.infinity,
+    double minHeight = 0.0,
+    double maxHeight = double.infinity,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) {
     BoxConstraints constraints = BoxConstraints(
       minWidth: minWidth,
       maxWidth: maxWidth,
@@ -181,52 +252,87 @@ extension Styled on Widget {
     }
   }
 
+  Widget width(
+    double width, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? ConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(width: width),
+            )
+          : AnimatedConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(width: width),
+              duration: duration,
+              curve: curve,
+            );
+
+  Widget height(
+    double height, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? ConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(height: height),
+            )
+          : AnimatedConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(height: height),
+              duration: duration,
+              curve: curve,
+            );
+
   Widget ripple() => Material(
       color: Colors.transparent, child: InkWell(onTap: () {}, child: this));
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
       properties: SemanticsProperties(label: label), child: this);
 
-  Widget gestures(
-          {GestureIsTapCallback isTap,
-          GestureTapDownCallback onTapDown,
-          GestureTapUpCallback onTapUp,
-          GestureTapCallback onTap,
-          GestureTapCancelCallback onTapCancel,
-          GestureTapDownCallback onSecondaryTapDown,
-          GestureTapUpCallback onSecondaryTapUp,
-          GestureTapCancelCallback onSecondaryTapCancel,
-          GestureTapCallback onDoubleTap,
-          GestureLongPressCallback onLongPress,
-          GestureLongPressStartCallback onLongPressStart,
-          GestureLongPressMoveUpdateCallback onLongPressMoveUpdate,
-          GestureLongPressUpCallback onLongPressUp,
-          GestureLongPressEndCallback onLongPressEnd,
-          GestureDragDownCallback onVerticalDragDown,
-          GestureDragStartCallback onVerticalDragStart,
-          GestureDragUpdateCallback onVerticalDragUpdate,
-          GestureDragEndCallback onVerticalDragEnd,
-          GestureDragCancelCallback onVerticalDragCancel,
-          GestureDragDownCallback onHorizontalDragDown,
-          GestureDragStartCallback onHorizontalDragStart,
-          GestureDragUpdateCallback onHorizontalDragUpdate,
-          GestureDragEndCallback onHorizontalDragEnd,
-          GestureDragCancelCallback onHorizontalDragCancel,
-          GestureDragDownCallback onPanDown,
-          GestureDragStartCallback onPanStart,
-          GestureDragUpdateCallback onPanUpdate,
-          GestureDragEndCallback onPanEnd,
-          GestureDragCancelCallback onPanCancel,
-          GestureScaleStartCallback onScaleStart,
-          GestureScaleUpdateCallback onScaleUpdate,
-          GestureScaleEndCallback onScaleEnd,
-          GestureForcePressStartCallback onForcePressStart,
-          GestureForcePressPeakCallback onForcePressPeak,
-          GestureForcePressUpdateCallback onForcePressUpdate,
-          GestureForcePressEndCallback onForcePressEnd,
-          HitTestBehavior behavior,
-          bool excludeFromSemantics = false,
-          DragStartBehavior dragStartBehavior = DragStartBehavior.start}) =>
+  Widget gestures({
+    GestureIsTapCallback isTap,
+    GestureTapDownCallback onTapDown,
+    GestureTapUpCallback onTapUp,
+    GestureTapCallback onTap,
+    GestureTapCancelCallback onTapCancel,
+    GestureTapDownCallback onSecondaryTapDown,
+    GestureTapUpCallback onSecondaryTapUp,
+    GestureTapCancelCallback onSecondaryTapCancel,
+    GestureTapCallback onDoubleTap,
+    GestureLongPressCallback onLongPress,
+    GestureLongPressStartCallback onLongPressStart,
+    GestureLongPressMoveUpdateCallback onLongPressMoveUpdate,
+    GestureLongPressUpCallback onLongPressUp,
+    GestureLongPressEndCallback onLongPressEnd,
+    GestureDragDownCallback onVerticalDragDown,
+    GestureDragStartCallback onVerticalDragStart,
+    GestureDragUpdateCallback onVerticalDragUpdate,
+    GestureDragEndCallback onVerticalDragEnd,
+    GestureDragCancelCallback onVerticalDragCancel,
+    GestureDragDownCallback onHorizontalDragDown,
+    GestureDragStartCallback onHorizontalDragStart,
+    GestureDragUpdateCallback onHorizontalDragUpdate,
+    GestureDragEndCallback onHorizontalDragEnd,
+    GestureDragCancelCallback onHorizontalDragCancel,
+    GestureDragDownCallback onPanDown,
+    GestureDragStartCallback onPanStart,
+    GestureDragUpdateCallback onPanUpdate,
+    GestureDragEndCallback onPanEnd,
+    GestureDragCancelCallback onPanCancel,
+    GestureScaleStartCallback onScaleStart,
+    GestureScaleUpdateCallback onScaleUpdate,
+    GestureScaleEndCallback onScaleEnd,
+    GestureForcePressStartCallback onForcePressStart,
+    GestureForcePressPeakCallback onForcePressPeak,
+    GestureForcePressUpdateCallback onForcePressUpdate,
+    GestureForcePressEndCallback onForcePressEnd,
+    HitTestBehavior behavior,
+    bool excludeFromSemantics = false,
+    DragStartBehavior dragStartBehavior = DragStartBehavior.start,
+  }) =>
       GestureDetector(
         onTapDown: (TapDownDetails tapDownDetails) {
           if (onTapDown != null) onTapDown(tapDownDetails);
