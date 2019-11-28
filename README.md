@@ -1,7 +1,7 @@
 # Styled_widget
 <img src="https://img.shields.io/pub/v/styled_widget">
 
-**This package requires Dart 2.6.0 or newer**
+**This package requires Dart 2.6.0 or newer which implies a Flutter version supporting this Dart version. As of right now Flutter stable does not support these constraints**
 
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
