@@ -97,7 +97,8 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) {
-    if (this._mergeDown<DecoratedBox>()) print('Should merge with previous widget');
+    if (this._mergeDown<DecoratedBox>())
+      print('Should merge with previous widget');
     return duration == null
         ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
         : AnimatedDecorationBox(
@@ -117,15 +118,34 @@ extension Styled on Widget {
     double topRight,
     double bottomLeft,
     double bottomRight,
+    Duration duration,
+    Curve curve = Curves.linear,
   }) =>
-      ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-            topRight: Radius.circular(topRight ?? all ?? 0.0),
-            bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-            bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-          ),
-          child: this);
+      duration == null
+          ? DecoratedBox(
+              child: this,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+                  topRight: Radius.circular(topRight ?? all ?? 0.0),
+                  bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+                  bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+                ),
+              ),
+            )
+          : AnimatedDecorationBox(
+              child: this,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+                  topRight: Radius.circular(topRight ?? all ?? 0.0),
+                  bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+                  bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+                ),
+              ),
+              duration: duration,
+              curve: curve,
+            );
 
   Widget circle({Duration duration, Curve curve = Curves.linear}) =>
       duration == null
@@ -252,6 +272,7 @@ extension Styled on Widget {
     }
   }
 
+  // TODO: animate
   Widget width(
     double width, {
     Duration duration,
@@ -269,6 +290,7 @@ extension Styled on Widget {
               curve: curve,
             );
 
+  // TODO: animate
   Widget height(
     double height, {
     Duration duration,
@@ -288,6 +310,55 @@ extension Styled on Widget {
 
   Widget ripple() => Material(
       color: Colors.transparent, child: InkWell(onTap: () {}, child: this));
+
+  // TODO: animate
+  Widget rotate({
+    @required double angle,
+    Offset origin,
+    AlignmentGeometry alignment = Alignment.center,
+    bool transformHitTests = true,
+  }) =>
+      Transform.rotate(
+        angle: angle,
+        alignment: alignment,
+        origin: origin,
+        transformHitTests: transformHitTests,
+        child: this,
+      );
+
+  // TODO: animate
+  Widget scale({
+    @required double scale,
+    Offset origin,
+    AlignmentGeometry alignment = Alignment.center,
+    bool transformHitTests = true,
+  }) =>
+      Transform.scale(
+        scale: scale,
+        alignment: alignment,
+        child: this,
+        origin: origin,
+        transformHitTests: transformHitTests,
+      );
+
+  // TODO: animate
+  Widget translate({@required Offset offset, bool transformHitTests = true}) =>
+      Transform.translate(
+          offset: offset, transformHitTests: transformHitTests, child: this);
+
+  // TODO: animate
+  Widget transform(
+          {@required Matrix4 transform,
+          Offset origin,
+          AlignmentGeometry alignment,
+          bool transformHitTests = true}) =>
+      Transform(
+        transform: transform,
+        alignment: alignment,
+        origin: origin,
+        transformHitTests: transformHitTests,
+        child: this,
+      );
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
       properties: SemanticsProperties(label: label), child: this);
