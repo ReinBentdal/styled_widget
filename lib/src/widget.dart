@@ -318,7 +318,6 @@ extension Styled on Widget {
     }
   }
 
-  // TODO: animate
   Widget width(
     double width, {
     Duration duration,
@@ -336,7 +335,6 @@ extension Styled on Widget {
               curve: curve,
             );
 
-  // TODO: animate
   Widget height(
     double height, {
     Duration duration,
@@ -357,54 +355,102 @@ extension Styled on Widget {
   Widget ripple() => Material(
       color: Colors.transparent, child: InkWell(onTap: () {}, child: this));
 
-  // TODO: animate
   Widget rotate({
     @required double angle,
     Offset origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
+    Duration duration,
+    Curve curve = Curves.linear,
   }) =>
-      Transform.rotate(
-        angle: angle,
-        alignment: alignment,
-        origin: origin,
-        transformHitTests: transformHitTests,
-        child: this,
-      );
+      duration == null
+          ? Transform.rotate(
+              angle: angle,
+              alignment: alignment,
+              origin: origin,
+              transformHitTests: transformHitTests,
+              child: this,
+            )
+          : AnimatedTransform(
+              child: this,
+              transform: Matrix4.rotationZ(angle),
+              alignment: alignment,
+              origin: origin,
+              transformHitTests: transformHitTests,
+              duration: duration,
+              curve: curve,
+            );
 
-  // TODO: animate
   Widget scale({
     @required double scale,
     Offset origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
+    Duration duration,
+    Curve curve = Curves.linear,
   }) =>
-      Transform.scale(
-        scale: scale,
-        alignment: alignment,
-        child: this,
-        origin: origin,
-        transformHitTests: transformHitTests,
-      );
+      duration == null
+          ? Transform.scale(
+              scale: scale,
+              alignment: alignment,
+              child: this,
+              origin: origin,
+              transformHitTests: transformHitTests,
+            )
+          : AnimatedTransform(
+              child: this,
+              transform: Matrix4.diagonal3Values(scale, scale, 1.0),
+              alignment: alignment,
+              transformHitTests: transformHitTests,
+              duration: duration,
+              curve: curve,
+            );
 
-  // TODO: animate
-  Widget translate({@required Offset offset, bool transformHitTests = true}) =>
-      Transform.translate(
-          offset: offset, transformHitTests: transformHitTests, child: this);
+  Widget translate({
+    @required Offset offset,
+    bool transformHitTests = true,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? Transform.translate(
+              offset: offset,
+              transformHitTests: transformHitTests,
+              child: this,
+            )
+          : AnimatedTransform(
+              child: this,
+              transform: Matrix4.translationValues(offset.dx, offset.dy, 0.0),
+              transformHitTests: transformHitTests,
+              duration: duration,
+              curve: curve,
+            );
 
-  // TODO: animate
-  Widget transform(
-          {@required Matrix4 transform,
-          Offset origin,
-          AlignmentGeometry alignment,
-          bool transformHitTests = true}) =>
-      Transform(
-        transform: transform,
-        alignment: alignment,
-        origin: origin,
-        transformHitTests: transformHitTests,
-        child: this,
-      );
+  Widget transform({
+    @required Matrix4 transform,
+    Offset origin,
+    AlignmentGeometry alignment,
+    bool transformHitTests = true,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? Transform(
+              transform: transform,
+              alignment: alignment,
+              origin: origin,
+              transformHitTests: transformHitTests,
+              child: this,
+            )
+          : AnimatedTransform(
+              child: this,
+              transform: transform,
+              origin: origin,
+              duration: duration,
+              alignment: alignment,
+              curve: curve,
+              transformHitTests: transformHitTests,
+            );
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
       properties: SemanticsProperties(label: label), child: this);
