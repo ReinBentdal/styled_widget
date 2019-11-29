@@ -8,6 +8,7 @@ If you want to try it out, you can find the package [here](https://pub.dev/packa
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
   - [Widget Tree](#widget-tree)
+  - [Implicit Animations](#implicit-animations)
 - **[Contributing](#contributing)**
 
 ## Introduction
@@ -126,5 +127,7 @@ Icon(Icons.portable_wifi_off)
 
 ## Core Concepts
 ### Widget Tree
+
+### Implicit Animations
 
 ## Contributing
