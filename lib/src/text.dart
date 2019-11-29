@@ -37,37 +37,69 @@ extension StyledText on Text {
   // static Text text(String data) => Text(data);
 
   Text bold() => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(fontWeight: FontWeight.bold));
+        style: (this.style ?? TextStyle()).copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      );
 
   Text italic() => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(fontStyle: FontStyle.italic));
+        style: (this.style ?? TextStyle()).copyWith(
+          fontStyle: FontStyle.italic,
+        ),
+      );
 
   Text fontWeight(FontWeight fontWeight) => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(fontWeight: fontWeight));
+        style: (this.style ?? TextStyle()).copyWith(
+          fontWeight: fontWeight,
+        ),
+      );
 
-  Text fontSize(double size) => this
-      .copyWith(style: (this.style ?? TextStyle()).copyWith(fontSize: size));
+  Text fontSize(double size) => this.copyWith(
+        style: (this.style ?? TextStyle()).copyWith(
+          fontSize: size,
+        ),
+      );
 
-  Text fontFamily(String font) => this
-      .copyWith(style: (this.style ?? TextStyle()).copyWith(fontFamily: font));
+  Text fontFamily(String font) => this.copyWith(
+        style: (this.style ?? TextStyle()).copyWith(
+          fontFamily: font,
+        ),
+      );
 
   Text letterSpacing(double space) => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(letterSpacing: space));
+        style: (this.style ?? TextStyle()).copyWith(
+          letterSpacing: space,
+        ),
+      );
 
   Text wordSpacing(double space) => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(wordSpacing: space));
+        style: (this.style ?? TextStyle()).copyWith(
+          wordSpacing: space,
+        ),
+      );
 
-  Text textShadow(
-          {Color color = const Color(0x33000000),
-          double blur = 0.0,
-          Offset offset = Offset.zero}) =>
+  Text textShadow({
+    Color color = const Color(0x33000000),
+    double blurRadius = 0.0,
+    Offset offset = Offset.zero,
+  }) =>
       this.copyWith(
-          style: (this.style ?? TextStyle()).copyWith(shadows: [
-        Shadow(color: color, blurRadius: blur, offset: offset)
-      ]));
+        style: (this.style ?? TextStyle()).copyWith(
+          shadows: [
+            Shadow(
+              color: color,
+              blurRadius: blurRadius,
+              offset: offset,
+            ),
+          ],
+        ),
+      );
 
-  Text textColor(Color color) =>
-      this.copyWith(style: (this.style ?? TextStyle()).copyWith(color: color));
+  Text textColor(Color color) => this.copyWith(
+        style: (this.style ?? TextStyle()).copyWith(
+          color: color,
+        ),
+      );
 
   Text textAlignment(TextAlign align) => this.copyWith(textAlign: align);
 
@@ -75,5 +107,8 @@ extension StyledText on Text {
       this.copyWith(textDirection: direction);
 
   Text textBaseline(TextBaseline textBaseline) => this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(textBaseline: textBaseline));
+        style: (this.style ?? TextStyle()).copyWith(
+          textBaseline: textBaseline,
+        ),
+      );
 }
