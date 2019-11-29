@@ -80,7 +80,10 @@ extension Styled on Widget {
     Curve curve = Curves.linear,
   }) =>
       duration == null
-          ? Opacity(opacity: opacity, child: this)
+          ? Opacity(
+              opacity: opacity,
+              child: this,
+            )
           : AnimatedOpacity(
               duration: duration,
               curve: curve,
@@ -94,7 +97,10 @@ extension Styled on Widget {
     Curve curve = Curves.linear,
   }) =>
       duration == null
-          ? Align(alignment: alignment, child: this)
+          ? Align(
+              alignment: alignment,
+              child: this,
+            )
           : AnimatedAlign(
               alignment: alignment,
               duration: duration,
@@ -109,7 +115,10 @@ extension Styled on Widget {
   }) {
     _tryMergeDown<BoxDecoration>(BoxDecoration(color: color));
     return duration == null
-        ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
+        ? DecoratedBox(
+            decoration: BoxDecoration(color: color),
+            child: this,
+          )
         : AnimatedDecorationBox(
             decoration: BoxDecoration(color: color),
             duration: duration,
@@ -121,6 +130,8 @@ extension Styled on Widget {
   // Widget animatedBackgroundColor(Color color, {@required Duration duration,
   //         @required Curve curve}) =>
 
+  // TODO: animate
+  // TODO: if the merge down feature exists, this may be changes to a BoxDecoration widget
   Widget borderRadius({
     double all,
     double topLeft,
@@ -130,42 +141,65 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) =>
-      duration == null
-          ? DecoratedBox(
-              child: this,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-                  topRight: Radius.circular(topRight ?? all ?? 0.0),
-                  bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-                  bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-                ),
-              ),
-            )
-          : AnimatedDecorationBox(
-              child: this,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-                  topRight: Radius.circular(topRight ?? all ?? 0.0),
-                  bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-                  bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-                ),
-              ),
-              duration: duration,
-              curve: curve,
-            );
+      ClipRRect(
+        child: this,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+          topRight: Radius.circular(topRight ?? all ?? 0.0),
+          bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+          bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+        ),
+      );
 
-  Widget circle({Duration duration, Curve curve = Curves.linear}) =>
-      duration == null
-          ? DecoratedBox(
-              decoration: BoxDecoration(shape: BoxShape.circle), child: this)
-          : AnimatedDecorationBox(
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: this,
-              duration: duration,
-              curve: curve,
-            );
+  Widget clipOval() => ClipOval(child: this);
+
+  // Widget borderRadius({
+  //   double all,
+  //   double topLeft,
+  //   double topRight,
+  //   double bottomLeft,
+  //   double bottomRight,
+  //   Duration duration,
+  //   Curve curve = Curves.linear,
+  // }) =>
+  //     duration == null
+  //         ? DecoratedBox(
+  //             child: this,
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.only(
+  //                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+  //                 topRight: Radius.circular(topRight ?? all ?? 0.0),
+  //                 bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+  //                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+  //               ),
+  //             ),
+  //           )
+  //         : AnimatedDecorationBox(
+  //             child: this,
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.only(
+  //                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+  //                 topRight: Radius.circular(topRight ?? all ?? 0.0),
+  //                 bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+  //                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+  //               ),
+  //             ),
+  //             duration: duration,
+  //             curve: curve,
+  //           );
+
+  // Widget circle({Duration duration, Curve curve = Curves.linear}) =>
+  //     duration == null
+  //         ? DecoratedBox(
+  //             decoration: BoxDecoration(shape: BoxShape.circle),
+  //             child: this,
+  //           )
+  //         : AnimatedDecorationBox(
+  //             decoration: BoxDecoration(shape: BoxShape.circle),
+  //             child: this,
+  //             duration: duration,
+  //             curve: curve,
+  //           );
 
   Widget decoration({
     Color color,
@@ -353,7 +387,9 @@ extension Styled on Widget {
             );
 
   Widget ripple() => Material(
-      color: Colors.transparent, child: InkWell(onTap: () {}, child: this));
+        color: Colors.transparent,
+        child: InkWell(onTap: () {}, child: this),
+      );
 
   Widget rotate({
     @required double angle,
@@ -453,7 +489,9 @@ extension Styled on Widget {
             );
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
-      properties: SemanticsProperties(label: label), child: this);
+        properties: SemanticsProperties(label: label),
+        child: this,
+      );
 
   Widget gestures({
     GestureIsTapCallback isTap,
