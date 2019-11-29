@@ -22,22 +22,24 @@ extension Styled on Widget {
         ),
       );
 
-  bool _mergeDown<T>() => this is T ? true : false;
-
-  EdgeInsetsGeometry _padding(
-    double all,
-    double horizontal,
-    double vertical,
-    double top,
-    double bottom,
-    double left,
-    double right,
-  ) =>
-      EdgeInsets.only(
-          top: top ?? vertical ?? all ?? 0.0,
-          bottom: bottom ?? vertical ?? all ?? 0.0,
-          left: left ?? horizontal ?? all ?? 0.0,
-          right: right ?? horizontal ?? all ?? 0.0);
+  /// If the child widget is of the same type they should merge together
+  dynamic _tryMergeDown<T>(T style) {
+    switch (this.runtimeType) {
+      case BoxDecoration:
+        print('boxDecoration should merge');
+        // TODO: merge boxDecoration
+        break;
+      case BoxConstraints:
+        print('boxConstraints should merge');
+        // TODO: merge boxConstraints
+        break;
+      case Transform:
+        print('transform should merge');
+        // TODO: merge transform
+        break;
+    }
+    return widget;
+  }
 
   Widget padding({
     double all,
@@ -52,15 +54,23 @@ extension Styled on Widget {
   }) =>
       duration == null
           ? Padding(
-              padding:
-                  _padding(all, horizontal, vertical, top, bottom, left, right),
+              padding: EdgeInsets.only(
+                top: top ?? vertical ?? all ?? 0.0,
+                bottom: bottom ?? vertical ?? all ?? 0.0,
+                left: left ?? horizontal ?? all ?? 0.0,
+                right: right ?? horizontal ?? all ?? 0.0,
+              ),
               child: this,
             )
           : AnimatedPadding(
               duration: duration,
               curve: curve,
-              padding:
-                  _padding(all, horizontal, vertical, top, bottom, left, right),
+              padding: EdgeInsets.only(
+                top: top ?? vertical ?? all ?? 0.0,
+                bottom: bottom ?? vertical ?? all ?? 0.0,
+                left: left ?? horizontal ?? all ?? 0.0,
+                right: right ?? horizontal ?? all ?? 0.0,
+              ),
               child: this,
             );
 
@@ -97,8 +107,7 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) {
-    if (this._mergeDown<DecoratedBox>())
-      print('Should merge with previous widget');
+    _tryMergeDown<BoxDecoration>(BoxDecoration(color: color));
     return duration == null
         ? DecoratedBox(decoration: BoxDecoration(color: color), child: this)
         : AnimatedDecorationBox(
@@ -236,6 +245,43 @@ extension Styled on Widget {
       );
     }
   }
+
+  Widget boxShadow(
+          {Color color = const Color(0xFF000000),
+          Offset offset = Offset.zero,
+          double blurRadius = 0.0,
+          double spreadRadius = 0.0,
+          Duration duration,
+          Curve curve = Curves.linear}) =>
+      duration == null
+          ? DecoratedBox(
+              child: this,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: color,
+                    blurRadius: blurRadius,
+                    spreadRadius: spreadRadius,
+                    offset: offset,
+                  ),
+                ],
+              ),
+            )
+          : AnimatedDecorationBox(
+              child: this,
+              duration: duration,
+              curve: curve,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: color,
+                    blurRadius: blurRadius,
+                    spreadRadius: spreadRadius,
+                    offset: offset,
+                  ),
+                ],
+              ),
+            );
 
   Widget constraints({
     double width,
