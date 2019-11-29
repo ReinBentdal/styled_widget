@@ -38,24 +38,33 @@ extension StyledText on Text {
 
   Text bold() => this.copyWith(
       style: (this.style ?? TextStyle()).copyWith(fontWeight: FontWeight.bold));
- 
+
   Text italic() => this.copyWith(
       style: (this.style ?? TextStyle()).copyWith(fontStyle: FontStyle.italic));
 
   Text fontWeight(FontWeight fontWeight) => this.copyWith(
       style: (this.style ?? TextStyle()).copyWith(fontWeight: fontWeight));
 
-  Text fontSize(double size) => this.copyWith(style: (this.style ?? TextStyle(fontSize: size)));
+  Text fontSize(double size) => this
+      .copyWith(style: (this.style ?? TextStyle()).copyWith(fontSize: size));
 
-  Text fontFamily(String font) => this.copyWith(style: (this.style ?? TextStyle(fontFamily: font)));
+  Text fontFamily(String font) => this
+      .copyWith(style: (this.style ?? TextStyle()).copyWith(fontFamily: font));
 
-  Text letterSpacing(double space) => this.copyWith(style: (this.style ?? TextStyle(letterSpacing: space)));
+  Text letterSpacing(double space) => this.copyWith(
+      style: (this.style ?? TextStyle()).copyWith(letterSpacing: space));
 
-  Text wordSpacing(double space) => this.copyWith(style: (this.style ?? TextStyle(wordSpacing: space)));
+  Text wordSpacing(double space) => this.copyWith(
+      style: (this.style ?? TextStyle()).copyWith(wordSpacing: space));
 
-  Text textShadow({Color color = const Color(0x33000000),
-      double blur = 0.0,
-      Offset offset = Offset.zero}) => this.copyWith(style: (this.style ?? TextStyle(shadows: [Shadow(color: color, blurRadius: blur, offset: offset)])));
+  Text textShadow(
+          {Color color = const Color(0x33000000),
+          double blur = 0.0,
+          Offset offset = Offset.zero}) =>
+      this.copyWith(
+          style: (this.style ?? TextStyle()).copyWith(shadows: [
+        Shadow(color: color, blurRadius: blur, offset: offset)
+      ]));
 
   Text textColor(Color color) =>
       this.copyWith(style: (this.style ?? TextStyle()).copyWith(color: color));
@@ -64,4 +73,7 @@ extension StyledText on Text {
 
   Text textDirection(TextDirection direction) =>
       this.copyWith(textDirection: direction);
+
+  Text textBaseline(TextBaseline textBaseline) => this.copyWith(
+      style: (this.style ?? TextStyle()).copyWith(textBaseline: textBaseline));
 }
