@@ -22,23 +22,52 @@ extension Styled on Widget {
         ),
       );
 
-  /// If the child widget is of the same type they should merge together
-  dynamic _tryMergeDown<T>(T style) {
-    switch (this.runtimeType) {
-      case BoxDecoration:
-        print('boxDecoration should merge');
-        // TODO: merge boxDecoration
-        break;
-      case BoxConstraints:
-        print('boxConstraints should merge');
-        // TODO: merge boxConstraints
-        break;
-      case Transform:
-        print('transform should merge');
-        // TODO: merge transform
-        break;
+  Widget _tryMergeTransform(
+      Matrix4 transform, Duration duration, Curve curve) {}
+
+  Widget _tryMergeConstraints() {}
+
+  Widget _tryMergeDecoration({
+    BoxDecoration decoration,
+    Duration duration,
+    Curve curve,
+    DecorationPosition position,
+  }) {
+    dynamic child = this;
+
+    // only merge if the duration and curve is the exact same
+    if ((child is DecoratedBox && duration == null) ||
+        (child is AnimatedDecorationBox &&
+            duration == child.duration &&
+            curve == child.curve)) {
+      BoxDecoration childDecoration = child.decoration;
+      position ??= child.position;
+      decoration = decoration.copyWith(
+        color: childDecoration?.color,
+        backgroundBlendMode: childDecoration?.backgroundBlendMode,
+        border: childDecoration?.border,
+        borderRadius: childDecoration?.borderRadius,
+        boxShadow: childDecoration?.boxShadow,
+        gradient: childDecoration?.gradient,
+        image: childDecoration?.image,
+        shape: childDecoration?.shape,
+      );
+      child = child.child;
     }
-    return widget;
+
+    return duration == null
+        ? DecoratedBox(
+            decoration: decoration,
+            position: position ?? DecorationPosition.background,
+            child: child,
+          )
+        : AnimatedDecorationBox(
+            child: child,
+            decoration: decoration,
+            position: position ?? DecorationPosition.background,
+            duration: duration,
+            curve: curve,
+          );
   }
 
   Widget padding({
@@ -112,20 +141,12 @@ extension Styled on Widget {
     Color color, {
     Duration duration,
     Curve curve = Curves.linear,
-  }) {
-    _tryMergeDown<BoxDecoration>(BoxDecoration(color: color));
-    return duration == null
-        ? DecoratedBox(
-            decoration: BoxDecoration(color: color),
-            child: this,
-          )
-        : AnimatedDecorationBox(
-            decoration: BoxDecoration(color: color),
-            duration: duration,
-            curve: curve,
-            child: this,
-          );
-  }
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(color: color),
+        duration: duration,
+        curve: curve,
+      );
 
   // Widget animatedBackgroundColor(Color color, {@required Duration duration,
   //         @required Curve curve}) =>
@@ -151,55 +172,30 @@ extension Styled on Widget {
         ),
       );
 
+  /// There are two borderRadius methods temprorary
+  Widget borderRadiusDecoration({
+    double all,
+    double topLeft,
+    double topRight,
+    double bottomLeft,
+    double bottomRight,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+            topRight: Radius.circular(topRight ?? all ?? 0.0),
+            bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+            bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+          ),
+        ),
+        duration: duration,
+        curve: curve,
+      );
+
   Widget clipOval() => ClipOval(child: this);
-
-  // Widget borderRadius({
-  //   double all,
-  //   double topLeft,
-  //   double topRight,
-  //   double bottomLeft,
-  //   double bottomRight,
-  //   Duration duration,
-  //   Curve curve = Curves.linear,
-  // }) =>
-  //     duration == null
-  //         ? DecoratedBox(
-  //             child: this,
-  //             decoration: BoxDecoration(
-  //               borderRadius: BorderRadius.only(
-  //                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-  //                 topRight: Radius.circular(topRight ?? all ?? 0.0),
-  //                 bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-  //                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-  //               ),
-  //             ),
-  //           )
-  //         : AnimatedDecorationBox(
-  //             child: this,
-  //             decoration: BoxDecoration(
-  //               borderRadius: BorderRadius.only(
-  //                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-  //                 topRight: Radius.circular(topRight ?? all ?? 0.0),
-  //                 bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-  //                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-  //               ),
-  //             ),
-  //             duration: duration,
-  //             curve: curve,
-  //           );
-
-  // Widget circle({Duration duration, Curve curve = Curves.linear}) =>
-  //     duration == null
-  //         ? DecoratedBox(
-  //             decoration: BoxDecoration(shape: BoxShape.circle),
-  //             child: this,
-  //           )
-  //         : AnimatedDecorationBox(
-  //             decoration: BoxDecoration(shape: BoxShape.circle),
-  //             child: this,
-  //             duration: duration,
-  //             curve: curve,
-  //           );
 
   Widget decoration({
     Color color,
@@ -214,36 +210,21 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) =>
-      duration == null
-          ? DecoratedBox(
-              child: this,
-              position: position,
-              decoration: BoxDecoration(
-                backgroundBlendMode: backgroundBlendMode,
-                border: border,
-                borderRadius: borderRadius,
-                boxShadow: boxShadow,
-                color: color,
-                gradient: gradient,
-                image: image,
-                shape: shape,
-              ),
-            )
-          : AnimatedDecorationBox(
-              child: this,
-              decoration: BoxDecoration(
-                backgroundBlendMode: backgroundBlendMode,
-                border: border,
-                borderRadius: borderRadius,
-                boxShadow: boxShadow,
-                color: color,
-                gradient: gradient,
-                image: image,
-                shape: shape,
-              ),
-              duration: duration,
-              curve: curve,
-            );
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          backgroundBlendMode: backgroundBlendMode,
+          border: border,
+          borderRadius: borderRadius,
+          boxShadow: boxShadow,
+          color: color,
+          gradient: gradient,
+          image: image,
+          shape: shape,
+        ),
+        position: position,
+        duration: duration,
+        curve: curve,
+      );
 
   Widget elevation(
     double elevation, {
@@ -265,19 +246,11 @@ extension Styled on Widget {
         ),
       ],
     );
-    if (duration == null) {
-      return DecoratedBox(
-        decoration: decoration,
-        child: this,
-      );
-    } else {
-      return AnimatedDecorationBox(
-        decoration: decoration,
-        child: this,
-        duration: duration,
-        curve: curve,
-      );
-    }
+    return _tryMergeDecoration(
+      decoration: decoration,
+      duration: duration,
+      curve: curve,
+    );
   }
 
   Widget boxShadow(
@@ -287,35 +260,20 @@ extension Styled on Widget {
           double spreadRadius = 0.0,
           Duration duration,
           Curve curve = Curves.linear}) =>
-      duration == null
-          ? DecoratedBox(
-              child: this,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: color,
-                    blurRadius: blurRadius,
-                    spreadRadius: spreadRadius,
-                    offset: offset,
-                  ),
-                ],
-              ),
-            )
-          : AnimatedDecorationBox(
-              child: this,
-              duration: duration,
-              curve: curve,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: color,
-                    blurRadius: blurRadius,
-                    spreadRadius: spreadRadius,
-                    offset: offset,
-                  ),
-                ],
-              ),
-            );
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: color,
+              blurRadius: blurRadius,
+              spreadRadius: spreadRadius,
+              offset: offset,
+            ),
+          ],
+        ),
+        duration: duration,
+        curve: curve,
+      );
 
   Widget constraints({
     double width,
@@ -386,9 +344,13 @@ extension Styled on Widget {
               curve: curve,
             );
 
-  Widget ripple() => Material(
+  Widget ripple({BorderRadius borderRadius}) => Material(
         color: Colors.transparent,
-        child: InkWell(onTap: () {}, child: this),
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: () {},
+          child: this,
+        ),
       );
 
   Widget rotate({
@@ -417,8 +379,8 @@ extension Styled on Widget {
               curve: curve,
             );
 
-  Widget scale({
-    @required double scale,
+  Widget scale(
+    double scale, {
     Offset origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
