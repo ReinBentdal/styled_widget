@@ -7,6 +7,7 @@ class AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   AnimatedDecorationBox({
     Key key,
     this.decoration,
+    this.position,
     this.child,
     Curve curve = Curves.linear,
     @required Duration duration,
@@ -30,6 +31,8 @@ class AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// constructor: set the `color` argument instead of the `decoration`
   /// argument.
   final Decoration decoration;
+
+  final DecorationPosition position;
 
   @override
   _AnimatedDecorationBoxState createState() => _AnimatedDecorationBoxState();
@@ -57,6 +60,7 @@ class _AnimatedDecorationBoxState
     return DecoratedBox(
       child: widget.child,
       decoration: _decoration?.evaluate(animation),
+      position: widget.position,
     );
   }
 
