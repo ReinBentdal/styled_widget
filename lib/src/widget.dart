@@ -22,10 +22,39 @@ extension Styled on Widget {
         ),
       );
 
-  Widget _tryMergeTransform(
-      Matrix4 transform, Duration duration, Curve curve) {}
+  Widget _tryMergeConstraints({
+    BoxConstraints constraints,
+    Duration duration,
+    Curve curve,
+  }) {
+    dynamic child = this;
 
-  Widget _tryMergeConstraints() {}
+    // only merge if the duration and curve is the exact same
+    if ((child is ConstrainedBox && duration == null) ||
+        (child is AnimatedConstrainedBox &&
+            duration == child.duration &&
+            curve == child.curve)) {
+      BoxConstraints childConstraints = child.constraints;
+      constraints = childConstraints?.copyWith(
+        minWidth: constraints?.minWidth,
+        maxWidth: constraints?.maxWidth,
+        minHeight: constraints?.minHeight,
+        maxHeight: constraints?.maxHeight,
+      );
+    }
+
+    return duration == null
+        ? ConstrainedBox(
+            constraints: constraints,
+            child: child,
+          )
+        : AnimatedConstrainedBox(
+            constraints: constraints,
+            child: child,
+            duration: duration,
+            curve: curve,
+          );
+  }
 
   Widget _tryMergeDecoration({
     BoxDecoration decoration,
@@ -42,15 +71,15 @@ extension Styled on Widget {
             curve == child.curve)) {
       BoxDecoration childDecoration = child.decoration;
       position ??= child.position;
-      decoration = decoration.copyWith(
-        color: childDecoration?.color,
-        backgroundBlendMode: childDecoration?.backgroundBlendMode,
-        border: childDecoration?.border,
-        borderRadius: childDecoration?.borderRadius,
-        boxShadow: childDecoration?.boxShadow,
-        gradient: childDecoration?.gradient,
-        image: childDecoration?.image,
-        shape: childDecoration?.shape,
+      decoration = childDecoration?.copyWith(
+        color: decoration?.color,
+        backgroundBlendMode: decoration?.backgroundBlendMode,
+        border: decoration?.border,
+        borderRadius: decoration?.borderRadius,
+        boxShadow: decoration?.boxShadow,
+        gradient: decoration?.gradient,
+        image: decoration?.image,
+        shape: decoration?.shape,
       );
       child = child.child;
     }
@@ -172,29 +201,6 @@ extension Styled on Widget {
         ),
       );
 
-  /// There are two borderRadius methods temprorary
-  Widget borderRadiusDecoration({
-    double all,
-    double topLeft,
-    double topRight,
-    double bottomLeft,
-    double bottomRight,
-    Duration duration,
-    Curve curve = Curves.linear,
-  }) =>
-      _tryMergeDecoration(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-            topRight: Radius.circular(topRight ?? all ?? 0.0),
-            bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-            bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-          ),
-        ),
-        duration: duration,
-        curve: curve,
-      );
-
   Widget clipOval() => ClipOval(child: this);
 
   Widget decoration({
@@ -295,19 +301,11 @@ extension Styled on Widget {
         ? constraints?.tighten(width: width, height: height) ??
             BoxConstraints.tightFor(width: width, height: height)
         : constraints;
-    if (duration == null) {
-      return ConstrainedBox(
-        constraints: constraints,
-        child: this,
-      );
-    } else {
-      return AnimatedConstrainedBox(
-        constraints: constraints,
-        duration: duration,
-        curve: curve,
-        child: this,
-      );
-    }
+    return _tryMergeConstraints(
+      constraints: constraints,
+      duration: duration,
+      curve: curve,
+    );
   }
 
   Widget width(
@@ -315,34 +313,28 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) =>
-      duration == null
-          ? ConstrainedBox(
-              child: this,
-              constraints: BoxConstraints.tightFor(width: width),
-            )
-          : AnimatedConstrainedBox(
-              child: this,
-              constraints: BoxConstraints.tightFor(width: width),
-              duration: duration,
-              curve: curve,
-            );
+      _tryMergeConstraints(
+        constraints: BoxConstraints(
+          minWidth: width,
+          maxWidth: width,
+        ),
+        duration: duration,
+        curve: curve,
+      );
 
   Widget height(
     double height, {
     Duration duration,
     Curve curve = Curves.linear,
   }) =>
-      duration == null
-          ? ConstrainedBox(
-              child: this,
-              constraints: BoxConstraints.tightFor(height: height),
-            )
-          : AnimatedConstrainedBox(
-              child: this,
-              constraints: BoxConstraints.tightFor(height: height),
-              duration: duration,
-              curve: curve,
-            );
+      _tryMergeConstraints(
+        constraints: BoxConstraints(
+          minHeight: height,
+          maxHeight: height,
+        ),
+        duration: duration,
+        curve: curve,
+      );
 
   Widget ripple({BorderRadius borderRadius}) => Material(
         color: Colors.transparent,
@@ -543,7 +535,4 @@ extension Styled on Widget {
         dragStartBehavior: dragStartBehavior,
         child: this,
       );
-
-  // TODO: support for implicit animations
-  // .animate(int duration, Curve curve)
 }
