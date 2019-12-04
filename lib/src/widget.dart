@@ -2,6 +2,7 @@
 Style methods which is common for all [Widget] widgets should be applied here.
 */
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -177,11 +178,124 @@ extension Styled on Widget {
         curve: curve,
       );
 
-  // Widget animatedBackgroundColor(Color color, {@required Duration duration,
-  //         @required Curve curve}) =>
+  Widget backroundImage(DecorationImage image,
+          {Duration duration, Curve curve = Curves.linear}) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(image: image),
+        duration: duration,
+        curve: curve,
+      );
 
-  // TODO: animate
-  // TODO: if the merge down feature exists, this may be changes to a BoxDecoration widget
+  Widget backgroundGradient(
+    Gradient gradient, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(gradient: gradient),
+        duration: duration,
+        curve: curve,
+      );
+
+  Widget backgroundLinearGradient({
+    AlignmentGeometry begin = Alignment.centerLeft,
+    AlignmentGeometry end = Alignment.centerRight,
+    List<Color> colors,
+    List<double> stops,
+    TileMode tileMode = TileMode.clamp,
+    GradientTransform transform,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: begin,
+            end: end,
+            colors: colors,
+            stops: stops,
+            tileMode: tileMode,
+            transform: transform,
+          ),
+        ),
+        duration: duration,
+        curve: curve,
+      );
+
+  Widget backgroundRadialGradient(
+          {AlignmentGeometry center = Alignment.center,
+          double radius = 0.5,
+          List<Color> colors,
+          List<double> stops,
+          TileMode tileMode = TileMode.clamp,
+          AlignmentGeometry focal,
+          double focalRadius = 0.0,
+          GradientTransform transform,
+          Duration duration,
+          Curve curve = Curves.linear}) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: center,
+            radius: radius,
+            colors: colors,
+            stops: stops,
+            tileMode: tileMode,
+            focal: focal,
+            focalRadius: focalRadius,
+            transform: transform,
+          ),
+        ),
+        duration: duration,
+        curve: curve,
+      );
+
+  Widget backgroundSweepGradient({
+    AlignmentGeometry center = Alignment.center,
+    double startAngle = 0.0,
+    double endAngle = pi * 2,
+    List<Color> colors,
+    List<double> stops,
+    TileMode tileMode = TileMode.clamp,
+    GradientTransform transform,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(
+          gradient: SweepGradient(
+            center: center,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            colors: colors,
+            stops: stops,
+            tileMode: tileMode,
+            transform: transform,
+          ),
+        ),
+        duration: duration,
+        curve: curve,
+      );
+
+  Widget backgroundBlendMode(
+    BlendMode blendMode, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        decoration: BoxDecoration(backgroundBlendMode: blendMode),
+        duration: duration,
+        curve: curve,
+      );
+
+  Widget backgroundBlur(double value) => BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: value,
+          sigmaY: value,
+        ),
+        child: this,
+      );
+
   Widget borderRadius({
     double all,
     double topLeft,
@@ -440,6 +554,8 @@ extension Styled on Widget {
               curve: curve,
               transformHitTests: transformHitTests,
             );
+
+  Widget overflow() => OverflowBox();
 
   Widget scrollable(
           {Axis scrollDirection = Axis.vertical,
