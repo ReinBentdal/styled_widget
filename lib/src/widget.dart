@@ -336,10 +336,9 @@ extension Styled on Widget {
         curve: curve,
       );
 
-  Widget ripple({BorderRadius borderRadius}) => Material(
+  Widget ripple() => Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: borderRadius,
           onTap: () {},
           child: this,
         ),
@@ -441,6 +440,23 @@ extension Styled on Widget {
               curve: curve,
               transformHitTests: transformHitTests,
             );
+
+  Widget scrollable(
+          {Axis scrollDirection = Axis.vertical,
+          bool reverse = false,
+          bool primary,
+          ScrollPhysics physics,
+          ScrollController controller,
+          DragStartBehavior dragStartBehavior = DragStartBehavior.start}) =>
+      SingleChildScrollView(
+        child: this,
+        scrollDirection: scrollDirection,
+        reverse: reverse,
+        primary: primary,
+        physics: physics,
+        controller: controller,
+        dragStartBehavior: dragStartBehavior,
+      );
 
   Widget semanticsLabel(String label) => Semantics.fromProperties(
         properties: SemanticsProperties(label: label),
