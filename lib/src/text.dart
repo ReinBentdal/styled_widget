@@ -1,12 +1,8 @@
 import 'package:flutter/widgets.dart';
-/*
-Style methods specific for the [Text] widget should be applied here
-*/
-
-// Text styledText(String data) => Text(data);
 
 extension StyledText on Text {
   Text copyWith({
+    String data,
     TextStyle style,
     StrutStyle strutStyle,
     TextAlign textAlign,
@@ -20,7 +16,7 @@ extension StyledText on Text {
     TextWidthBasis textWidthBasis,
   }) =>
       Text(
-        this.data,
+        data ?? this.data,
         style: style ?? this.style,
         strutStyle: strutStyle ?? this.strutStyle,
         textAlign: textAlign ?? this.textAlign,
@@ -33,8 +29,6 @@ extension StyledText on Text {
         textScaleFactor: textScaleFactor ?? this.textScaleFactor,
         textWidthBasis: textWidthBasis ?? textWidthBasis,
       );
-
-  // static Text text(String data) => Text(data);
 
   Text bold() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
