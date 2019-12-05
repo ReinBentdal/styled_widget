@@ -1,5 +1,7 @@
-## 0.0.4 [work in progress]
-* If both the parent and child widget is of type [DecoratedBox] they will now merge together
+## 0.0.4
+* Added [linearGradient], [radialGradient], [sweepGradient], [backgroundBlendMode], [backgroundImage], [scrollable]
+* Merges similar widgets together
+* Minor improvements and fixes
 
 ## 0.0.3
 * Added animations for all [widget] methods supporting animations
