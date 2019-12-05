@@ -180,19 +180,22 @@ class AnimatedTransform extends ImplicitlyAnimatedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment, showName: false, defaultValue: null));
+    properties.add(DiagnosticsProperty<AlignmentGeometry>(
+        'alignment', alignment,
+        showName: false, defaultValue: null));
     properties.add(ObjectFlagProperty<Matrix4>.has('transform', transform));
   }
 }
 
 class _AnimatedTransformState
     extends AnimatedWidgetBaseState<AnimatedTransform> {
-      AlignmentGeometryTween _alignment;
+  AlignmentGeometryTween _alignment;
   Matrix4Tween _transform;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _alignment = visitor(_alignment, widget.alignment, (dynamic value) => AlignmentGeometryTween(begin: value));
+    _alignment = visitor(_alignment, widget.alignment,
+        (dynamic value) => AlignmentGeometryTween(begin: value));
     _transform = visitor(_transform, widget.transform,
         (dynamic value) => Matrix4Tween(begin: value));
   }
