@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-extension StyledText on Text {
+extension on Text {
   Text copyWith({
     String data,
     TextStyle style,

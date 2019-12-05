@@ -1,6 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-extension StyledIcon on Icon {
+mixin Test {
+
+}
+
+extension on Icon {
   Icon copyWith({
     double size,
     Color color,
