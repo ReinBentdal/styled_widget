@@ -1,7 +1,4 @@
 import 'package:flutter/widgets.dart';
-/*
-Style methods specific for the [Icon] widget should be applied here
-*/
 
 extension StyledIcon on Icon {
   Icon copyWith({
@@ -15,8 +12,6 @@ extension StyledIcon on Icon {
           size: size ?? this.size,
           semanticLabel: semanticLabel ?? this.semanticLabel,
           textDirection: textDirection ?? this.textDirection);
-
-  // static Icon icon(IconData icon) => Icon(icon);
 
   Icon iconSize(double size) => this.copyWith(size: size);
 
