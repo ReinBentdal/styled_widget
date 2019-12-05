@@ -1,6 +1,3 @@
-/*
-Style methods which is common for all [Widget] widgets should be applied here.
-*/
 import 'dart:math';
 import 'dart:ui';
 
@@ -13,7 +10,7 @@ import 'animated.dart';
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
 extension Styled on Widget {
-  static Widget widget([Widget child]) =>
+  static Widget widget({Widget child}) =>
       child ??
       LimitedBox(
         maxWidth: 0.0,
@@ -458,6 +455,7 @@ extension Styled on Widget {
         ),
       );
 
+  // TODO: RotatedBox
   Widget rotate({
     @required double angle,
     Offset origin,
