@@ -1,3 +1,6 @@
+## 0.0.5 [work in progress]
+* Added styling methods for [TextSpan]
+
 ## 0.0.4
 * Added [linearGradient], [radialGradient], [sweepGradient], [backgroundBlendMode], [backgroundImage], [scrollable]
 * Merges similar widgets together
