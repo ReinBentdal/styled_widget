@@ -8,8 +8,10 @@ import 'package:flutter/rendering.dart';
 import 'animated.dart';
 
 typedef GestureIsTapCallback = void Function(bool isTapped);
+typedef Widget WidgetWrapper(Widget widget);
+typedef Widget WidgetWrapperWithContext(Widget widget, BuildContext context);
 
-extension Styled on Widget {
+extension StyledWidget on Widget {
   static Widget widget({Widget child}) =>
       child ??
       LimitedBox(
@@ -665,4 +667,18 @@ extension Styled on Widget {
         dragStartBehavior: dragStartBehavior,
         child: this,
       );
+
+  wrap(WidgetWrapper widgetWrapper) {
+    if(widgetWrapper == null) {
+      return this;
+    }
+    return widgetWrapper(this);
+  }
+
+  wrapWithContext(WidgetWrapperWithContext widgetWrapperWithContext, BuildContext context) {
+    if(widgetWrapperWithContext == null) {
+      return this;
+    }
+    return widgetWrapperWithContext(this, context);
+  }
 }

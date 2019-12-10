@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-extension on Text {
+typedef Widget TextWrapper(Text text);
+typedef Widget TextWrapperWithContext(Text text, BuildContext context);
+
+extension StyledText on Text {
   Text copyWith({
     String data,
     TextStyle style,
@@ -105,4 +108,18 @@ extension on Text {
           textBaseline: textBaseline,
         ),
       );
+
+  wrap(TextWrapper textWrapper) {
+    if(textWrapper == null) {
+      return this;
+    }
+    return textWrapper(this);
+  }
+
+  wrapWithContext(TextWrapperWithContext textWrapperWithContext, BuildContext context) {
+    if(textWrapperWithContext == null) {
+      return this;
+    }
+    return textWrapperWithContext(this, context);
+  }
 }
