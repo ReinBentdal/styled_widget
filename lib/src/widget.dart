@@ -175,7 +175,7 @@ extension Styled on Widget {
         curve: curve,
       );
 
-  Widget backroundImage(DecorationImage image,
+  Widget backgroundImage(DecorationImage image,
           {Duration duration, Curve curve = Curves.linear}) =>
       _tryMergeDecoration(
         decoration: BoxDecoration(image: image),
