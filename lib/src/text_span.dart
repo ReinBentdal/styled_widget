@@ -1,78 +1,63 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-extension on Text {
-  Text copyWith({
-    String data,
+extension on TextSpan {
+  TextSpan copyWith({
     TextStyle style,
-    StrutStyle strutStyle,
-    TextAlign textAlign,
-    TextDirection textDirection,
-    Locale locale,
-    bool softWrap,
-    TextOverflow overflow,
-    double textScaleFactor,
-    int maxLines,
+    GestureRecognizer recognizer,
     String semanticsLabel,
-    TextWidthBasis textWidthBasis,
   }) =>
-      Text(
-        data ?? this.data,
+      TextSpan(
+        text: this.text,
+        children: this.children,
         style: style ?? this.style,
-        strutStyle: strutStyle ?? this.strutStyle,
-        textAlign: textAlign ?? this.textAlign,
-        locale: locale ?? this.locale,
-        maxLines: maxLines ?? this.maxLines,
-        overflow: overflow ?? this.overflow,
+        recognizer: recognizer ?? this.recognizer,
         semanticsLabel: semanticsLabel ?? this.semanticsLabel,
-        softWrap: softWrap ?? this.softWrap,
-        textDirection: textDirection ?? this.textDirection,
-        textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-        textWidthBasis: textWidthBasis ?? textWidthBasis,
       );
 
-  Text bold() => this.copyWith(
+  TextSpan bold() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontWeight: FontWeight.bold,
         ),
       );
 
-  Text italic() => this.copyWith(
+  TextSpan italic() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontStyle: FontStyle.italic,
         ),
       );
 
-  Text fontWeight(FontWeight fontWeight) => this.copyWith(
+  TextSpan fontWeight(FontWeight fontWeight) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontWeight: fontWeight,
         ),
       );
 
-  Text fontSize(double size) => this.copyWith(
+  TextSpan fontSize(double size) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontSize: size,
         ),
       );
 
-  Text fontFamily(String font) => this.copyWith(
+  TextSpan fontFamily(String font) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontFamily: font,
         ),
       );
 
-  Text letterSpacing(double space) => this.copyWith(
+  TextSpan letterSpacing(double space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           letterSpacing: space,
         ),
       );
 
-  Text wordSpacing(double space) => this.copyWith(
+  TextSpan wordSpacing(double space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           wordSpacing: space,
         ),
       );
 
-  Text textShadow({
+  TextSpan textShadow({
     Color color = const Color(0x33000000),
     double blurRadius = 0.0,
     Offset offset = Offset.zero,
@@ -89,18 +74,13 @@ extension on Text {
         ),
       );
 
-  Text textColor(Color color) => this.copyWith(
+  TextSpan textColor(Color color) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           color: color,
         ),
       );
 
-  Text textAlignment(TextAlign align) => this.copyWith(textAlign: align);
-
-  Text textDirection(TextDirection direction) =>
-      this.copyWith(textDirection: direction);
-
-  Text textBaseline(TextBaseline textBaseline) => this.copyWith(
+  TextSpan textBaseline(TextBaseline textBaseline) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           textBaseline: textBaseline,
         ),

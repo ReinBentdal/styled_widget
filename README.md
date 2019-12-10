@@ -9,22 +9,21 @@ If you want to try it out, you can find the package [here](https://pub.dev/packa
 - **[Core Concepts](#core-concepts)**
   - [Widget Tree](#widget-tree)
   - [Implicit Animations](#implicit-animations)
+- **[More examples](#more-examples)**
 - **[Contributing](#contributing)**
 
 ## Introduction
 
 ### Basic Example
 ```dart
-final styledWidget = (Widget child) => Styled.widget(child)
-    .padding(all: 20)
-    .backgroundColor(Colors.blue)
-    .constraints(width: 100, height: 100)
-    .borderRadius(all: 10)
-    .elevation(10)
-    .alignment(Alignment.center);
-
 @override
-Widget build(BuildContext context) => styledWidget(FlutterLogo());
+Widget build(BuildContext context) => FlutterLogo()
+  .padding(all: 20)
+  .backgroundColor(Colors.blue)
+  .constraints(width: 100, height: 100)
+  .borderRadius(all: 10)
+  .elevation(10)
+  .alignment(Alignment.center);
 ```
 <details>
   <summary>Native Flutter equivilent</summary>
@@ -129,5 +128,8 @@ Icon(Icons.portable_wifi_off)
 ### Widget Tree
 
 ### Implicit Animations
+
+## More Examples
+
 
 ## Contributing

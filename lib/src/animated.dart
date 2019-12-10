@@ -7,6 +7,7 @@ class AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   AnimatedDecorationBox({
     Key key,
     this.decoration,
+    this.position,
     this.child,
     Curve curve = Curves.linear,
     @required Duration duration,
@@ -30,6 +31,8 @@ class AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// constructor: set the `color` argument instead of the `decoration`
   /// argument.
   final Decoration decoration;
+
+  final DecorationPosition position;
 
   @override
   _AnimatedDecorationBoxState createState() => _AnimatedDecorationBoxState();
@@ -57,6 +60,7 @@ class _AnimatedDecorationBoxState
     return DecoratedBox(
       child: widget.child,
       decoration: _decoration?.evaluate(animation),
+      position: widget.position,
     );
   }
 
@@ -176,19 +180,22 @@ class AnimatedTransform extends ImplicitlyAnimatedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment, showName: false, defaultValue: null));
+    properties.add(DiagnosticsProperty<AlignmentGeometry>(
+        'alignment', alignment,
+        showName: false, defaultValue: null));
     properties.add(ObjectFlagProperty<Matrix4>.has('transform', transform));
   }
 }
 
 class _AnimatedTransformState
     extends AnimatedWidgetBaseState<AnimatedTransform> {
-      AlignmentGeometryTween _alignment;
+  AlignmentGeometryTween _alignment;
   Matrix4Tween _transform;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _alignment = visitor(_alignment, widget.alignment, (dynamic value) => AlignmentGeometryTween(begin: value));
+    _alignment = visitor(_alignment, widget.alignment,
+        (dynamic value) => AlignmentGeometryTween(begin: value));
     _transform = visitor(_transform, widget.transform,
         (dynamic value) => Matrix4Tween(begin: value));
   }
