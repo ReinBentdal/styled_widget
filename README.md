@@ -1,6 +1,8 @@
 # Styled_widget
 <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget"></a>
 
+Simplifying your widget tree structure by using a method based widget tree, inspired by SwiftUI.
+
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
   - [Widget Tree](#widget-tree)

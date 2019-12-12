@@ -1,9 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-mixin Test {
-
-}
-
 extension on Icon {
   Icon copyWith({
     double size,
