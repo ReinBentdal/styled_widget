@@ -1,4 +1,4 @@
-## 0.0.5 [work in progress]
+## 0.0.5
 * Added styling methods for [TextSpan]
 
 ## 0.0.4
