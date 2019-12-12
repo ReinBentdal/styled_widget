@@ -3,6 +3,8 @@
 
 Simplifying your widget tree structure by using a method based widget tree, inspired by SwiftUI.
 
+If you like the package, consider giving the package a :star: on [GitHub](https://github.com/ReinBentdal/styled_widget) or a :thumbsup: on [pub](https://pub.dev/packages/styled_widget)!
+
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
   - [Widget Tree](#widget-tree)
