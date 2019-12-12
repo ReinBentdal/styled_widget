@@ -1,8 +1,6 @@
 # Styled_widget
 <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget"></a>
 
-If you want to try it out, you can find the package [here](https://pub.dev/packages/styled_widget)
-
 - **[Introduction](#introduction)**
 - **[Core Concepts](#core-concepts)**
   - [Widget Tree](#widget-tree)
