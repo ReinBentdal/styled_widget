@@ -1,8 +1,6 @@
 # Styled_widget
 <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget"></a>
 
-**This package requires Dart 2.6.0 or newer which implies a Flutter version supporting this Dart version. As of right now Flutter stable does not support these constraints**
-
 If you want to try it out, you can find the package [here](https://pub.dev/packages/styled_widget)
 
 - **[Introduction](#introduction)**
