@@ -1,6 +1,6 @@
 name: styled_widget
 description: Simplifying your widget tree structure by using a method based widget tree, inspired by SwiftUI.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/ReinBentdal/styled_widget
 repository: https://github.com/ReinBentdal/styled_widget
 
@@ -14,6 +14,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-analyzer:
-  enable-experiment: extension-methods
