@@ -1,6 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'dart:math';
 
-extension on Text {
+import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
+
+part 'animated_text.dart';
+
+extension StyledText on Text {
   Text copyWith({
     String data,
     TextStyle style,
@@ -27,8 +32,32 @@ extension on Text {
         softWrap: softWrap ?? this.softWrap,
         textDirection: textDirection ?? this.textDirection,
         textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-        textWidthBasis: textWidthBasis ?? textWidthBasis,
+        textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       );
+
+  Widget animateText(
+          {@required Duration duration, Curve curve = Curves.linear}) =>
+      duration != null
+          ? _AnimatedText(
+              data: this.data,
+              duration: duration,
+              curve: curve,
+              locale: this.locale,
+              maxLines: this.maxLines,
+              overflow: this.overflow,
+              semanticsLabel: this.semanticsLabel,
+              softWrap: this.softWrap,
+              strutStyle: this.strutStyle,
+              style: this.style,
+              textAlign: this.textAlign,
+              textDirection: this.textDirection,
+              textScaleFactor: this.textScaleFactor,
+              textWidthBasis: this.textWidthBasis,
+            )
+          : this;
+
+  Text textScale(double scaleFactor) =>
+      this.copyWith(textScaleFactor: scaleFactor);
 
   Text bold() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
@@ -85,9 +114,35 @@ extension on Text {
               blurRadius: blurRadius,
               offset: offset,
             ),
+            ...this.style?.shadows,
           ],
         ),
       );
+
+  Text textElevation(
+    double elevation, {
+    double angle = 0.0,
+    Color color = const Color(0x33000000),
+    double opacity = 1.0,
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) {
+    double calculatedOpacity = (0.5 - (sqrt(elevation) / 19)) * opacity;
+    if (calculatedOpacity <= 0.0) return this;
+    Shadow shadow = Shadow(
+      color: color.withOpacity(calculatedOpacity),
+      blurRadius: elevation,
+      offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
+    );
+    return this.copyWith(
+      style: (this.style ?? TextStyle()).copyWith(
+        shadows: [
+          shadow,
+          ...this.style?.shadows,
+        ],
+      ),
+    );
+  }
 
   Text textColor(Color color) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
@@ -105,4 +160,7 @@ extension on Text {
           textBaseline: textBaseline,
         ),
       );
+
+  Text textWidthBasis(TextWidthBasis textWidthBasis) =>
+      this.copyWith(textWidthBasis: textWidthBasis);
 }
