@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-extension on TextSpan {
+extension StyledTextSpan on TextSpan {
   TextSpan copyWith({
     TextStyle style,
     GestureRecognizer recognizer,
