@@ -1,8 +1,15 @@
+## 0.0.6
+* Added `animatedText` to implicitly animate text when property value changes
+* Animated `borderRadius` and `backgroundBlur`
+* Multiple `boxShadow` methods will now merge together instead of replacing
+* Added `textWidthBasis` method to [Text]
+* Added `textElevation`
+
 ## 0.0.5
 * Added styling methods for [TextSpan]
 
 ## 0.0.4
-* Added [linearGradient], [radialGradient], [sweepGradient], [backgroundBlendMode], [backgroundImage], [scrollable]
+* Added `linearGradient`, `radialGradient`, `sweepGradient`, `backgroundBlendMode`, `backgroundImage`, `scrollable`
 * Merges similar widgets together
 * Minor improvements and fixes
 
