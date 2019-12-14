@@ -4,8 +4,9 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/foundation.dart';
 
-import 'animated.dart';
+part 'animated_widget.dart';
 
 typedef GestureIsTapCallback = void Function(bool isTapped);
 
@@ -29,7 +30,7 @@ extension Styled on Widget {
 
     // only merge if the duration and curve is the exact same
     if ((child is ConstrainedBox && duration == null) ||
-        (child is AnimatedConstrainedBox &&
+        (child is _AnimatedConstrainedBox &&
             duration == child.duration &&
             curve == child.curve)) {
       BoxConstraints childConstraints = child.constraints;
@@ -46,7 +47,7 @@ extension Styled on Widget {
             constraints: constraints,
             child: child,
           )
-        : AnimatedConstrainedBox(
+        : _AnimatedConstrainedBox(
             constraints: constraints,
             child: child,
             duration: duration,
@@ -64,7 +65,7 @@ extension Styled on Widget {
 
     // only merge if the duration and curve is the exact same
     if ((child is DecoratedBox && duration == null) ||
-        (child is AnimatedDecorationBox &&
+        (child is _AnimatedDecorationBox &&
             duration == child.duration &&
             curve == child.curve)) {
       BoxDecoration childDecoration = child.decoration;
@@ -74,7 +75,7 @@ extension Styled on Widget {
         backgroundBlendMode: decoration?.backgroundBlendMode,
         border: decoration?.border,
         borderRadius: decoration?.borderRadius,
-        boxShadow: decoration?.boxShadow,
+        boxShadow: [...decoration?.boxShadow, ...childDecoration?.boxShadow],
         gradient: decoration?.gradient,
         image: decoration?.image,
         shape: decoration?.shape,
@@ -88,7 +89,7 @@ extension Styled on Widget {
             position: position ?? DecorationPosition.background,
             child: child,
           )
-        : AnimatedDecorationBox(
+        : _AnimatedDecorationBox(
             child: child,
             decoration: decoration,
             position: position ?? DecorationPosition.background,
@@ -96,6 +97,17 @@ extension Styled on Widget {
             curve: curve,
           );
   }
+
+  // Widget animate({
+  //   @required Duration duration,
+  //   Curve curve = Curves.linear,
+  // }) {
+  //   _tryInheritedAnimation(
+  //     duration: duration,
+  //     curve: curve,
+  //   );
+  //   return this;
+  // }
 
   Widget padding({
     double all,
@@ -285,13 +297,25 @@ extension Styled on Widget {
         curve: curve,
       );
 
-  Widget backgroundBlur(double value) => BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: value,
-          sigmaY: value,
-        ),
-        child: this,
-      );
+  Widget backgroundBlur(
+    double sigma, {
+    Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      duration == null
+          ? BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: sigma,
+                sigmaY: sigma,
+              ),
+              child: this,
+            )
+          : _AnimatedBackgroundBlur(
+              child: this,
+              sigma: sigma,
+              duration: duration,
+              curve: curve,
+            );
 
   Widget borderRadius({
     double all,
@@ -302,15 +326,25 @@ extension Styled on Widget {
     Duration duration,
     Curve curve = Curves.linear,
   }) =>
-      ClipRRect(
-        child: this,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-          topRight: Radius.circular(topRight ?? all ?? 0.0),
-          bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-          bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-        ),
-      );
+      duration == null
+          ? ClipRRect(
+              child: this,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+                topRight: Radius.circular(topRight ?? all ?? 0.0),
+                bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+                bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+              ),
+            )
+          : _AnimatedBorderRadius(
+              child: this,
+              topLeft: topLeft ?? all ?? 0.0,
+              topRight: topRight ?? all ?? 0.0,
+              bottomLeft: bottomLeft ?? all ?? 0.0,
+              bottomRight: bottomRight ?? all ?? 0.0,
+              duration: duration,
+              curve: curve,
+            );
 
   Widget clipOval() => ClipOval(child: this);
 
@@ -472,7 +506,7 @@ extension Styled on Widget {
               transformHitTests: transformHitTests,
               child: this,
             )
-          : AnimatedTransform(
+          : _AnimatedTransform(
               child: this,
               transform: Matrix4.rotationZ(angle),
               alignment: alignment,
@@ -498,7 +532,7 @@ extension Styled on Widget {
               origin: origin,
               transformHitTests: transformHitTests,
             )
-          : AnimatedTransform(
+          : _AnimatedTransform(
               child: this,
               transform: Matrix4.diagonal3Values(scale, scale, 1.0),
               alignment: alignment,
@@ -519,7 +553,7 @@ extension Styled on Widget {
               transformHitTests: transformHitTests,
               child: this,
             )
-          : AnimatedTransform(
+          : _AnimatedTransform(
               child: this,
               transform: Matrix4.translationValues(offset.dx, offset.dy, 0.0),
               transformHitTests: transformHitTests,
@@ -543,7 +577,7 @@ extension Styled on Widget {
               transformHitTests: transformHitTests,
               child: this,
             )
-          : AnimatedTransform(
+          : _AnimatedTransform(
               child: this,
               transform: transform,
               origin: origin,
