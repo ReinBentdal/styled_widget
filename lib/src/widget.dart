@@ -348,6 +348,38 @@ extension Styled on Widget {
 
   Widget clipOval() => ClipOval(child: this);
 
+  Widget border({
+    double all,
+    double left,
+    double right,
+    double top,
+    double bottom,
+    Color color = const Color(0xFF000000),
+    BorderStyle style = BorderStyle.solid,
+    @required Duration duration,
+    Curve curve = Curves.linear,
+  }) =>
+      _tryMergeDecoration(
+        duration: duration,
+        curve: curve,
+        decoration: BoxDecoration(
+          border: Border(
+            left: (left ?? all) == null
+                ? BorderSide.none
+                : BorderSide(color: color, width: left ?? all, style: style),
+            right: (right ?? all) == null
+                ? BorderSide.none
+                : BorderSide(color: color, width: right ?? all, style: style),
+            top: (top ?? all) == null
+                ? BorderSide.none
+                : BorderSide(color: color, width: top ?? all, style: style),
+            bottom: (bottom ?? all) == null
+                ? BorderSide.none
+                : BorderSide(color: color, width: bottom ?? all, style: style),
+          ),
+        ),
+      );
+
   Widget decoration({
     Color color,
     DecorationImage image,

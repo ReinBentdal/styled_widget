@@ -1,3 +1,6 @@
+## 0.0.7
+* Added `border`
+
 ## 0.0.6
 * Added `animatedText` to implicitly animate text when property value changes
 * Animated `borderRadius` and `backgroundBlur`
