@@ -25,78 +25,61 @@ class UserPage extends StatelessWidget {
         .scrollable();
 
     return page(
-      child: Column(
-        children: <Widget>[
-          Text('User settings')
-              .bold()
-              .fontSize(32)
-              .alignment(Alignment.center)
-              .padding(bottom: 20),
-          UserCard(),
-          ActionsRow(),
-          Settings(),
-        ],
-      ),
+      child: <Widget>[
+        Text('User settings')
+            .bold()
+            .fontSize(32)
+            .alignment(Alignment.center)
+            .padding(bottom: 20),
+        UserCard(),
+        ActionsRow(),
+        Settings(),
+      ].toColumn(),
     );
   }
 }
 
 class UserCard extends StatelessWidget {
   Widget _buildUserRow() {
-    return Row(
-      children: <Widget>[
-        Icon(Icons.account_circle)
-            .backgroundColor(Colors.white)
-            .borderRadius(all: 30)
-            .constraints(height: 50, width: 50)
-            .padding(right: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Rein Gundersen Bentdal')
-                .textColor(Colors.white)
-                .fontSize(18)
-                .fontWeight(FontWeight.w600)
-                .padding(bottom: 5),
-            Text('Creative builder')
-                .textColor(Colors.white.withOpacity(0.6))
-                .fontSize(12),
-          ],
-        )
-      ],
-    );
+    return <Widget>[
+      Icon(Icons.account_circle)
+          .backgroundColor(Colors.white)
+          .borderRadius(all: 30)
+          .constraints(height: 50, width: 50)
+          .padding(right: 10),
+      <Widget>[
+        Text('Rein Gundersen Bentdal')
+            .textColor(Colors.white)
+            .fontSize(18)
+            .fontWeight(FontWeight.w600)
+            .padding(bottom: 5),
+        Text('Creative builder')
+            .textColor(Colors.white.withOpacity(0.6))
+            .fontSize(12),
+      ].toColumn(crossAxisAlignment: CrossAxisAlignment.start),
+    ].toRow();
   }
 
   Widget _buildUserStats() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        _buildUserStatsItem('846', 'Collect'),
-        _buildUserStatsItem('51', 'Attention'),
-        _buildUserStatsItem('267', 'Track'),
-        _buildUserStatsItem('39', 'Coupons'),
-      ],
-    ).padding(vertical: 10);
+    return <Widget>[
+      _buildUserStatsItem('846', 'Collect'),
+      _buildUserStatsItem('51', 'Attention'),
+      _buildUserStatsItem('267', 'Track'),
+      _buildUserStatsItem('39', 'Coupons'),
+    ]
+        .toRow(mainAxisAlignment: MainAxisAlignment.spaceAround)
+        .padding(vertical: 10);
   }
 
-  Widget _buildUserStatsItem(String value, String text) {
-    return Column(
-      children: <Widget>[
+  Widget _buildUserStatsItem(String value, String text) => <Widget>[
         Text(value).fontSize(20).textColor(Colors.white).padding(bottom: 5),
         Text(text).textColor(Colors.white.withOpacity(0.6)).fontSize(12),
-      ],
-    );
-  }
+      ].toColumn();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        _buildUserRow(),
-        _buildUserStats(),
-      ],
-    )
+    return <Widget>[_buildUserRow(), _buildUserStats()]
+        .toColumn(mainAxisAlignment: MainAxisAlignment.spaceAround)
         .padding(horizontal: 20, vertical: 10)
         .backgroundColor(Color(0xff3977ff))
         .borderRadius(all: 20)
@@ -121,24 +104,19 @@ class ActionsRow extends StatelessWidget {
     final Widget actionText =
         Text(name).textColor(Colors.black.withOpacity(0.8)).fontSize(12);
 
-    return Column(
-      children: <Widget>[
-        actionIcon,
-        actionText,
-      ],
-    ).padding(vertical: 20);
+    return <Widget>[
+      actionIcon,
+      actionText,
+    ].toColumn().padding(vertical: 20);
   }
 
   @override
-  Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          _buildActionItem('Wallet', Icons.attach_money),
-          _buildActionItem('Delivery', Icons.card_giftcard),
-          _buildActionItem('Message', Icons.message),
-          _buildActionItem('Service', Icons.room_service),
-        ],
-      );
+  Widget build(BuildContext context) => <Widget>[
+        _buildActionItem('Wallet', Icons.attach_money),
+        _buildActionItem('Delivery', Icons.card_giftcard),
+        _buildActionItem('Message', Icons.message),
+        _buildActionItem('Service', Icons.room_service),
+      ].toRow(mainAxisAlignment: MainAxisAlignment.spaceAround);
 }
 
 class SettingsItemModel {
@@ -189,18 +167,15 @@ const List<SettingsItemModel> settingsItems = [
 
 class Settings extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: settingsItems
-          .map((settingsItem) => SettingsItem(
-                settingsItem.icon,
-                settingsItem.color,
-                settingsItem.title,
-                settingsItem.description,
-              ))
-          .toList(),
-    );
-  }
+  Widget build(BuildContext context) => settingsItems
+      .map((settingsItem) => SettingsItem(
+            settingsItem.icon,
+            settingsItem.color,
+            settingsItem.title,
+            settingsItem.description,
+          ))
+      .toList()
+      .toColumn();
 }
 
 class SettingsItem extends StatefulWidget {
@@ -218,66 +193,54 @@ class SettingsItem extends StatefulWidget {
 class _SettingsItemState extends State<SettingsItem> {
   bool pressed = false;
 
-  void onPressHandle(bool ispressed) => setState(() => pressed = ispressed);
-
-  final settingsItem = ({
-    bool isPressed,
-    GestureIsTapCallback isTap,
-    Widget child,
-  }) =>
-      Styled.widget(child: child)
-          .alignment(Alignment.center)
-          .borderRadius(all: 15)
-          .ripple()
-          .backgroundColor(Colors.white)
-          .borderRadius(all: 15)
-          .constraints(height: 70)
-          .elevation(
-            isPressed ? 0 : 50,
-            color: Colors.grey,
-            duration: Duration(milliseconds: 150),
-            curve: Curves.easeOut,
-          )
-          .gestures(isTap: isTap)
-          .padding(vertical: 10)
-          .scale(
-            isPressed ? 0.95 : 1.0,
-            duration: Duration(milliseconds: 150),
-            curve: Curves.easeOut,
-          );
-
-  final icon = ({IconData icon, Color bgColor}) => Icon(icon)
-      .iconColor(Colors.white)
-      .iconSize(20)
-      .padding(all: 12)
-      .backgroundColor(bgColor)
-      .borderRadius(all: 30)
-      .padding(left: 15, right: 10);
-
-  final title =
-      (String title) => Text(title).bold().fontSize(16).padding(bottom: 5);
-
-  final description = (String description) =>
-      Text(description).textColor(Colors.black26).bold().fontSize(12);
-
   @override
   Widget build(BuildContext context) {
+    final settingsItem = ({Widget child}) => Styled.widget(child: child)
+        .alignment(Alignment.center)
+        .borderRadius(all: 15)
+        .ripple()
+        .backgroundColor(Colors.white)
+        .borderRadius(all: 15)
+        .constraints(height: 70)
+        .elevation(
+          pressed ? 0 : 50,
+          color: Colors.grey,
+          duration: Duration(milliseconds: 150),
+          curve: Curves.easeOut,
+        )
+        .gestures(onTapChange: (tapStatus) => setState(() => pressed = tapStatus))
+        .padding(vertical: 10)
+        .scale(
+          pressed ? 0.95 : 1.0,
+          duration: Duration(milliseconds: 150),
+          curve: Curves.easeOut,
+        );
+
+    final Widget icon = Icon(widget.icon)
+        .iconColor(Colors.white)
+        .iconSize(20)
+        .padding(all: 12)
+        .backgroundColor(widget.iconBgColor)
+        .borderRadius(all: 30)
+        .padding(left: 15, right: 10);
+
+    final Widget title =
+        Text(widget.title).bold().fontSize(16).padding(bottom: 5);
+
+    final Widget description =
+        Text(widget.description).textColor(Colors.black26).bold().fontSize(12);
+
     return settingsItem(
-      isPressed: pressed,
-      isTap: (isTapped) => setState(() => pressed = isTapped),
-      child: Row(
-        children: <Widget>[
-          icon(icon: widget.icon, bgColor: widget.iconBgColor),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              title(widget.title),
-              description(widget.description),
-            ],
-          )
-        ],
-      ),
+      child: <Widget>[
+        icon,
+        <Widget>[
+          title,
+          description,
+        ].toColumn(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+      ].toRow(),
     );
   }
 }
