@@ -1,5 +1,7 @@
-## 0.0.7
+## 0.0.7 [work in progress]
 * Added `border`
+* Added `toColumn`, `toRow` and `toStack` to [List]
+* renamed `isTap` to `onTapChange`
 
 ## 0.0.6
 * Added `animatedText` to implicitly animate text when property value changes
