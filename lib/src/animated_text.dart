@@ -70,7 +70,9 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
         (dynamic value) => Tween<double>(begin: value));
     _height = visitor(_height, widget.style?.height,
         (dynamic value) => Tween<double>(begin: value));
-    _decorationThickness = visitor(_decorationThickness, widget.style?.decorationThickness,
+    _decorationThickness = visitor(
+        _decorationThickness,
+        widget.style?.decorationThickness,
         (dynamic value) => Tween<double>(begin: value));
     _maxLines = visitor(_maxLines, widget.maxLines,
         (dynamic value) => Tween<int>(begin: value));
@@ -84,14 +86,14 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
   Widget build(BuildContext context) => Text(
         widget.data,
         style: widget.style?.copyWith(
-            fontSize: _fontSize?.evaluate(animation),
-            letterSpacing: _letterSpacing?.evaluate(animation),
-            wordSpacing: _wordSpacing?.evaluate(animation),
-            height: _height?.evaluate(animation),
-            decorationThickness: _decorationThickness?.evaluate(animation),
-            color: _color?.evaluate(animation),
-            decorationColor: _decorationColor?.evaluate(animation),
-            ),
+          fontSize: _fontSize?.evaluate(animation),
+          letterSpacing: _letterSpacing?.evaluate(animation),
+          wordSpacing: _wordSpacing?.evaluate(animation),
+          height: _height?.evaluate(animation),
+          decorationThickness: _decorationThickness?.evaluate(animation),
+          color: _color?.evaluate(animation),
+          decorationColor: _decorationColor?.evaluate(animation),
+        ),
         strutStyle: widget.strutStyle,
         textAlign: widget.textAlign,
         textDirection: widget.textDirection,

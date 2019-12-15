@@ -1,6 +1,5 @@
 part of 'widget.dart';
 
-
 class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.
   _AnimatedDecorationBox({
@@ -164,8 +163,9 @@ class _AnimatedTransform extends ImplicitlyAnimatedWidget {
     Curve curve = Curves.linear,
     @required Duration duration,
   }) : super(
-            curve: curve,
-            duration: duration,);
+          curve: curve,
+          duration: duration,
+        );
 
   /// The [child] contained by the container.
   ///
@@ -331,8 +331,13 @@ class _AnimatedBackgroundBlur extends ImplicitlyAnimatedWidget {
     @required Duration duration,
     VoidCallback onEnd,
     this.alwaysIncludeSemantics = false,
-  }) : assert(sigma != null && sigma >= 0.0),
-       super(key: key, curve: curve, duration: duration, onEnd: onEnd,);
+  })  : assert(sigma != null && sigma >= 0.0),
+        super(
+          key: key,
+          curve: curve,
+          duration: duration,
+          onEnd: onEnd,
+        );
 
   /// The widget below this widget in the tree.
   ///
@@ -361,13 +366,15 @@ class _AnimatedBackgroundBlur extends ImplicitlyAnimatedWidget {
   }
 }
 
-class _AnimatedBackgroundBlurState extends ImplicitlyAnimatedWidgetState<_AnimatedBackgroundBlur> {
+class _AnimatedBackgroundBlurState
+    extends ImplicitlyAnimatedWidgetState<_AnimatedBackgroundBlur> {
   Tween<double> _sigma;
   Animation<double> _sigmaAnimation;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _sigma = visitor(_sigma, widget.opacity, (dynamic value) => Tween<double>(begin: value));
+    _sigma = visitor(
+        _sigma, widget.opacity, (dynamic value) => Tween<double>(begin: value));
   }
 
   @override
