@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 
 part 'animated_widget.dart';
 
-typedef GestureIsTapCallback = void Function(bool isTapped);
+typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
 extension Styled on Widget {
   static Widget widget({Widget child}) =>
@@ -644,7 +644,7 @@ extension Styled on Widget {
       );
 
   Widget gestures({
-    GestureIsTapCallback isTap,
+    GestureOnTapChangeCallback onTapChange,
     GestureTapDownCallback onTapDown,
     GestureTapUpCallback onTapUp,
     GestureTapCallback onTap,
@@ -687,15 +687,15 @@ extension Styled on Widget {
       GestureDetector(
         onTapDown: (TapDownDetails tapDownDetails) {
           if (onTapDown != null) onTapDown(tapDownDetails);
-          if (isTap != null) isTap(true);
+          if (onTapChange != null) onTapChange(true);
         },
         onTapUp: (TapUpDetails tapUpDetails) {
           if (onTapUp != null) onTapUp(tapUpDetails);
-          if (isTap != null) isTap(false);
+          if (onTapChange != null) onTapChange(false);
         },
         onTapCancel: () {
           if (onTapCancel != null) onTapCancel();
-          if (isTap != null) isTap(false);
+          if (onTapChange != null) onTapChange(false);
         },
         onTap: onTap,
         onDoubleTap: onDoubleTap,
