@@ -12,7 +12,7 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 - **[More examples](#more-examples)**
 - **[Contributing](#contributing)**
 
-## Built with styled_widget
+### Built with styled_widget
 | [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
 |-|
 |<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif" width="250">|
