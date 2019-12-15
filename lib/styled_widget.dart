@@ -9,3 +9,4 @@ export 'src/widget.dart';
 export 'src/text.dart';
 export 'src/text_span.dart';
 export 'src/icon.dart';
+export 'src/list.dart';
