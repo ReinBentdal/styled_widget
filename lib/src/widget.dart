@@ -343,7 +343,8 @@ extension Styled on Widget {
               shadowColor: shadowColor,
             )
           : PhysicalShape(
-              clipper: const ShapeBorderClipper(shape: RoundedRectangleBorder()),
+              clipper:
+                  const ShapeBorderClipper(shape: RoundedRectangleBorder()),
               color: Colors.transparent,
               elevation: elevation,
               shadowColor: shadowColor,

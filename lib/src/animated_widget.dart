@@ -250,7 +250,7 @@ class _AnimatedElevation extends ImplicitlyAnimatedWidget {
     Curve curve = Curves.linear,
     @required Duration duration,
     VoidCallback onEnd,
-  })  : super(
+  }) : super(
           key: key,
           curve: curve,
           duration: duration,

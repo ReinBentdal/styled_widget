@@ -1,6 +1,5 @@
 library styled_widget;
 
-import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 

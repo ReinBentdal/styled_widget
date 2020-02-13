@@ -122,7 +122,7 @@ extension StyledText on Text {
     Duration duration,
     Curve curve = Curves.linear,
   }) {
-    double calculatedOpacity = _elevationOpacityCurve(elevation)*opacityRatio;
+    double calculatedOpacity = _elevationOpacityCurve(elevation) * opacityRatio;
 
     Shadow shadow = Shadow(
       color: color.withOpacity(calculatedOpacity),
