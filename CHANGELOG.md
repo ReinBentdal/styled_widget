@@ -1,7 +1,11 @@
-## 0.0.7 [work in progress]
+## 0.0.7
+* Added `animate`
 * Added `border`
+* Added more parameters to `ripple`
 * Added `toColumn`, `toRow` and `toStack` to [List]
-* renamed `isTap` to `onTapChange`
+* Renamed `isTap` to `onTapChange`
+* Changed `elevation` behaviour to match material design standard
+* [Breaking] Removed `duration` and `curve` parameters from all methods in favor of `animate` method
 
 ## 0.0.6
 * Added `animatedText` to implicitly animate text when property value changes

@@ -1,4 +1,4 @@
-part of 'text.dart';
+part of '../styled_widget.dart';
 
 class _AnimatedText extends ImplicitlyAnimatedWidget {
   /// Creates a container that animates its parameters implicitly.

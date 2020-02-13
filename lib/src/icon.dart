@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+part of '../styled_widget.dart';
 
 extension StyledIcon on Icon {
   Icon copyWith({

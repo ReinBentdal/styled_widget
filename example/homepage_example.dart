@@ -83,7 +83,7 @@ class UserCard extends StatelessWidget {
         .padding(horizontal: 20, vertical: 10)
         .backgroundColor(Color(0xff3977ff))
         .borderRadius(all: 20)
-        .elevation(10, color: Color(0xff3977ff))
+        .elevation(10, shadowColor: Color(0xff3977ff))
         .height(175)
         .alignment(Alignment.center);
   }
@@ -202,19 +202,15 @@ class _SettingsItemState extends State<SettingsItem> {
         .backgroundColor(Colors.white)
         .borderRadius(all: 15)
         .constraints(height: 70)
-        .elevation(
-          pressed ? 0 : 50,
-          color: Colors.grey,
-          duration: Duration(milliseconds: 150),
-          curve: Curves.easeOut,
-        )
-        .gestures(onTapChange: (tapStatus) => setState(() => pressed = tapStatus))
+        .elevation(pressed ? 0 : 50, shadowColor: Colors.black38, animate: true)
         .padding(vertical: 10)
-        .scale(
-          pressed ? 0.95 : 1.0,
-          duration: Duration(milliseconds: 150),
-          curve: Curves.easeOut,
-        );
+        .gestures(
+            onTapChange: (tapStatus) => setState(() => pressed = tapStatus))
+        // .scale(
+        //   pressed ? 0.95 : 1.0,
+        //   animate: true,
+        // )
+        .animate(duration: Duration(milliseconds: 150), curve: Curves.easeOut);
 
     final Widget icon = Icon(widget.icon)
         .iconColor(Colors.white)

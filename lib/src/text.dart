@@ -1,9 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
-
-part 'animated_text.dart';
+part of '../styled_widget.dart';
 
 extension StyledText on Text {
   Text copyWith({
@@ -123,12 +118,12 @@ extension StyledText on Text {
     double elevation, {
     double angle = 0.0,
     Color color = const Color(0x33000000),
-    double opacity = 1.0,
+    double opacityRatio = 1.0,
     Duration duration,
     Curve curve = Curves.linear,
   }) {
-    double calculatedOpacity = (0.5 - (sqrt(elevation) / 19)) * opacity;
-    if (calculatedOpacity <= 0.0) return this;
+    double calculatedOpacity = _elevationOpacityCurve(elevation)*opacityRatio;
+
     Shadow shadow = Shadow(
       color: color.withOpacity(calculatedOpacity),
       blurRadius: elevation,

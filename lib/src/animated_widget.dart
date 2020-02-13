@@ -1,4 +1,317 @@
-part of 'widget.dart';
+part of '../styled_widget.dart';
+
+class _StyledAnimatedModel {
+  final Duration duration;
+  final Curve curve;
+  _StyledAnimatedModel({
+    @required this.duration,
+    this.curve,
+  });
+}
+
+class _StyledAnimated extends InheritedWidget {
+  final _StyledAnimatedModel animation;
+
+  _StyledAnimated({this.animation, Widget child}) : super(child: child);
+
+  @override
+  bool updateShouldNotify(_StyledAnimated oldAnimation) =>
+      !(oldAnimation?.animation?.duration == animation?.duration &&
+          oldAnimation?.animation?.curve == animation?.curve);
+
+  static _StyledAnimated of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_StyledAnimated>();
+}
+
+class _StyledAnimatedPaddingContainer extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  _StyledAnimatedPaddingContainer({this.child, this.padding});
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return AnimatedPadding(
+      padding: padding,
+      child: child,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
+class _StyledAnimatedOpacityContainer extends StatelessWidget {
+  final Widget child;
+  final double opacity;
+
+  _StyledAnimatedOpacityContainer({this.child, this.opacity});
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return AnimatedOpacity(
+      opacity: opacity,
+      child: child,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
+class _StyledAnimatedAlignContainer extends StatelessWidget {
+  final Widget child;
+  final AlignmentGeometry alignment;
+
+  _StyledAnimatedAlignContainer({this.child, this.alignment});
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return AnimatedAlign(
+      alignment: alignment,
+      child: child,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
+class _StyledAnimatedDecorationBoxContainer extends StatelessWidget {
+  final Widget child;
+  final BoxDecoration decoration;
+  final DecorationPosition position;
+
+  _StyledAnimatedDecorationBoxContainer({
+    this.child,
+    this.decoration,
+    this.position,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedDecorationBox(
+      position: position,
+      decoration: decoration,
+      child: child,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
+class _StyledAnimatedConstrainedBoxContainer extends StatelessWidget {
+  final Widget child;
+  final BoxConstraints constraints;
+
+  _StyledAnimatedConstrainedBoxContainer({this.child, this.constraints});
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedConstrainedBox(
+      duration: animation?.duration,
+      curve: animation?.curve,
+      constraints: constraints,
+      child: child,
+    );
+  }
+}
+
+class _StyledAnimatedTransformContainer extends StatelessWidget {
+  final Widget child;
+  final Matrix4 transform;
+  final Offset origin;
+  final AlignmentGeometry alignment;
+  final bool transformHitTests;
+  _StyledAnimatedTransformContainer({
+    this.child,
+    this.transform,
+    this.origin,
+    this.alignment,
+    this.transformHitTests,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedTransform(
+      child: this,
+      transform: transform,
+      alignment: alignment,
+      origin: origin,
+      transformHitTests: transformHitTests,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
+class _StyledAnimatedBorderRadiusContainer extends StatelessWidget {
+  final Widget child;
+  final double topLeft;
+  final double topRight;
+  final double bottomLeft;
+  final double bottomRight;
+
+  _StyledAnimatedBorderRadiusContainer({
+    this.child,
+    this.bottomLeft,
+    this.bottomRight,
+    this.topLeft,
+    this.topRight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedBorderRadius(
+      duration: animation?.duration,
+      curve: animation?.curve,
+      topLeft: topLeft,
+      topRight: topRight,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+      child: child,
+    );
+  }
+}
+
+class _StyledAnimatedBackgroundBlurContainer extends StatelessWidget {
+  final Widget child;
+  final double sigma;
+
+  _StyledAnimatedBackgroundBlurContainer({
+    this.child,
+    this.sigma,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedBackgroundBlur(
+      duration: animation?.duration,
+      curve: animation?.curve,
+      sigma: sigma,
+    );
+  }
+}
+
+class _StyledAnimatedElevationContainer extends StatelessWidget {
+  final Widget child;
+  final double elevation;
+  final Color shadowColor;
+
+  _StyledAnimatedElevationContainer({
+    this.child,
+    this.elevation,
+    this.shadowColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedElevation(
+      duration: animation?.duration,
+      curve: animation?.curve,
+      elevation: elevation,
+      shadowColor: shadowColor,
+      child: child,
+    );
+  }
+}
+
+class _AnimatedElevation extends ImplicitlyAnimatedWidget {
+  /// The [curve] and [duration] arguments must not be null.
+  _AnimatedElevation({
+    Key key,
+    this.elevation,
+    this.shadowColor,
+    this.child,
+    Curve curve = Curves.linear,
+    @required Duration duration,
+    VoidCallback onEnd,
+  })  : super(
+          key: key,
+          curve: curve,
+          duration: duration,
+          onEnd: onEnd,
+        );
+
+  /// The [child] contained by the container.
+  ///
+  /// If null, and if the [constraints] are unbounded or also null, the
+  /// container will expand to fill all available space in its parent, unless
+  /// the parent provides unbounded constraints, in which case the container
+  /// will attempt to be as small as possible.
+  ///
+  /// {@macro flutter.widgets.child}
+  final Widget child;
+
+  final double elevation;
+
+  final Color shadowColor;
+
+  @override
+  _AnimatedElevationState createState() => _AnimatedElevationState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    // TODO: debug [elevation] and [shadowColor]?
+  }
+}
+
+class _AnimatedElevationState
+    extends AnimatedWidgetBaseState<_AnimatedElevation> {
+  Tween<double> _elevation;
+  ColorTween _shadowColor;
+
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _elevation = visitor(_elevation, widget.elevation,
+        (dynamic value) => Tween<double>(begin: value));
+    _shadowColor = visitor(_shadowColor, widget.shadowColor,
+        (dynamic value) => ColorTween(begin: value));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PhysicalShape(
+      clipper: const ShapeBorderClipper(shape: RoundedRectangleBorder()),
+      color: Colors.transparent,
+      elevation: _elevation?.evaluate(animation),
+      shadowColor: _shadowColor?.evaluate(animation),
+      child: widget.child,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder description) {
+    super.debugFillProperties(description);
+    // TODO: debug shadowColor, elevation
+  }
+}
 
 class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.
@@ -155,6 +468,7 @@ class _AnimatedTransform extends ImplicitlyAnimatedWidget {
   ///
   /// The [curve] and [duration] arguments must not be null.
   _AnimatedTransform({
+    Key key,
     this.transform,
     this.origin,
     this.alignment,
@@ -163,6 +477,7 @@ class _AnimatedTransform extends ImplicitlyAnimatedWidget {
     Curve curve = Curves.linear,
     @required Duration duration,
   }) : super(
+          key: key,
           curve: curve,
           duration: duration,
         );
