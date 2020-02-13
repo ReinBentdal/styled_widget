@@ -6,7 +6,7 @@ Simplifying your widget tree structure by using a method based widget tree, insp
 
 If you like the package, consider giving the package a :star: on [GitHub](https://github.com/ReinBentdal/styled_widget) or a :thumbsup: on [pub](https://pub.dev/packages/styled_widget)!
 
-To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)
+**To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)**
 
 ### Built with styled_widget
 | [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
