@@ -6,12 +6,7 @@ Simplifying your widget tree structure by using a method based widget tree, insp
 
 If you like the package, consider giving the package a :star: on [GitHub](https://github.com/ReinBentdal/styled_widget) or a :thumbsup: on [pub](https://pub.dev/packages/styled_widget)!
 
-- **[Introduction](#introduction)**
-- **[Core Concepts](#core-concepts)**
-  - [Widget Tree](#widget-tree)
-  - [Implicit Animations](#implicit-animations)
-- **[More examples](#more-examples)**
-- **[Contributing](#contributing)**
+To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)
 
 ### Built with styled_widget
 | [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
@@ -129,13 +124,3 @@ Icon(Icons.portable_wifi_off)
 
 #### Result
 <img width="300" src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/code_demo.png">
-
-## Core Concepts
-### Widget Tree
-
-### Implicit Animations
-
-## More Examples
-
-
-## Contributing
