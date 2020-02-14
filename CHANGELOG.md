@@ -1,6 +1,7 @@
-## 0.0.9
+## 0.1.0
 * Added `Styled.icon` to be able to animate `Icon`
 * Added `Styled.text` to be able to animate `Text`
+* Changed `elevation` formula
 * Changed `animate` parameters from named to "unnamed" and required
 
 ## 0.0.8
