@@ -9,49 +9,17 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 
 ### To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)
 
-## Examples
-#### Showcase app
+### Showcase app
 | [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
 |-|
 |<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif" width="250">|
 
-#### Text
-```dart
-Text('some text')
-  .bold()
-  .fontSize(24)
-  .padding(all: 10)
-  .backgroundColor(Colors.amber)
-  .alignment(Alignment.center);
-```
-"Native" flutter eqivalent
-```dart
-Align(
-  alignment: Alignment.center,
-  child: DecoratedBox(
-    decoration: BoxDecoration(
-      color: Colors.amber,
-    ),
-    child: Padding(
-      padding: EdgeInsets.all(10),
-      child: Text(
-        'some text', 
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  ),
-);
-```
-
-#### Animations
-```dart
-YourWidget
-  ...
-  .backgroundColor(onTapState ? Colors.black : Colors.amber, animate: true)
-  ...
-  .animate(duration: Duration(milliseconds: 1000), curve: Curves.easeOut)
-  .gestures(onTapChange: (state) => setState(() => onTapState = state));
-```
+### Table of contents
+* [Home](https://github.com/ReinBentdal/styled_widget/wiki)
+* [Basic concept](https://github.com/ReinBentdal/styled_widget/wiki/Basic-concept)
+* [Widgets](https://github.com/ReinBentdal/styled_widget/wiki/Widgets)
+* [Animations](https://github.com/ReinBentdal/styled_widget/wiki/Animations)
+* [Examples](https://github.com/ReinBentdal/styled_widget/wiki/Examples)
+  * [styled_widget logo](https://github.com/ReinBentdal/styled_widget/wiki/styled_widget-logo)
+  * [Basic text example](https://github.com/ReinBentdal/styled_widget/wiki/basic-text-example)
+* [Contributing](https://github.com/ReinBentdal/styled_widget/wiki/Contributing)
