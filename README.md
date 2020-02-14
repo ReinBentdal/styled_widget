@@ -9,10 +9,10 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 
 ### To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)
 
-### Showcase app
-| [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
-|-|
-|<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif" width="250">|
+### Showcase
+| [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
+|-|-|
+|<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif"  width="250">|<img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/toggle.gif?raw=true" width="250">|
 
 ### Table of contents
 * [Home](https://github.com/ReinBentdal/styled_widget/wiki)
