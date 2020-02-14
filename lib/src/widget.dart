@@ -392,7 +392,7 @@ extension Styled on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedBorderRadiusContainer(
+          ? _StyledAnimatedClipRRectContainer(
               child: this,
               topLeft: topLeft ?? all ?? 0.0,
               topRight: topRight ?? all ?? 0.0,

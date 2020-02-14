@@ -160,14 +160,14 @@ class _StyledAnimatedTransformContainer extends StatelessWidget {
   }
 }
 
-class _StyledAnimatedBorderRadiusContainer extends StatelessWidget {
+class _StyledAnimatedClipRRectContainer extends StatelessWidget {
   final Widget child;
   final double topLeft;
   final double topRight;
   final double bottomLeft;
   final double bottomRight;
 
-  _StyledAnimatedBorderRadiusContainer({
+  _StyledAnimatedClipRRectContainer({
     this.child,
     this.bottomLeft,
     this.bottomRight,
@@ -180,7 +180,7 @@ class _StyledAnimatedBorderRadiusContainer extends StatelessWidget {
     _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
     assert(
         animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedBorderRadius(
+    return _AnimatedClipRRect(
       duration: animation?.duration,
       curve: animation?.curve,
       topLeft: topLeft,
@@ -563,9 +563,9 @@ class _AnimatedTransformState
   }
 }
 
-class _AnimatedBorderRadius extends ImplicitlyAnimatedWidget {
+class _AnimatedClipRRect extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedBorderRadius({
+  _AnimatedClipRRect({
     Key key,
     this.topLeft,
     this.topRight,
@@ -598,7 +598,7 @@ class _AnimatedBorderRadius extends ImplicitlyAnimatedWidget {
   final double bottomRight;
 
   @override
-  _AnimatedBorderRadiusState createState() => _AnimatedBorderRadiusState();
+  _AnimatedClipRRectState createState() => _AnimatedClipRRectState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -607,8 +607,8 @@ class _AnimatedBorderRadius extends ImplicitlyAnimatedWidget {
   }
 }
 
-class _AnimatedBorderRadiusState
-    extends AnimatedWidgetBaseState<_AnimatedBorderRadius> {
+class _AnimatedClipRRectState
+    extends AnimatedWidgetBaseState<_AnimatedClipRRect> {
   Tween<double> _topLeft;
   Tween<double> _topRight;
   Tween<double> _bottomLeft;
