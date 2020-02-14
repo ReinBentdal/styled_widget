@@ -365,22 +365,24 @@ extension Styled on Widget {
             );
 
   Widget borderRadius({
-        double all,
+    double all,
     double topLeft,
     double topRight,
     double bottomLeft,
     double bottomRight,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-                topRight: Radius.circular(topRight ?? all ?? 0.0),
-                bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-                bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-              ),);
+    BoxDecoration decoration = BoxDecoration(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+        topRight: Radius.circular(topRight ?? all ?? 0.0),
+        bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+        bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+      ),
+    );
     return animate
-      ? _tryMergeAnimatedDecoration(decoration: decoration)
-      : _tryMergeDecoration(decoration: decoration);
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
   }
 
   Widget clipRRect({
@@ -478,7 +480,7 @@ extension Styled on Widget {
   }
 
   double _elevationOpacityCurve(double x) =>
-      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2)+0.2;
+      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2) + 0.2;
 
   Widget elevation(
     double elevation, {
@@ -487,7 +489,7 @@ extension Styled on Widget {
     double opacity = 1.0,
     bool animate = false,
   }) {
-    double calculatedOpacity = _elevationOpacityCurve(elevation)*opacity;
+    double calculatedOpacity = _elevationOpacityCurve(elevation) * opacity;
     BoxDecoration decoration = BoxDecoration(
       boxShadow: [
         BoxShadow(
@@ -499,8 +501,8 @@ extension Styled on Widget {
       ],
     );
     return animate
-      ? _tryMergeAnimatedDecoration(decoration: decoration)
-      : _tryMergeDecoration(decoration: decoration);
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
   }
 
   Widget boxShadow({
