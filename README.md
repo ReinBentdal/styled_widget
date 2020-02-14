@@ -49,7 +49,9 @@ Align(
 #### Animations
 ```dart
 YourWidget
+  ...
   .backgroundColor(onTapState ? Colors.black : Colors.amber, animate: true)
+  ...
   .animate(duration: Duration(milliseconds: 1000), curve: Curves.easeOut)
   .gestures(onTapChange: (state) => setState(() => onTapState = state));
 ```
