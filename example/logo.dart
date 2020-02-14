@@ -6,9 +6,9 @@ void main() => runApp(app);
 final Widget app = MaterialApp(home: Scaffold(body: logo));
 
 final Widget logo = <Widget>[
-  Image
-    .network('https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_472874.png&f=1&nofb=1')
-    .constraints(width: 50),
+  Image.network(
+          'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_472874.png&f=1&nofb=1')
+      .constraints(width: 50),
   Text('styled_widget').bold().fontSize(40),
 ]
     .toRow(mainAxisAlignment: MainAxisAlignment.spaceEvenly)

@@ -364,6 +364,25 @@ extension Styled on Widget {
               child: this,
             );
 
+  // Widget borderRadius({
+  //       double all,
+  //   double topLeft,
+  //   double topRight,
+  //   double bottomLeft,
+  //   double bottomRight,
+  //   bool animate = false,
+  // }) {
+  //   BoxDecoration decoration = BoxDecoration(borderRadius: BorderRadius.only(
+  //               topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+  //               topRight: Radius.circular(topRight ?? all ?? 0.0),
+  //               bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+  //               bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+  //             ),);
+  //   return animate
+  //     ? _tryMergeAnimatedDecoration(decoration: decoration)
+  //     : _tryMergeDecoration(decoration: decoration);
+  // }
+
   Widget borderRadius({
     double all,
     double topLeft,

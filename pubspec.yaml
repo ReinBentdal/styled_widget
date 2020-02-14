@@ -1,6 +1,6 @@
 name: styled_widget
 description: Simplifying your widget tree structure by defining widget using methods.
-version: 0.0.8+1
+version: 0.0.9
 homepage: https://github.com/ReinBentdal/styled_widget
 repository: https://github.com/ReinBentdal/styled_widget
 
