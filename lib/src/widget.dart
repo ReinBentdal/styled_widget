@@ -13,6 +13,74 @@ extension Styled on Widget {
         ),
       );
 
+  static Text text(
+    String data, {
+    TextStyle style,
+    StrutStyle strutStyle,
+    TextAlign textAlign,
+    TextDirection textDirection,
+    Locale locale,
+    bool softWrap,
+    TextOverflow overflow,
+    double textScaleFactor,
+    int maxLines,
+    String semanticsLabel,
+    TextWidthBasis textWidthBasis,
+    bool animate = false,
+  }) =>
+      animate
+          ? _StyledAnimatedTextContainer(
+              data,
+              locale: locale,
+              maxLines: maxLines,
+              overflow: overflow,
+              semanticsLabel: semanticsLabel,
+              softWrap: softWrap,
+              strutStyle: strutStyle,
+              style: style,
+              textAlign: textAlign,
+              textDirection: textDirection,
+              textScaleFactor: textScaleFactor,
+              textWidthBasis: textWidthBasis,
+            )
+          : Text(
+              data,
+              locale: locale,
+              maxLines: maxLines,
+              overflow: overflow,
+              semanticsLabel: semanticsLabel,
+              softWrap: softWrap,
+              strutStyle: strutStyle,
+              style: style,
+              textAlign: textAlign,
+              textDirection: textDirection,
+              textScaleFactor: textScaleFactor,
+              textWidthBasis: textWidthBasis,
+            );
+
+  static Icon icon(IconData icon,
+          {Key key,
+          double size,
+          Color color,
+          String semanticLabel,
+          TextDirection textDirection,
+          bool animate = false}) =>
+      animate
+          ? _StyledAnimatedIconContainer(
+              icon,
+              color: color,
+              size: size,
+              semanticLabel: semanticLabel,
+              textDirection: textDirection,
+            )
+          : Icon(
+              icon,
+              color: color,
+              size: size,
+              semanticLabel: semanticLabel,
+              textDirection: textDirection,
+            );
+
   Widget _tryMergeConstraints({BoxConstraints constraints}) {
     // only merge if the duration and curve is the exact same
     if (this is ConstrainedBox) {
@@ -67,11 +135,7 @@ extension Styled on Widget {
           backgroundBlendMode: decoration?.backgroundBlendMode,
           border: decoration?.border,
           borderRadius: decoration?.borderRadius,
-          // TODO: remove child shadow?
-          boxShadow: [
-            ...decoration?.boxShadow,
-            ...(child.decoration as BoxDecoration)?.boxShadow,
-          ],
+          boxShadow: decoration?.boxShadow,
           gradient: decoration?.gradient,
           image: decoration?.image,
           shape: decoration?.shape,
@@ -101,11 +165,7 @@ extension Styled on Widget {
           backgroundBlendMode: decoration?.backgroundBlendMode,
           border: decoration?.border,
           borderRadius: decoration?.borderRadius,
-          // TODO: remove child shadow?
-          boxShadow: [
-            ...decoration?.boxShadow,
-            ...child.decoration?.boxShadow,
-          ],
+          boxShadow: decoration?.boxShadow,
           gradient: decoration?.gradient,
           image: decoration?.image,
           shape: decoration?.shape,
@@ -120,10 +180,10 @@ extension Styled on Widget {
   }
 
   /// animated all properties before this method
-  Widget animate({
-    @required Duration duration,
-    Curve curve = Curves.linear,
-  }) =>
+  Widget animate(
+    Duration duration,
+    Curve curve,
+  ) =>
       _StyledAnimated(
         animation: _StyledAnimatedModel(duration: duration, curve: curve),
         child: this,
@@ -398,7 +458,8 @@ extension Styled on Widget {
           );
   }
 
-  double _elevationOpacityCurve(x) => pow(x, 1 / 16) / sqrt(pow(x, 2) + 2);
+  double _elevationOpacityCurve(double x) =>
+      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2);
 
   Widget elevation(
     double elevation, {

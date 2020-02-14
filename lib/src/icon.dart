@@ -1,19 +1,29 @@
 part of '../styled_widget.dart';
 
-extension StyledIcon on Icon {
-  Icon copyWith({
+extension StyledIcon<T extends Icon> on T {
+  T copyWith({
     double size,
     Color color,
     String semanticLabel,
     TextDirection textDirection,
   }) =>
-      Icon(this.icon,
-          color: color ?? this.color,
-          size: size ?? this.size,
-          semanticLabel: semanticLabel ?? this.semanticLabel,
-          textDirection: textDirection ?? this.textDirection);
+      this is _StyledAnimatedIconContainer
+          ? _StyledAnimatedIconContainer(
+              this.icon,
+              color: color ?? this.color,
+              size: size ?? this.size,
+              semanticLabel: semanticLabel ?? this.semanticLabel,
+              textDirection: textDirection ?? this.textDirection,
+            )
+          : Icon(
+              this.icon,
+              color: color ?? this.color,
+              size: size ?? this.size,
+              semanticLabel: semanticLabel ?? this.semanticLabel,
+              textDirection: textDirection ?? this.textDirection,
+            );
 
-  Icon iconSize(double size) => this.copyWith(size: size);
+  T iconSize(double size) => this.copyWith(size: size);
 
-  Icon iconColor(Color color) => this.copyWith(color: color);
+  T iconColor(Color color) => this.copyWith(color: color);
 }
