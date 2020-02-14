@@ -1,7 +1,7 @@
 part of '../styled_widget.dart';
 
-extension StyledText on Text {
-  Text copyWith({
+extension StyledText<T extends Text> on T {
+  T copyWith({
     String data,
     TextStyle style,
     StrutStyle strutStyle,
@@ -15,88 +15,82 @@ extension StyledText on Text {
     String semanticsLabel,
     TextWidthBasis textWidthBasis,
   }) =>
-      Text(
-        data ?? this.data,
-        style: style ?? this.style,
-        strutStyle: strutStyle ?? this.strutStyle,
-        textAlign: textAlign ?? this.textAlign,
-        locale: locale ?? this.locale,
-        maxLines: maxLines ?? this.maxLines,
-        overflow: overflow ?? this.overflow,
-        semanticsLabel: semanticsLabel ?? this.semanticsLabel,
-        softWrap: softWrap ?? this.softWrap,
-        textDirection: textDirection ?? this.textDirection,
-        textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-        textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-      );
-
-  Widget animateText(
-          {@required Duration duration, Curve curve = Curves.linear}) =>
-      duration != null
-          ? _AnimatedText(
-              data: this.data,
-              duration: duration,
-              curve: curve,
-              locale: this.locale,
-              maxLines: this.maxLines,
-              overflow: this.overflow,
-              semanticsLabel: this.semanticsLabel,
-              softWrap: this.softWrap,
-              strutStyle: this.strutStyle,
-              style: this.style,
-              textAlign: this.textAlign,
-              textDirection: this.textDirection,
-              textScaleFactor: this.textScaleFactor,
-              textWidthBasis: this.textWidthBasis,
+      this is _StyledAnimatedTextContainer
+          ? _StyledAnimatedTextContainer(
+              data ?? this.data,
+              style: style ?? this.style,
+              strutStyle: strutStyle ?? this.strutStyle,
+              textAlign: textAlign ?? this.textAlign,
+              locale: locale ?? this.locale,
+              maxLines: maxLines ?? this.maxLines,
+              overflow: overflow ?? this.overflow,
+              semanticsLabel: semanticsLabel ?? this.semanticsLabel,
+              softWrap: softWrap ?? this.softWrap,
+              textDirection: textDirection ?? this.textDirection,
+              textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+              textWidthBasis: textWidthBasis ?? this.textWidthBasis,
             )
-          : this;
+          : Text(
+              data ?? this.data,
+              style: style ?? this.style,
+              strutStyle: strutStyle ?? this.strutStyle,
+              textAlign: textAlign ?? this.textAlign,
+              locale: locale ?? this.locale,
+              maxLines: maxLines ?? this.maxLines,
+              overflow: overflow ?? this.overflow,
+              semanticsLabel: semanticsLabel ?? this.semanticsLabel,
+              softWrap: softWrap ?? this.softWrap,
+              textDirection: textDirection ?? this.textDirection,
+              textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+              textWidthBasis: textWidthBasis ?? this.textWidthBasis,
+            );
 
-  Text textScale(double scaleFactor) =>
+  T textScale(double scaleFactor) =>
       this.copyWith(textScaleFactor: scaleFactor);
 
-  Text bold() => this.copyWith(
+  T bold() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontWeight: FontWeight.bold,
         ),
       );
 
-  Text italic() => this.copyWith(
+  T italic() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontStyle: FontStyle.italic,
         ),
       );
 
-  Text fontWeight(FontWeight fontWeight) => this.copyWith(
+  T fontWeight(FontWeight fontWeight) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontWeight: fontWeight,
         ),
       );
 
-  Text fontSize(double size) => this.copyWith(
+  T fontSize(double size) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontSize: size,
         ),
       );
 
-  Text fontFamily(String font) => this.copyWith(
+  T fontFamily(String font) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontFamily: font,
         ),
       );
 
-  Text letterSpacing(double space) => this.copyWith(
+  T letterSpacing(double space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           letterSpacing: space,
         ),
       );
 
-  Text wordSpacing(double space) => this.copyWith(
+  T wordSpacing(double space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           wordSpacing: space,
         ),
       );
 
-  Text textShadow({
+  T textShadow({
     Color color = const Color(0x33000000),
     double blurRadius = 0.0,
     Offset offset = Offset.zero,
@@ -109,18 +103,15 @@ extension StyledText on Text {
               blurRadius: blurRadius,
               offset: offset,
             ),
-            ...this.style?.shadows,
           ],
         ),
       );
 
-  Text textElevation(
+  T textElevation(
     double elevation, {
     double angle = 0.0,
     Color color = const Color(0x33000000),
     double opacityRatio = 1.0,
-    Duration duration,
-    Curve curve = Curves.linear,
   }) {
     double calculatedOpacity = _elevationOpacityCurve(elevation) * opacityRatio;
 
@@ -133,29 +124,28 @@ extension StyledText on Text {
       style: (this.style ?? TextStyle()).copyWith(
         shadows: [
           shadow,
-          ...this.style?.shadows,
         ],
       ),
     );
   }
 
-  Text textColor(Color color) => this.copyWith(
+  T textColor(Color color) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           color: color,
         ),
       );
 
-  Text textAlignment(TextAlign align) => this.copyWith(textAlign: align);
+  T textAlignment(TextAlign align) => this.copyWith(textAlign: align);
 
-  Text textDirection(TextDirection direction) =>
+  T textDirection(TextDirection direction) =>
       this.copyWith(textDirection: direction);
 
-  Text textBaseline(TextBaseline textBaseline) => this.copyWith(
+  T textBaseline(TextBaseline textBaseline) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           textBaseline: textBaseline,
         ),
       );
 
-  Text textWidthBasis(TextWidthBasis textWidthBasis) =>
+  T textWidthBasis(TextWidthBasis textWidthBasis) =>
       this.copyWith(textWidthBasis: textWidthBasis);
 }

@@ -1,12 +1,81 @@
 part of '../styled_widget.dart';
 
+class _StyledAnimatedTextContainer extends Text {
+  final String data;
+  final TextStyle style;
+  final StrutStyle strutStyle;
+  final TextAlign textAlign;
+  final TextDirection textDirection;
+  final Locale locale;
+  final bool softWrap;
+  final TextOverflow overflow;
+  final double textScaleFactor;
+  final int maxLines;
+  final String semanticsLabel;
+  final TextWidthBasis textWidthBasis;
+
+  _StyledAnimatedTextContainer(
+    this.data, {
+    this.locale,
+    this.maxLines,
+    this.overflow,
+    this.semanticsLabel,
+    this.softWrap,
+    this.strutStyle,
+    this.style,
+    this.textAlign,
+    this.textDirection,
+    this.textScaleFactor,
+    this.textWidthBasis,
+  }) : super(
+          data,
+          locale: locale,
+          maxLines: maxLines,
+          overflow: overflow,
+          semanticsLabel: semanticsLabel,
+          softWrap: softWrap,
+          strutStyle: strutStyle,
+          style: style,
+          textAlign: textAlign,
+          textDirection: textDirection,
+          textScaleFactor: textScaleFactor,
+          textWidthBasis: textWidthBasis,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    if (animation == null) {
+      return super.build(context);
+    }
+    // assert(
+    //     animation != null, 'You can`t animate without specifying an animation');
+    return _AnimatedText(
+      data,
+      duration: animation?.duration,
+      curve: animation?.curve,
+      locale: locale,
+      maxLines: maxLines,
+      overflow: overflow,
+      semanticsLabel: semanticsLabel,
+      softWrap: softWrap,
+      strutStyle: strutStyle,
+      style: style,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      textScaleFactor: textScaleFactor,
+      textWidthBasis: textWidthBasis,
+    );
+  }
+}
+
 class _AnimatedText extends ImplicitlyAnimatedWidget {
   /// Creates a container that animates its parameters implicitly.
   ///
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedText({
+  _AnimatedText(
+    this.data, {
     Key key,
-    this.data,
     this.locale,
     this.maxLines,
     this.overflow,

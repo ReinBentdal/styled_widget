@@ -1,3 +1,8 @@
+## 0.0.9
+* Added `Styled.icon` to be able to animate `Icon`
+* Added `Styled.text` to be able to animate `Text`
+* Changed `animate` parameters from named to "unnamed" and required
+
 ## 0.0.8
 * Added `animation` for `backgroundColor`, `backgroundImage`, `backgroundGradient`, `backgroundLinearGradient`, `backgroundRadialGradient`, `backgroundSweepGradient`, `backgroundBlendMode`, `border`, `boxShadow`, `width` and `height`
 * [fix] `transform` animation crashes app
