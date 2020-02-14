@@ -10,7 +10,7 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 ### To read about how this package works and how to use it, visit the [wiki](https://github.com/ReinBentdal/styled_widget/wiki)
 
 ## Examples
-### Showcase app
+#### Showcase app
 | [App designer](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/blob/master/example/homepage_example.dart) |
 |-|
 |<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif" width="250">|
