@@ -19,6 +19,7 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 * [Basic concept](https://github.com/ReinBentdal/styled_widget/wiki/Basic-concept)
 * [Widgets](https://github.com/ReinBentdal/styled_widget/wiki/Widgets)
 * [Animations](https://github.com/ReinBentdal/styled_widget/wiki/Animations)
+* [List of methods](https://github.com/ReinBentdal/styled_widget/wiki/List-of-methods)
 * [Examples](https://github.com/ReinBentdal/styled_widget/wiki/Examples)
   * [styled_widget logo](https://github.com/ReinBentdal/styled_widget/wiki/styled_widget-logo)
   * [Basic text example](https://github.com/ReinBentdal/styled_widget/wiki/basic-text-example)
