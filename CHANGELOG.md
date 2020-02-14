@@ -1,3 +1,7 @@
+## 0.0.8
+* Added `animation` for `backgroundColor`, `backgroundImage`, `backgroundGradient`, `backgroundLinearGradient`, `backgroundRadialGradient`, `backgroundSweepGradient`, `backgroundBlendMode`, `border`, `boxShadow`, `width` and `height`
+* [fix] `transform` animation crashes app
+
 ## 0.0.7
 * Added `animate`
 * Added `border`

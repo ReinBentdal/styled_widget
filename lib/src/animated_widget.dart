@@ -139,8 +139,8 @@ class _StyledAnimatedTransformContainer extends StatelessWidget {
     this.child,
     this.transform,
     this.origin,
-    this.alignment,
-    this.transformHitTests,
+    this.alignment = Alignment.center,
+    this.transformHitTests = true,
   });
 
   @override
@@ -149,7 +149,7 @@ class _StyledAnimatedTransformContainer extends StatelessWidget {
     assert(
         animation != null, 'You can`t animate without specifying an animation');
     return _AnimatedTransform(
-      child: this,
+      child: child,
       transform: transform,
       alignment: alignment,
       origin: origin,

@@ -32,6 +32,26 @@ extension Styled on Widget {
     );
   }
 
+  Widget _tryMergeAnimatedConstraints({BoxConstraints constraints}) {
+    if (this is _StyledAnimatedConstrainedBoxContainer) {
+      return _StyledAnimatedConstrainedBoxContainer(
+        child: (this as _StyledAnimatedConstrainedBoxContainer)?.child,
+        constraints: (this as _StyledAnimatedConstrainedBoxContainer)
+            ?.constraints
+            ?.copyWith(
+              minWidth: constraints?.minWidth,
+              maxWidth: constraints?.maxWidth,
+              minHeight: constraints?.minHeight,
+              maxHeight: constraints?.maxHeight,
+            ),
+      );
+    }
+    return _StyledAnimatedConstrainedBoxContainer(
+      constraints: constraints,
+      child: this,
+    );
+  }
+
   Widget _tryMergeDecoration({
     BoxDecoration decoration,
     DecorationPosition position = DecorationPosition.background,
@@ -41,15 +61,16 @@ extension Styled on Widget {
       DecoratedBox child = this as DecoratedBox;
       return DecoratedBox(
         child: child.child,
-        position: position ?? child?.position,
+        position: position,
         decoration: (child.decoration as BoxDecoration)?.copyWith(
           color: decoration?.color,
           backgroundBlendMode: decoration?.backgroundBlendMode,
           border: decoration?.border,
           borderRadius: decoration?.borderRadius,
+          // TODO: remove child shadow?
           boxShadow: [
             ...decoration?.boxShadow,
-            ...(child.decoration as BoxDecoration)?.boxShadow
+            ...(child.decoration as BoxDecoration)?.boxShadow,
           ],
           gradient: decoration?.gradient,
           image: decoration?.image,
@@ -61,6 +82,40 @@ extension Styled on Widget {
       decoration: decoration,
       position: position,
       child: this,
+    );
+  }
+
+  Widget _tryMergeAnimatedDecoration({
+    BoxDecoration decoration,
+    DecorationPosition position = DecorationPosition.background,
+  }) {
+    if (this is _StyledAnimatedDecorationBoxContainer &&
+        (this as _StyledAnimatedDecorationBoxContainer)?.position == position) {
+      _StyledAnimatedDecorationBoxContainer child =
+          this as _StyledAnimatedDecorationBoxContainer;
+      return _StyledAnimatedDecorationBoxContainer(
+        child: child.child,
+        position: position,
+        decoration: child.decoration?.copyWith(
+          color: decoration?.color,
+          backgroundBlendMode: decoration?.backgroundBlendMode,
+          border: decoration?.border,
+          borderRadius: decoration?.borderRadius,
+          // TODO: remove child shadow?
+          boxShadow: [
+            ...decoration?.boxShadow,
+            ...child.decoration?.boxShadow,
+          ],
+          gradient: decoration?.gradient,
+          image: decoration?.image,
+          shape: decoration?.shape,
+        ),
+      );
+    }
+    return _StyledAnimatedDecorationBoxContainer(
+      child: this,
+      decoration: decoration,
+      position: position,
     );
   }
 
@@ -132,14 +187,20 @@ extension Styled on Widget {
               child: this,
             );
 
-  Widget backgroundColor(Color color) =>
-      _tryMergeDecoration(decoration: BoxDecoration(color: color));
+  Widget backgroundColor(Color color, {bool animate = false}) => animate
+      ? _tryMergeAnimatedDecoration(decoration: BoxDecoration(color: color))
+      : _tryMergeDecoration(decoration: BoxDecoration(color: color));
 
-  Widget backgroundImage(DecorationImage image) =>
-      _tryMergeDecoration(decoration: BoxDecoration(image: image));
+  Widget backgroundImage(DecorationImage image, {bool animate = false}) =>
+      animate
+          ? _tryMergeAnimatedDecoration(decoration: BoxDecoration(image: image))
+          : _tryMergeDecoration(decoration: BoxDecoration(image: image));
 
-  Widget backgroundGradient(Gradient gradient) =>
-      _tryMergeDecoration(decoration: BoxDecoration(gradient: gradient));
+  Widget backgroundGradient(Gradient gradient, {bool animate = false}) =>
+      animate
+          ? _tryMergeAnimatedDecoration(
+              decoration: BoxDecoration(gradient: gradient))
+          : _tryMergeDecoration(decoration: BoxDecoration(gradient: gradient));
 
   Widget backgroundLinearGradient({
     AlignmentGeometry begin = Alignment.centerLeft,
@@ -148,69 +209,83 @@ extension Styled on Widget {
     List<double> stops,
     TileMode tileMode = TileMode.clamp,
     GradientTransform transform,
-  }) =>
-      _tryMergeDecoration(
-          decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: begin,
-          end: end,
-          colors: colors,
-          stops: stops,
-          tileMode: tileMode,
-          transform: transform,
-        ),
-      ));
+    bool animate = false,
+  }) {
+    BoxDecoration decoration = BoxDecoration(
+      gradient: LinearGradient(
+        begin: begin,
+        end: end,
+        colors: colors,
+        stops: stops,
+        tileMode: tileMode,
+        transform: transform,
+      ),
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
+  }
 
-  Widget backgroundRadialGradient({
-    AlignmentGeometry center = Alignment.center,
-    double radius = 0.5,
-    List<Color> colors,
-    List<double> stops,
-    TileMode tileMode = TileMode.clamp,
-    AlignmentGeometry focal,
-    double focalRadius = 0.0,
-    GradientTransform transform,
-  }) =>
-      _tryMergeDecoration(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: center,
-            radius: radius,
-            colors: colors,
-            stops: stops,
-            tileMode: tileMode,
-            focal: focal,
-            focalRadius: focalRadius,
-            transform: transform,
-          ),
-        ),
-      );
+  Widget backgroundRadialGradient(
+      {AlignmentGeometry center = Alignment.center,
+      double radius = 0.5,
+      List<Color> colors,
+      List<double> stops,
+      TileMode tileMode = TileMode.clamp,
+      AlignmentGeometry focal,
+      double focalRadius = 0.0,
+      GradientTransform transform,
+      bool animate = false}) {
+    BoxDecoration decoration = BoxDecoration(
+      gradient: RadialGradient(
+        center: center,
+        radius: radius,
+        colors: colors,
+        stops: stops,
+        tileMode: tileMode,
+        focal: focal,
+        focalRadius: focalRadius,
+        transform: transform,
+      ),
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
+  }
 
-  Widget backgroundSweepGradient({
-    AlignmentGeometry center = Alignment.center,
-    double startAngle = 0.0,
-    double endAngle = pi * 2,
-    List<Color> colors,
-    List<double> stops,
-    TileMode tileMode = TileMode.clamp,
-    GradientTransform transform,
-  }) =>
-      _tryMergeDecoration(
-        decoration: BoxDecoration(
-          gradient: SweepGradient(
-            center: center,
-            startAngle: startAngle,
-            endAngle: endAngle,
-            colors: colors,
-            stops: stops,
-            tileMode: tileMode,
-            transform: transform,
-          ),
-        ),
-      );
+  Widget backgroundSweepGradient(
+      {AlignmentGeometry center = Alignment.center,
+      double startAngle = 0.0,
+      double endAngle = pi * 2,
+      List<Color> colors,
+      List<double> stops,
+      TileMode tileMode = TileMode.clamp,
+      GradientTransform transform,
+      bool animate = false}) {
+    BoxDecoration decoration = BoxDecoration(
+      gradient: SweepGradient(
+        center: center,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        colors: colors,
+        stops: stops,
+        tileMode: tileMode,
+        transform: transform,
+      ),
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
+  }
 
-  Widget backgroundBlendMode(BlendMode blendMode) => _tryMergeDecoration(
-      decoration: BoxDecoration(backgroundBlendMode: blendMode));
+  Widget backgroundBlendMode(BlendMode blendMode, {bool animate = false}) =>
+      animate
+          ? _tryMergeAnimatedDecoration(
+              decoration: BoxDecoration(backgroundBlendMode: blendMode),
+            )
+          : _tryMergeDecoration(
+              decoration: BoxDecoration(backgroundBlendMode: blendMode),
+            );
 
   Widget backgroundBlur(
     double sigma, {
@@ -267,25 +342,28 @@ extension Styled on Widget {
     double bottom,
     Color color = const Color(0xFF000000),
     BorderStyle style = BorderStyle.solid,
-  }) =>
-      _tryMergeDecoration(
-        decoration: BoxDecoration(
-          border: Border(
-            left: (left ?? all) == null
-                ? BorderSide.none
-                : BorderSide(color: color, width: left ?? all, style: style),
-            right: (right ?? all) == null
-                ? BorderSide.none
-                : BorderSide(color: color, width: right ?? all, style: style),
-            top: (top ?? all) == null
-                ? BorderSide.none
-                : BorderSide(color: color, width: top ?? all, style: style),
-            bottom: (bottom ?? all) == null
-                ? BorderSide.none
-                : BorderSide(color: color, width: bottom ?? all, style: style),
-          ),
-        ),
-      );
+    bool animate = false,
+  }) {
+    BoxDecoration decoration = BoxDecoration(
+      border: Border(
+        left: (left ?? all) == null
+            ? BorderSide.none
+            : BorderSide(color: color, width: left ?? all, style: style),
+        right: (right ?? all) == null
+            ? BorderSide.none
+            : BorderSide(color: color, width: right ?? all, style: style),
+        top: (top ?? all) == null
+            ? BorderSide.none
+            : BorderSide(color: color, width: top ?? all, style: style),
+        bottom: (bottom ?? all) == null
+            ? BorderSide.none
+            : BorderSide(color: color, width: bottom ?? all, style: style),
+      ),
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
+  }
 
   Widget decoration({
     Color color,
@@ -298,36 +376,27 @@ extension Styled on Widget {
     BoxShape shape = BoxShape.rectangle,
     DecorationPosition position = DecorationPosition.background,
     bool animate = false,
-  }) =>
-      animate
-          ? _StyledAnimatedDecorationBoxContainer(
-              child: this,
-              position: position,
-              decoration: BoxDecoration(
-                color: color,
-                image: image,
-                border: border,
-                borderRadius: borderRadius,
-                boxShadow: boxShadow,
-                gradient: gradient,
-                backgroundBlendMode: backgroundBlendMode,
-                shape: shape,
-              ),
-            )
-          : DecoratedBox(
-              child: this,
-              position: position,
-              decoration: BoxDecoration(
-                color: color,
-                image: image,
-                border: border,
-                borderRadius: borderRadius,
-                boxShadow: boxShadow,
-                gradient: gradient,
-                backgroundBlendMode: backgroundBlendMode,
-                shape: shape,
-              ),
-            );
+  }) {
+    BoxDecoration decoration = BoxDecoration(
+      color: color,
+      image: image,
+      border: border,
+      borderRadius: borderRadius,
+      boxShadow: boxShadow,
+      gradient: gradient,
+      backgroundBlendMode: backgroundBlendMode,
+      shape: shape,
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(
+            decoration: decoration,
+            position: position,
+          )
+        : _tryMergeDecoration(
+            decoration: decoration,
+            position: position,
+          );
+  }
 
   double _elevationOpacityCurve(x) => pow(x, 1 / 16) / sqrt(pow(x, 2) + 2);
 
@@ -356,18 +425,22 @@ extension Styled on Widget {
     Offset offset = Offset.zero,
     double blurRadius = 0.0,
     double spreadRadius = 0.0,
-  }) =>
-      _tryMergeDecoration(
-          decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: color,
-            blurRadius: blurRadius,
-            spreadRadius: spreadRadius,
-            offset: offset,
-          ),
-        ],
-      ));
+    bool animate = false,
+  }) {
+    BoxDecoration decoration = BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: color,
+          blurRadius: blurRadius,
+          spreadRadius: spreadRadius,
+          offset: offset,
+        ),
+      ],
+    );
+    return animate
+        ? _tryMergeAnimatedDecoration(decoration: decoration)
+        : _tryMergeDecoration(decoration: decoration);
+  }
 
   Widget constraints({
     double width,
@@ -389,29 +462,37 @@ extension Styled on Widget {
             BoxConstraints.tightFor(width: width, height: height)
         : constraints;
     return animate
-        ? _StyledAnimatedConstrainedBoxContainer(
-            child: this,
-            constraints: constraints,
-          )
-        : ConstrainedBox(
-            constraints: constraints,
-            child: this,
-          );
+        ? _tryMergeAnimatedConstraints(constraints: constraints)
+        : _tryMergeConstraints(constraints: constraints);
   }
 
-  Widget width(double width) => _tryMergeConstraints(
-        constraints: BoxConstraints(
-          minWidth: width,
-          maxWidth: width,
-        ),
-      );
+  Widget width(double width, {bool animate = false}) => animate
+      ? _tryMergeAnimatedConstraints(
+          constraints: BoxConstraints(
+            minWidth: width,
+            maxWidth: width,
+          ),
+        )
+      : _tryMergeConstraints(
+          constraints: BoxConstraints(
+            minWidth: width,
+            maxWidth: width,
+          ),
+        );
 
-  Widget height(double height) => _tryMergeConstraints(
-        constraints: BoxConstraints(
-          minHeight: height,
-          maxHeight: height,
-        ),
-      );
+  Widget height(double height, {bool animate = false}) => animate
+      ? _tryMergeAnimatedConstraints(
+          constraints: BoxConstraints(
+            minHeight: height,
+            maxHeight: height,
+          ),
+        )
+      : _tryMergeConstraints(
+          constraints: BoxConstraints(
+            minHeight: height,
+            maxHeight: height,
+          ),
+        );
 
   Widget ripple({
     Color focusColor,

@@ -206,10 +206,7 @@ class _SettingsItemState extends State<SettingsItem> {
         .padding(vertical: 10)
         .gestures(
             onTapChange: (tapStatus) => setState(() => pressed = tapStatus))
-        // .scale(
-        //   pressed ? 0.95 : 1.0,
-        //   animate: true,
-        // )
+        .scale(pressed ? 0.95 : 1.0, animate: true)
         .animate(duration: Duration(milliseconds: 150), curve: Curves.easeOut);
 
     final Widget icon = Icon(widget.icon)
