@@ -21,6 +21,8 @@ If you like the package, consider giving the package a :star: on [GitHub](https:
 * [Animations](https://github.com/ReinBentdal/styled_widget/wiki/Animations)
 * [List of methods](https://github.com/ReinBentdal/styled_widget/wiki/List-of-methods)
 * [Examples](https://github.com/ReinBentdal/styled_widget/wiki/Examples)
+  * [demo app](https://github.com/ReinBentdal/styled_widget/wiki/demo_app)
+  * [toggle animation](https://github.com/ReinBentdal/styled_widget/wiki/toggle)
   * [styled_widget logo](https://github.com/ReinBentdal/styled_widget/wiki/styled_widget-logo)
   * [Basic text example](https://github.com/ReinBentdal/styled_widget/wiki/basic-text-example)
 * [Contributing](https://github.com/ReinBentdal/styled_widget/wiki/Contributing)
