@@ -214,104 +214,117 @@ class _StyledAnimatedBackgroundBlurContainer extends StatelessWidget {
   }
 }
 
-class _StyledAnimatedElevationContainer extends StatelessWidget {
-  final Widget child;
-  final double elevation;
-  final Color shadowColor;
+// class _StyledAnimatedElevationContainer extends StatelessWidget {
+//   final Widget child;
+//   final double elevation;
+//   final Color shadowColor;
+//   final BorderRadiusGeometry borderRadius;
 
-  _StyledAnimatedElevationContainer({
-    this.child,
-    this.elevation,
-    this.shadowColor,
-  });
+//   _StyledAnimatedElevationContainer({
+//     this.child,
+//     this.elevation,
+//     this.shadowColor,
+//     this.borderRadius,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedElevation(
-      duration: animation?.duration,
-      curve: animation?.curve,
-      elevation: elevation,
-      shadowColor: shadowColor,
-      child: child,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+//     assert(
+//         animation != null, 'You can`t animate without specifying an animation');
+//     return _AnimatedElevation(
+//       duration: animation?.duration,
+//       curve: animation?.curve,
+//       elevation: elevation,
+//       shadowColor: shadowColor,
+//       borderRadius: borderRadius,
+//       child: child,
+//     );
+//   }
+// }
 
-class _AnimatedElevation extends ImplicitlyAnimatedWidget {
-  /// The [curve] and [duration] arguments must not be null.
-  _AnimatedElevation({
-    Key key,
-    this.elevation,
-    this.shadowColor,
-    this.child,
-    Curve curve = Curves.linear,
-    @required Duration duration,
-    VoidCallback onEnd,
-  }) : super(
-          key: key,
-          curve: curve,
-          duration: duration,
-          onEnd: onEnd,
-        );
+// class _AnimatedElevation extends ImplicitlyAnimatedWidget {
+//   /// The [curve] and [duration] arguments must not be null.
+//   _AnimatedElevation({
+//     Key key,
+//     this.elevation,
+//     this.shadowColor,
+//     this.child,
+//     this.borderRadius,
+//     Curve curve = Curves.linear,
+//     @required Duration duration,
+//     VoidCallback onEnd,
+//   }) : super(
+//           key: key,
+//           curve: curve,
+//           duration: duration,
+//           onEnd: onEnd,
+//         );
 
-  /// The [child] contained by the container.
-  ///
-  /// If null, and if the [constraints] are unbounded or also null, the
-  /// container will expand to fill all available space in its parent, unless
-  /// the parent provides unbounded constraints, in which case the container
-  /// will attempt to be as small as possible.
-  ///
-  /// {@macro flutter.widgets.child}
-  final Widget child;
+//   /// The [child] contained by the container.
+//   ///
+//   /// If null, and if the [constraints] are unbounded or also null, the
+//   /// container will expand to fill all available space in its parent, unless
+//   /// the parent provides unbounded constraints, in which case the container
+//   /// will attempt to be as small as possible.
+//   ///
+//   /// {@macro flutter.widgets.child}
+//   final Widget child;
 
-  final double elevation;
+//   final double elevation;
 
-  final Color shadowColor;
+//   final Color shadowColor;
 
-  @override
-  _AnimatedElevationState createState() => _AnimatedElevationState();
+//   final BorderRadiusGeometry borderRadius;
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
+//   @override
+//   _AnimatedElevationState createState() => _AnimatedElevationState();
 
-    // TODO: debug [elevation] and [shadowColor]?
-  }
-}
+//   @override
+//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+//     super.debugFillProperties(properties);
 
-class _AnimatedElevationState
-    extends AnimatedWidgetBaseState<_AnimatedElevation> {
-  Tween<double> _elevation;
-  ColorTween _shadowColor;
+//     // TODO: debug [elevation] and [shadowColor]?
+//   }
+// }
 
-  @override
-  void forEachTween(TweenVisitor<dynamic> visitor) {
-    _elevation = visitor(_elevation, widget.elevation,
-        (dynamic value) => Tween<double>(begin: value));
-    _shadowColor = visitor(_shadowColor, widget.shadowColor,
-        (dynamic value) => ColorTween(begin: value));
-  }
+// class _AnimatedElevationState
+//     extends AnimatedWidgetBaseState<_AnimatedElevation> {
+//   Tween<double> _elevation;
+//   ColorTween _shadowColor;
+//   BorderRadiusTween _borderRadius;
 
-  @override
-  Widget build(BuildContext context) {
-    return PhysicalShape(
-      clipper: const ShapeBorderClipper(shape: RoundedRectangleBorder()),
-      color: Colors.transparent,
-      elevation: _elevation?.evaluate(animation),
-      shadowColor: _shadowColor?.evaluate(animation),
-      child: widget.child,
-    );
-  }
+//   @override
+//   void forEachTween(TweenVisitor<dynamic> visitor) {
+//     _elevation = visitor(_elevation, widget.elevation,
+//         (dynamic value) => Tween<double>(begin: value));
+//     _shadowColor = visitor(_shadowColor, widget.shadowColor,
+//         (dynamic value) => ColorTween(begin: value));
+//     _borderRadius = visitor(_borderRadius, widget.borderRadius,
+//         (dynamic value) => BorderRadiusTween(begin: value));
+//   }
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder description) {
-    super.debugFillProperties(description);
-    // TODO: debug shadowColor, elevation
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return PhysicalShape(
+//       clipper: ShapeBorderClipper(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: _borderRadius?.evaluate(animation),
+//         ),
+//       ),
+//       color: Colors.transparent,
+//       elevation: _elevation?.evaluate(animation),
+//       shadowColor: _shadowColor?.evaluate(animation),
+//       child: widget.child,
+//     );
+//   }
+
+//   @override
+//   void debugFillProperties(DiagnosticPropertiesBuilder description) {
+//     super.debugFillProperties(description);
+//     // TODO: debug shadowColor, elevation
+//   }
+// }
 
 class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.

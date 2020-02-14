@@ -364,26 +364,26 @@ extension Styled on Widget {
               child: this,
             );
 
-  // Widget borderRadius({
-  //       double all,
-  //   double topLeft,
-  //   double topRight,
-  //   double bottomLeft,
-  //   double bottomRight,
-  //   bool animate = false,
-  // }) {
-  //   BoxDecoration decoration = BoxDecoration(borderRadius: BorderRadius.only(
-  //               topLeft: Radius.circular(topLeft ?? all ?? 0.0),
-  //               topRight: Radius.circular(topRight ?? all ?? 0.0),
-  //               bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
-  //               bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
-  //             ),);
-  //   return animate
-  //     ? _tryMergeAnimatedDecoration(decoration: decoration)
-  //     : _tryMergeDecoration(decoration: decoration);
-  // }
-
   Widget borderRadius({
+        double all,
+    double topLeft,
+    double topRight,
+    double bottomLeft,
+    double bottomRight,
+    bool animate = false,
+  }) {
+    BoxDecoration decoration = BoxDecoration(borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(topLeft ?? all ?? 0.0),
+                topRight: Radius.circular(topRight ?? all ?? 0.0),
+                bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
+                bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+              ),);
+    return animate
+      ? _tryMergeAnimatedDecoration(decoration: decoration)
+      : _tryMergeDecoration(decoration: decoration);
+  }
+
+  Widget clipRRect({
     double all,
     double topLeft,
     double topRight,
@@ -478,27 +478,30 @@ extension Styled on Widget {
   }
 
   double _elevationOpacityCurve(double x) =>
-      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2);
+      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2)+0.2;
 
   Widget elevation(
     double elevation, {
-    Color shadowColor = const Color(0xFF000000),
+    double angle = 0.0,
+    Color shadowColor = const Color(0x33000000),
+    double opacity = 1.0,
     bool animate = false,
-  }) =>
-      animate
-          ? _StyledAnimatedElevationContainer(
-              child: this,
-              elevation: elevation,
-              shadowColor: shadowColor,
-            )
-          : PhysicalShape(
-              clipper:
-                  const ShapeBorderClipper(shape: RoundedRectangleBorder()),
-              color: Colors.transparent,
-              elevation: elevation,
-              shadowColor: shadowColor,
-              child: this,
-            );
+  }) {
+    double calculatedOpacity = _elevationOpacityCurve(elevation)*opacity;
+    BoxDecoration decoration = BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: shadowColor.withOpacity(calculatedOpacity),
+          blurRadius: elevation,
+          spreadRadius: 0.0,
+          offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
+        ),
+      ],
+    );
+    return animate
+      ? _tryMergeAnimatedDecoration(decoration: decoration)
+      : _tryMergeDecoration(decoration: decoration);
+  }
 
   Widget boxShadow({
     Color color = const Color(0xFF000000),
