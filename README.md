@@ -1,5 +1,7 @@
 <p align="center" >
-  <img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/styled_widget.jpg?raw=true" height="150" />
+  <a href="https://pub.dev/packages/styled_widget">
+    <img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/styled_widget.jpg?raw=true" height="150" />
+  </a>
 </p>
 
 <br />
