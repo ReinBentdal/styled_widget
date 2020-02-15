@@ -593,24 +593,20 @@ extension Styled on Widget {
     bool canRequestFocus = true,
     bool autoFocus = false,
   }) =>
-      Material(
-        color: Colors.transparent,
-        child: InkWell(
-          focusColor: focusColor,
-          hoverColor: hoverColor,
-          highlightColor: highlightColor,
-          splashColor: splashColor,
-          splashFactory: splashFactory,
-          radius: radius,
-          customBorder: customBorder,
-          enableFeedback: enableFeedback,
-          excludeFromSemantics: excludeFromSemantics,
-          focusNode: focusNode,
-          canRequestFocus: canRequestFocus,
-          autofocus: autoFocus,
-          onTap: () {},
-          child: this,
-        ),
+      _StyledRipple(
+        child: this,
+        focusColor: focusColor,
+        hoverColor: hoverColor,
+        highlightColor: highlightColor,
+        splashColor: splashColor,
+        splashFactory: splashFactory,
+        radius: radius,
+        customBorder: customBorder,
+        enableFeedback: enableFeedback,
+        excludeFromSemantics: excludeFromSemantics,
+        focusNode: focusNode,
+        canRequestFocus: canRequestFocus,
+        autoFocus: autoFocus,
       );
 
   // TODO: RotatedBox
@@ -764,51 +760,112 @@ extension Styled on Widget {
     bool excludeFromSemantics = false,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
-      GestureDetector(
-        onTapDown: (TapDownDetails tapDownDetails) {
-          if (onTapDown != null) onTapDown(tapDownDetails);
-          if (onTapChange != null) onTapChange(true);
-        },
-        onTapUp: (TapUpDetails tapUpDetails) {
-          if (onTapUp != null) onTapUp(tapUpDetails);
-          if (onTapChange != null) onTapChange(false);
-        },
-        onTapCancel: () {
-          if (onTapCancel != null) onTapCancel();
-          if (onTapChange != null) onTapChange(false);
-        },
-        onTap: onTap,
-        onDoubleTap: onDoubleTap,
-        onLongPress: onLongPress,
-        onLongPressStart: onLongPressStart,
-        onLongPressEnd: onLongPressEnd,
-        onLongPressMoveUpdate: onLongPressMoveUpdate,
-        onLongPressUp: onLongPressUp,
-        onVerticalDragStart: onVerticalDragStart,
-        onVerticalDragEnd: onVerticalDragEnd,
-        onVerticalDragDown: onVerticalDragDown,
-        onVerticalDragCancel: onVerticalDragCancel,
-        onVerticalDragUpdate: onVerticalDragUpdate,
-        onHorizontalDragStart: onHorizontalDragStart,
-        onHorizontalDragEnd: onHorizontalDragEnd,
-        onHorizontalDragCancel: onHorizontalDragCancel,
-        onHorizontalDragUpdate: onHorizontalDragUpdate,
-        onHorizontalDragDown: onHorizontalDragDown,
-        onForcePressStart: onForcePressStart,
-        onForcePressEnd: onForcePressEnd,
-        onForcePressPeak: onForcePressPeak,
-        onForcePressUpdate: onForcePressUpdate,
-        onPanStart: onPanStart,
-        onPanEnd: onPanEnd,
-        onPanCancel: onPanCancel,
-        onPanDown: onPanDown,
-        onPanUpdate: onPanUpdate,
-        onScaleStart: onScaleStart,
-        onScaleEnd: onScaleEnd,
-        onScaleUpdate: onScaleUpdate,
-        behavior: behavior,
-        excludeFromSemantics: excludeFromSemantics,
-        dragStartBehavior: dragStartBehavior,
-        child: this,
+      _StyledGestureDetector(// exposes the onTap method to children with [InheritedWidget]
+        gestureDetector: GestureDetector(
+          onTapDown: (TapDownDetails tapDownDetails) {
+            if (onTapDown != null) onTapDown(tapDownDetails);
+            if (onTapChange != null) onTapChange(true);
+          },
+          onTapUp: (TapUpDetails tapUpDetails) {
+            if (onTapUp != null) onTapUp(tapUpDetails);
+            if (onTapChange != null) onTapChange(false);
+          },
+          onTapCancel: () {
+            if (onTapCancel != null) onTapCancel();
+            if (onTapChange != null) onTapChange(false);
+          },
+          onTap: onTap,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressEnd: onLongPressEnd,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onVerticalDragStart: onVerticalDragStart,
+          onVerticalDragEnd: onVerticalDragEnd,
+          onVerticalDragDown: onVerticalDragDown,
+          onVerticalDragCancel: onVerticalDragCancel,
+          onVerticalDragUpdate: onVerticalDragUpdate,
+          onHorizontalDragStart: onHorizontalDragStart,
+          onHorizontalDragEnd: onHorizontalDragEnd,
+          onHorizontalDragCancel: onHorizontalDragCancel,
+          onHorizontalDragUpdate: onHorizontalDragUpdate,
+          onHorizontalDragDown: onHorizontalDragDown,
+          onForcePressStart: onForcePressStart,
+          onForcePressEnd: onForcePressEnd,
+          onForcePressPeak: onForcePressPeak,
+          onForcePressUpdate: onForcePressUpdate,
+          onPanStart: onPanStart,
+          onPanEnd: onPanEnd,
+          onPanCancel: onPanCancel,
+          onPanDown: onPanDown,
+          onPanUpdate: onPanUpdate,
+          onScaleStart: onScaleStart,
+          onScaleEnd: onScaleEnd,
+          onScaleUpdate: onScaleUpdate,
+          behavior: behavior,
+          excludeFromSemantics: excludeFromSemantics,
+          dragStartBehavior: dragStartBehavior,
+          child: this,
+        ),
       );
+}
+
+class _StyledRipple extends StatelessWidget {
+  final Widget child;
+  final Color focusColor;
+  final Color hoverColor;
+  final Color highlightColor;
+  final Color splashColor;
+  final InteractiveInkFeatureFactory splashFactory;
+  final double radius;
+  final ShapeBorder customBorder;
+  final bool enableFeedback;
+  final bool excludeFromSemantics;
+  final FocusNode focusNode;
+  final bool canRequestFocus;
+  final bool autoFocus;
+  _StyledRipple({
+    this.child,
+    this.focusColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.splashColor,
+    this.splashFactory,
+    this.radius,
+    this.customBorder,
+    this.enableFeedback = true,
+    this.excludeFromSemantics = false,
+    this.focusNode,
+    this.canRequestFocus = true,
+    this.autoFocus = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    GestureDetector gestureDetector = _StyledGestureDetector.of(context)?.gestureDetector;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        focusColor: focusColor,
+        hoverColor: hoverColor,
+        highlightColor: highlightColor,
+        splashColor: splashColor,
+        splashFactory: splashFactory,
+        radius: radius,
+        customBorder: customBorder,
+        enableFeedback: enableFeedback,
+        excludeFromSemantics: excludeFromSemantics,
+        focusNode: focusNode,
+        canRequestFocus: canRequestFocus,
+        autofocus: autoFocus,
+        onTap: gestureDetector?.onTap ?? () {},
+        onDoubleTap: gestureDetector?.onDoubleTap,
+        onTapCancel: gestureDetector?.onTapCancel,
+        onTapDown: gestureDetector?.onTapDown,
+        onLongPress: gestureDetector?.onLongPress,
+        child: child,
+      ),
+    );
+  }
 }
