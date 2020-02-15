@@ -14,8 +14,7 @@
 
 <br />
 
-Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget trees in a more effiient way. `styled_widget` aims to make the code both more readable and easier to make it easier to focus on the style!
-
+Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget tree\`s more readable and efficient. It is therefore much easier to focus on the actual design of your app.
 ```dart
 final Widget button = Text('button')
   .bold()
