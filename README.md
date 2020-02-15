@@ -14,6 +14,16 @@
 
 <br />
 
+Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget trees in a more effiient way. `styled_widget` aims to make the code both more readable and easier to make it easier to focus on the style!
+
+```dart
+final Widget button = Text('button')
+  .bold()
+  .padding(all: 5)
+  .backgroundColor(Colors.amber)
+  .borderRadius(all: 3);
+```
+
 ### Showcase
 | [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
 |-|-|
