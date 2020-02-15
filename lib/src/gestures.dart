@@ -2,9 +2,10 @@ part of '../styled_widget.dart';
 
 class _StyledGestureDetector extends InheritedWidget {
   final GestureDetector gestureDetector;
-  _StyledGestureDetector({this.gestureDetector}) : super(child: gestureDetector);
+  _StyledGestureDetector({this.gestureDetector})
+      : super(child: gestureDetector);
 
-    @override
+  @override
   bool updateShouldNotify(_StyledGestureDetector oldAnimation) =>
       gestureDetector != oldAnimation?.gestureDetector;
 

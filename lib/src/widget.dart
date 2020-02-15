@@ -760,7 +760,8 @@ extension Styled on Widget {
     bool excludeFromSemantics = false,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
-      _StyledGestureDetector(// exposes the onTap method to children with [InheritedWidget]
+      _StyledGestureDetector(
+        // exposes the onTap method to children with [InheritedWidget]
         gestureDetector: GestureDetector(
           onTapDown: (TapDownDetails tapDownDetails) {
             if (onTapDown != null) onTapDown(tapDownDetails);
@@ -843,7 +844,8 @@ class _StyledRipple extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GestureDetector gestureDetector = _StyledGestureDetector.of(context)?.gestureDetector;
+    GestureDetector gestureDetector =
+        _StyledGestureDetector.of(context)?.gestureDetector;
     return Material(
       color: Colors.transparent,
       child: InkWell(

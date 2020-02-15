@@ -1,3 +1,6 @@
+## 0.1.0+1
+* Fixed gestures not working with `ripple`
+
 ## 0.1.0
 * Added `Styled.icon` to be able to animate `Icon`
 * Added `Styled.text` to be able to animate `Text`
