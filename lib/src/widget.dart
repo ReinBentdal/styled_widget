@@ -864,7 +864,7 @@ class _StyledRipple extends StatelessWidget {
         onTap: gestureDetector?.onTap ?? () {},
         onDoubleTap: gestureDetector?.onDoubleTap,
         onTapCancel: gestureDetector?.onTapCancel,
-        onTapDown: gestureDetector?.onTapDown,
+        // onTapDown: gestureDetector?.onTapDown,
         onLongPress: gestureDetector?.onLongPress,
         child: child,
       ),
