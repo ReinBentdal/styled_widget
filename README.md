@@ -7,7 +7,7 @@
 <br />
 
 <p align="center" >
-  <strong>Simplifying your widget tree structure by defining widget using methods.</strong>
+  <strong>Simplifying your widget tree structure by defining widgets using methods.</strong>
   <br />
   <br />
   <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget?color=blue" /></a>&nbsp;&nbsp;
