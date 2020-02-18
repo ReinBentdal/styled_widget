@@ -1,4 +1,4 @@
-part of '../styled_widget.dart';
+part of '../../styled_widget.dart';
 
 extension StyledList<E> on List<Widget> {
   Widget toColumn({

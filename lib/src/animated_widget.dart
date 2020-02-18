@@ -166,6 +166,8 @@ class _StyledAnimatedClipRRectContainer extends StatelessWidget {
   final double topRight;
   final double bottomLeft;
   final double bottomRight;
+  final CustomClipper<RRect> clipper;
+  final Clip clipBehavior;
 
   _StyledAnimatedClipRRectContainer({
     this.child,
@@ -173,6 +175,8 @@ class _StyledAnimatedClipRRectContainer extends StatelessWidget {
     this.bottomRight,
     this.topLeft,
     this.topRight,
+    this.clipBehavior,
+    this.clipper,
   });
 
   @override
@@ -187,6 +191,8 @@ class _StyledAnimatedClipRRectContainer extends StatelessWidget {
       topRight: topRight,
       bottomLeft: bottomLeft,
       bottomRight: bottomRight,
+      clipper: clipper,
+      clipBehavior: clipBehavior,
       child: child,
     );
   }
@@ -213,118 +219,6 @@ class _StyledAnimatedBackgroundBlurContainer extends StatelessWidget {
     );
   }
 }
-
-// class _StyledAnimatedElevationContainer extends StatelessWidget {
-//   final Widget child;
-//   final double elevation;
-//   final Color shadowColor;
-//   final BorderRadiusGeometry borderRadius;
-
-//   _StyledAnimatedElevationContainer({
-//     this.child,
-//     this.elevation,
-//     this.shadowColor,
-//     this.borderRadius,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-//     assert(
-//         animation != null, 'You can`t animate without specifying an animation');
-//     return _AnimatedElevation(
-//       duration: animation?.duration,
-//       curve: animation?.curve,
-//       elevation: elevation,
-//       shadowColor: shadowColor,
-//       borderRadius: borderRadius,
-//       child: child,
-//     );
-//   }
-// }
-
-// class _AnimatedElevation extends ImplicitlyAnimatedWidget {
-//   /// The [curve] and [duration] arguments must not be null.
-//   _AnimatedElevation({
-//     Key key,
-//     this.elevation,
-//     this.shadowColor,
-//     this.child,
-//     this.borderRadius,
-//     Curve curve = Curves.linear,
-//     @required Duration duration,
-//     VoidCallback onEnd,
-//   }) : super(
-//           key: key,
-//           curve: curve,
-//           duration: duration,
-//           onEnd: onEnd,
-//         );
-
-//   /// The [child] contained by the container.
-//   ///
-//   /// If null, and if the [constraints] are unbounded or also null, the
-//   /// container will expand to fill all available space in its parent, unless
-//   /// the parent provides unbounded constraints, in which case the container
-//   /// will attempt to be as small as possible.
-//   ///
-//   /// {@macro flutter.widgets.child}
-//   final Widget child;
-
-//   final double elevation;
-
-//   final Color shadowColor;
-
-//   final BorderRadiusGeometry borderRadius;
-
-//   @override
-//   _AnimatedElevationState createState() => _AnimatedElevationState();
-
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-//     super.debugFillProperties(properties);
-
-//     // TODO: debug [elevation] and [shadowColor]?
-//   }
-// }
-
-// class _AnimatedElevationState
-//     extends AnimatedWidgetBaseState<_AnimatedElevation> {
-//   Tween<double> _elevation;
-//   ColorTween _shadowColor;
-//   BorderRadiusTween _borderRadius;
-
-//   @override
-//   void forEachTween(TweenVisitor<dynamic> visitor) {
-//     _elevation = visitor(_elevation, widget.elevation,
-//         (dynamic value) => Tween<double>(begin: value));
-//     _shadowColor = visitor(_shadowColor, widget.shadowColor,
-//         (dynamic value) => ColorTween(begin: value));
-//     _borderRadius = visitor(_borderRadius, widget.borderRadius,
-//         (dynamic value) => BorderRadiusTween(begin: value));
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return PhysicalShape(
-//       clipper: ShapeBorderClipper(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: _borderRadius?.evaluate(animation),
-//         ),
-//       ),
-//       color: Colors.transparent,
-//       elevation: _elevation?.evaluate(animation),
-//       shadowColor: _shadowColor?.evaluate(animation),
-//       child: widget.child,
-//     );
-//   }
-
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder description) {
-//     super.debugFillProperties(description);
-//     // TODO: debug shadowColor, elevation
-//   }
-// }
 
 class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.
@@ -571,6 +465,8 @@ class _AnimatedClipRRect extends ImplicitlyAnimatedWidget {
     this.topRight,
     this.bottomLeft,
     this.bottomRight,
+    this.clipper,
+    this.clipBehavior,
     this.child,
     Curve curve = Curves.linear,
     @required Duration duration,
@@ -596,6 +492,8 @@ class _AnimatedClipRRect extends ImplicitlyAnimatedWidget {
   final double topRight;
   final double bottomLeft;
   final double bottomRight;
+  final CustomClipper<RRect> clipper;
+  final Clip clipBehavior;
 
   @override
   _AnimatedClipRRectState createState() => _AnimatedClipRRectState();
@@ -630,6 +528,8 @@ class _AnimatedClipRRectState
   Widget build(BuildContext context) {
     return ClipRRect(
       child: widget.child,
+      clipper: widget.clipper,
+      clipBehavior: widget.clipBehavior,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(_topLeft.evaluate(animation)),
         topRight: Radius.circular(_topRight.evaluate(animation)),

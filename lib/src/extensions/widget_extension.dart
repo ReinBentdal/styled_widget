@@ -1,86 +1,8 @@
-part of '../styled_widget.dart';
+part of '../../styled_widget.dart';
 
 typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
-extension Styled on Widget {
-  static Widget widget({Widget child}) =>
-      child ??
-      LimitedBox(
-        maxWidth: 0.0,
-        maxHeight: 0.0,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-        ),
-      );
-
-  static Text text(
-    String data, {
-    TextStyle style,
-    StrutStyle strutStyle,
-    TextAlign textAlign,
-    TextDirection textDirection,
-    Locale locale,
-    bool softWrap,
-    TextOverflow overflow,
-    double textScaleFactor,
-    int maxLines,
-    String semanticsLabel,
-    TextWidthBasis textWidthBasis,
-    bool animate = false,
-  }) =>
-      animate
-          ? _StyledAnimatedTextContainer(
-              data,
-              locale: locale,
-              maxLines: maxLines,
-              overflow: overflow,
-              semanticsLabel: semanticsLabel,
-              softWrap: softWrap,
-              strutStyle: strutStyle,
-              style: style,
-              textAlign: textAlign,
-              textDirection: textDirection,
-              textScaleFactor: textScaleFactor,
-              textWidthBasis: textWidthBasis,
-            )
-          : Text(
-              data,
-              locale: locale,
-              maxLines: maxLines,
-              overflow: overflow,
-              semanticsLabel: semanticsLabel,
-              softWrap: softWrap,
-              strutStyle: strutStyle,
-              style: style,
-              textAlign: textAlign,
-              textDirection: textDirection,
-              textScaleFactor: textScaleFactor,
-              textWidthBasis: textWidthBasis,
-            );
-
-  static Icon icon(IconData icon,
-          {Key key,
-          double size,
-          Color color,
-          String semanticLabel,
-          TextDirection textDirection,
-          bool animate = false}) =>
-      animate
-          ? _StyledAnimatedIconContainer(
-              icon,
-              color: color,
-              size: size,
-              semanticLabel: semanticLabel,
-              textDirection: textDirection,
-            )
-          : Icon(
-              icon,
-              color: color,
-              size: size,
-              semanticLabel: semanticLabel,
-              textDirection: textDirection,
-            );
-
+extension StyledWidget on Widget {
   Widget _tryMergeConstraints({BoxConstraints constraints}) {
     // only merge if the duration and curve is the exact same
     if (this is ConstrainedBox) {
@@ -391,11 +313,15 @@ extension Styled on Widget {
     double topRight,
     double bottomLeft,
     double bottomRight,
+    CustomClipper<RRect> clipper,
+    Clip clipBehavior = Clip.antiAlias,
     bool animate = false,
   }) =>
       animate
           ? _StyledAnimatedClipRRectContainer(
               child: this,
+              clipper: clipper,
+              clipBehavior: clipBehavior,
               topLeft: topLeft ?? all ?? 0.0,
               topRight: topRight ?? all ?? 0.0,
               bottomLeft: bottomLeft ?? all ?? 0.0,
@@ -403,6 +329,8 @@ extension Styled on Widget {
             )
           : ClipRRect(
               child: this,
+              clipper: clipper ?? null,
+              clipBehavior: clipBehavior ?? null,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
                 topRight: Radius.circular(topRight ?? all ?? 0.0),
@@ -410,6 +338,16 @@ extension Styled on Widget {
                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
               ),
             );
+
+  Widget clipRect({
+    CustomClipper<Rect> clipper,
+    Clip clipBehavior = Clip.hardEdge,
+  }) =>
+      ClipRect(
+        clipper: clipper,
+        clipBehavior: clipBehavior,
+        child: this,
+      );
 
   Widget clipOval() => ClipOval(
         child: this,

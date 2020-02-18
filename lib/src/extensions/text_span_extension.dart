@@ -1,52 +1,45 @@
-part of '../styled_widget.dart';
+part of '../../styled_widget.dart';
 
-extension StyledText<T extends Text> on T {
-  T copyWith({
-    String data,
+extension StyledTextSpan<T extends TextSpan> on T {
+  TextSpan copyWith({
     TextStyle style,
-    StrutStyle strutStyle,
-    TextAlign textAlign,
-    TextDirection textDirection,
-    Locale locale,
-    bool softWrap,
-    TextOverflow overflow,
-    double textScaleFactor,
-    int maxLines,
+    GestureRecognizer recognizer,
     String semanticsLabel,
-    TextWidthBasis textWidthBasis,
   }) =>
-      this is _StyledAnimatedTextContainer
-          ? _StyledAnimatedTextContainer(
-              data ?? this.data,
-              style: style ?? this.style,
-              strutStyle: strutStyle ?? this.strutStyle,
-              textAlign: textAlign ?? this.textAlign,
-              locale: locale ?? this.locale,
-              maxLines: maxLines ?? this.maxLines,
-              overflow: overflow ?? this.overflow,
-              semanticsLabel: semanticsLabel ?? this.semanticsLabel,
-              softWrap: softWrap ?? this.softWrap,
-              textDirection: textDirection ?? this.textDirection,
-              textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-              textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-            )
-          : Text(
-              data ?? this.data,
-              style: style ?? this.style,
-              strutStyle: strutStyle ?? this.strutStyle,
-              textAlign: textAlign ?? this.textAlign,
-              locale: locale ?? this.locale,
-              maxLines: maxLines ?? this.maxLines,
-              overflow: overflow ?? this.overflow,
-              semanticsLabel: semanticsLabel ?? this.semanticsLabel,
-              softWrap: softWrap ?? this.softWrap,
-              textDirection: textDirection ?? this.textDirection,
-              textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-              textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-            );
+      TextSpan(
+        text: this.text,
+        children: this.children,
+        style: style ?? this.style,
+        recognizer: recognizer ?? this.recognizer,
+        semanticsLabel: semanticsLabel ?? this.semanticsLabel,
+      );
 
-  T textScale(double scaleFactor) =>
-      this.copyWith(textScaleFactor: scaleFactor);
+  T textStyle(TextStyle style) => this.copyWith(
+        style: this.style.copyWith(
+              background: style?.background,
+              backgroundColor: style?.backgroundColor,
+              color: style?.color,
+              debugLabel: style?.debugLabel,
+              decoration: style?.decoration,
+              decorationColor: style?.decorationColor,
+              decorationStyle: style?.decorationStyle,
+              decorationThickness: style?.decorationThickness,
+              fontFamily: style?.fontFamily,
+              fontFamilyFallback: style?.fontFamilyFallback,
+              fontFeatures: style?.fontFeatures,
+              fontSize: style?.fontSize,
+              fontStyle: style?.fontStyle,
+              fontWeight: style?.fontWeight,
+              foreground: style?.foreground,
+              height: style?.height,
+              inherit: style?.inherit,
+              letterSpacing: style?.letterSpacing,
+              locale: style?.locale,
+              shadows: style?.shadows,
+              textBaseline: style?.textBaseline,
+              wordSpacing: style?.wordSpacing,
+            ),
+      );
 
   T bold() => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
@@ -107,6 +100,9 @@ extension StyledText<T extends Text> on T {
         ),
       );
 
+  double _elevationOpacityCurve(double x) =>
+      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2) + 0.2;
+
   T textElevation(
     double elevation, {
     double angle = 0.0,
@@ -135,17 +131,9 @@ extension StyledText<T extends Text> on T {
         ),
       );
 
-  T textAlignment(TextAlign align) => this.copyWith(textAlign: align);
-
-  T textDirection(TextDirection direction) =>
-      this.copyWith(textDirection: direction);
-
   T textBaseline(TextBaseline textBaseline) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           textBaseline: textBaseline,
         ),
       );
-
-  T textWidthBasis(TextWidthBasis textWidthBasis) =>
-      this.copyWith(textWidthBasis: textWidthBasis);
 }

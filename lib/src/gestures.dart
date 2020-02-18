@@ -1,5 +1,6 @@
 part of '../styled_widget.dart';
 
+// TODO: InheritedWidget performance
 class _StyledGestureDetector extends InheritedWidget {
   final GestureDetector gestureDetector;
   _StyledGestureDetector({this.gestureDetector})

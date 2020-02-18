@@ -8,12 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 
-part 'src/widget.dart';
-part 'src/text.dart';
-part 'src/text_span.dart';
-part 'src/list.dart';
-part 'src/icon.dart';
+part 'src/extensions/widget_extension.dart';
+part 'src/extensions/text_extension.dart';
+part 'src/extensions/text_span_extension.dart';
+part 'src/extensions/list_extension.dart';
+part 'src/extensions/icon_extension.dart';
+
 part 'src/animated_widget.dart';
 part 'src/animated_text.dart';
 part 'src/animated_icon.dart';
+
 part 'src/gestures.dart';
+part 'src/Styled.dart';

@@ -1,4 +1,10 @@
-## 0.1.0+1
+## 0.1.1
+* Added `textStyle` method to `Text` and `TextSpan`
+* `TextSpan` methods updated to match `Text` methods
+* Added `clipRect`
+* Added `clipper` and `clipBehavior` to `clipRRect`
+
+## 0.1.0+2
 * Fixed gestures not working with `ripple`
 
 ## 0.1.0

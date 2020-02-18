@@ -1,4 +1,4 @@
-part of '../styled_widget.dart';
+part of '../../styled_widget.dart';
 
 extension StyledIcon<T extends Icon> on T {
   T copyWith({
