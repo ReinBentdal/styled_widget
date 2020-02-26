@@ -633,15 +633,31 @@ extension StyledWidget on Widget {
               child: this,
             );
 
-  Widget overflow() => OverflowBox();
+  // TODO: animate
+  OverflowBox overflow({
+    AlignmentGeometry alignment = Alignment.center,
+    double minWidth,
+    double maxWidth,
+    double minHeight,
+    double maxHeight,
+  }) =>
+      OverflowBox(
+        alignment: alignment,
+        minWidth: minWidth,
+        maxWidth: minWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight,
+        child: this,
+      );
 
-  Widget scrollable(
-          {Axis scrollDirection = Axis.vertical,
-          bool reverse = false,
-          bool primary,
-          ScrollPhysics physics,
-          ScrollController controller,
-          DragStartBehavior dragStartBehavior = DragStartBehavior.start}) =>
+  SingleChildScrollView scrollable({
+    Axis scrollDirection = Axis.vertical,
+    bool reverse = false,
+    bool primary,
+    ScrollPhysics physics,
+    ScrollController controller,
+    DragStartBehavior dragStartBehavior = DragStartBehavior.start,
+  }) =>
       SingleChildScrollView(
         child: this,
         scrollDirection: scrollDirection,
@@ -652,7 +668,43 @@ extension StyledWidget on Widget {
         dragStartBehavior: dragStartBehavior,
       );
 
-  Widget semanticsLabel(String label) => Semantics.fromProperties(
+  Expanded expanded({
+    int flex = 1,
+  }) =>
+      Expanded(
+        child: this,
+        flex: flex,
+      );
+
+  Positioned positioned(
+          {double left,
+          double top,
+          double right,
+          double bottom,
+          double width,
+          double height,
+          bool animate = false}) =>
+      animate
+          ? _StyledAnimatedOPositionedContainer(
+              child: this,
+              left: left,
+              top: top,
+              right: right,
+              bottom: bottom,
+              width: width,
+              height: height,
+            )
+          : Positioned(
+              child: this,
+              left: left,
+              top: top,
+              right: right,
+              bottom: bottom,
+              width: width,
+              height: height,
+            );
+
+  Semantics semanticsLabel(String label) => Semantics.fromProperties(
         properties: SemanticsProperties(label: label),
         child: this,
       );

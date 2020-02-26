@@ -1,3 +1,7 @@
+## 0.1.2
+* Added `expanded` as `Widget` extension method
+* Added `positioned` as `Widget` extension method
+
 ## 0.1.1
 * Added `textStyle` method to `Text` and `TextSpan`
 * `TextSpan` methods updated to match `Text` methods

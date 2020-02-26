@@ -23,6 +23,39 @@ class _StyledAnimated extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<_StyledAnimated>();
 }
 
+class _StyledAnimatedOPositionedContainer extends StatelessWidget {
+  final Widget child;
+  final double left, top, right, bottom, width, height;
+
+  _StyledAnimatedOPositionedContainer({
+    this.child,
+    this.left,
+    this.top,
+    this.right,
+    this.bottom,
+    this.width,
+    this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return AnimatedPositioned(
+      child: child,
+      left: left,
+      top: top,
+      right: right,
+      bottom: bottom,
+      width: width,
+      height: height,
+      duration: animation?.duration,
+      curve: animation?.curve,
+    );
+  }
+}
+
 class _StyledAnimatedPaddingContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;

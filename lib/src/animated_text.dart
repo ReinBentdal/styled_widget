@@ -122,7 +122,7 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
   Tween<double> _wordSpacing;
   Tween<double> _height;
   Tween<double> _decorationThickness;
-  Tween<int> _maxLines; // TODO: animate maxLines?
+  Tween<int> _maxLines;
   ColorTween _color;
   ColorTween _decorationColor;
   // TODO: animate background and foreground?
