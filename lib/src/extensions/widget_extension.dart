@@ -101,6 +101,13 @@ extension StyledWidget on Widget {
     );
   }
 
+  _StyledAnimatedModel _getAnimation(BuildContext context) {
+    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    assert(
+        animation != null, 'You can`t animate without specifying an animation');
+    return animation;
+  }
+
   /// animated all properties before this method
   Widget animate(
     Duration duration,
@@ -634,7 +641,7 @@ extension StyledWidget on Widget {
             );
 
   // TODO: animate
-  OverflowBox overflow({
+  Widget overflow({
     AlignmentGeometry alignment = Alignment.center,
     double minWidth,
     double maxWidth,
@@ -650,7 +657,7 @@ extension StyledWidget on Widget {
         child: this,
       );
 
-  SingleChildScrollView scrollable({
+  Widget scrollable({
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
     bool primary,
@@ -668,7 +675,7 @@ extension StyledWidget on Widget {
         dragStartBehavior: dragStartBehavior,
       );
 
-  Expanded expanded({
+  Widget expanded({
     int flex = 1,
   }) =>
       Expanded(
@@ -676,24 +683,40 @@ extension StyledWidget on Widget {
         flex: flex,
       );
 
-  Positioned positioned(
-          {double left,
-          double top,
-          double right,
-          double bottom,
-          double width,
-          double height,
-          bool animate = false}) =>
+  Widget flexible({
+    int flex = 1,
+    FlexFit fit = FlexFit.loose,
+  }) =>
+      Flexible(
+        child: this,
+        flex: flex,
+        fit: fit,
+      );
+
+  Widget positioned({
+    double left,
+    double top,
+    double right,
+    double bottom,
+    double width,
+    double height,
+    bool animate = false,
+  }) =>
       animate
-          ? _StyledAnimatedOPositionedContainer(
-              child: this,
-              left: left,
-              top: top,
-              right: right,
-              bottom: bottom,
-              width: width,
-              height: height,
-            )
+          ? Builder(builder: (BuildContext context) {
+              _StyledAnimatedModel animation = this._getAnimation(context);
+              return AnimatedPositioned(
+                child: this,
+                duration: animation?.duration,
+                curve: animation?.curve,
+                left: left,
+                top: top,
+                right: right,
+                bottom: bottom,
+                width: width,
+                height: height,
+              );
+            })
           : Positioned(
               child: this,
               left: left,
@@ -704,7 +727,7 @@ extension StyledWidget on Widget {
               height: height,
             );
 
-  Semantics semanticsLabel(String label) => Semantics.fromProperties(
+  Widget semanticsLabel(String label) => Semantics.fromProperties(
         properties: SemanticsProperties(label: label),
         child: this,
       );

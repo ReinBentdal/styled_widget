@@ -1,3 +1,7 @@
+## 0.1.3
+* Added `flexible` as `Widget` extension method
+* Fixed bug with `textStyle` not working correctly
+
 ## 0.1.2
 * Added `expanded` as `Widget` extension method
 * Added `positioned` as `Widget` extension method
