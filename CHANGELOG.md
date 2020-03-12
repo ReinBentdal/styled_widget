@@ -1,3 +1,12 @@
+## 0.2.0
+* Major code refactoring
+* Added `parent` as `Widget` extension method
+* Added animations for `overflow`
+* [Breaking] Similar widgets no longer try to merge
+* [Breaking] Changes `elevation` formula to match the material spec
+* [Breaking] Renamed `constraints` to `constrained` to avoid nameclash
+* [Breaking] Renamed `decoration` to `decorated` to avoid nameclash
+
 ## 0.1.3
 * Added `flexible` as `Widget` extension method
 * Fixed bug with `textStyle` not working correctly

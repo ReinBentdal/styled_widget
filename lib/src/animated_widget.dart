@@ -9,214 +9,35 @@ class _StyledAnimatedModel {
   });
 }
 
-class _StyledAnimated extends InheritedWidget {
+class _StyledInheritedAnimation extends InheritedWidget {
   final _StyledAnimatedModel animation;
 
-  _StyledAnimated({this.animation, Widget child}) : super(child: child);
+  _StyledInheritedAnimation({this.animation, Widget child})
+      : super(child: child);
 
   @override
-  bool updateShouldNotify(_StyledAnimated oldAnimation) =>
+  bool updateShouldNotify(_StyledInheritedAnimation oldAnimation) =>
       !(oldAnimation?.animation?.duration == animation?.duration &&
           oldAnimation?.animation?.curve == animation?.curve);
 
-  static _StyledAnimated of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_StyledAnimated>();
+  static _StyledInheritedAnimation of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_StyledInheritedAnimation>();
 }
 
-class _StyledAnimatedPaddingContainer extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry padding;
+class _StyledAnimatedBuilder extends StatelessWidget {
+  _StyledAnimatedBuilder({@required this.builder});
 
-  _StyledAnimatedPaddingContainer({this.child, this.padding});
+  final Widget Function(_StyledAnimatedModel) builder;
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    _StyledAnimatedModel animation =
+        _StyledInheritedAnimation.of(context)?.animation;
     assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return AnimatedPadding(
-      padding: padding,
-      child: child,
-      duration: animation?.duration,
-      curve: animation?.curve,
+      animation != null,
+      '[styled_widget]: Tried to animate a widget without an animation specified. Define your animation using .animate() as an ancestor of the widget you are trying to animate',
     );
-  }
-}
-
-class _StyledAnimatedOpacityContainer extends StatelessWidget {
-  final Widget child;
-  final double opacity;
-
-  _StyledAnimatedOpacityContainer({this.child, this.opacity});
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return AnimatedOpacity(
-      opacity: opacity,
-      child: child,
-      duration: animation?.duration,
-      curve: animation?.curve,
-    );
-  }
-}
-
-class _StyledAnimatedAlignContainer extends StatelessWidget {
-  final Widget child;
-  final AlignmentGeometry alignment;
-
-  _StyledAnimatedAlignContainer({this.child, this.alignment});
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return AnimatedAlign(
-      alignment: alignment,
-      child: child,
-      duration: animation?.duration,
-      curve: animation?.curve,
-    );
-  }
-}
-
-class _StyledAnimatedDecorationBoxContainer extends StatelessWidget {
-  final Widget child;
-  final BoxDecoration decoration;
-  final DecorationPosition position;
-
-  _StyledAnimatedDecorationBoxContainer({
-    this.child,
-    this.decoration,
-    this.position,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedDecorationBox(
-      position: position,
-      decoration: decoration,
-      child: child,
-      duration: animation?.duration,
-      curve: animation?.curve,
-    );
-  }
-}
-
-class _StyledAnimatedConstrainedBoxContainer extends StatelessWidget {
-  final Widget child;
-  final BoxConstraints constraints;
-
-  _StyledAnimatedConstrainedBoxContainer({this.child, this.constraints});
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedConstrainedBox(
-      duration: animation?.duration,
-      curve: animation?.curve,
-      constraints: constraints,
-      child: child,
-    );
-  }
-}
-
-class _StyledAnimatedTransformContainer extends StatelessWidget {
-  final Widget child;
-  final Matrix4 transform;
-  final Offset origin;
-  final AlignmentGeometry alignment;
-  final bool transformHitTests;
-  _StyledAnimatedTransformContainer({
-    this.child,
-    this.transform,
-    this.origin,
-    this.alignment = Alignment.center,
-    this.transformHitTests = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedTransform(
-      child: child,
-      transform: transform,
-      alignment: alignment,
-      origin: origin,
-      transformHitTests: transformHitTests,
-      duration: animation?.duration,
-      curve: animation?.curve,
-    );
-  }
-}
-
-class _StyledAnimatedClipRRectContainer extends StatelessWidget {
-  final Widget child;
-  final double topLeft;
-  final double topRight;
-  final double bottomLeft;
-  final double bottomRight;
-  final CustomClipper<RRect> clipper;
-  final Clip clipBehavior;
-
-  _StyledAnimatedClipRRectContainer({
-    this.child,
-    this.bottomLeft,
-    this.bottomRight,
-    this.topLeft,
-    this.topRight,
-    this.clipBehavior,
-    this.clipper,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedClipRRect(
-      duration: animation?.duration,
-      curve: animation?.curve,
-      topLeft: topLeft,
-      topRight: topRight,
-      bottomLeft: bottomLeft,
-      bottomRight: bottomRight,
-      clipper: clipper,
-      clipBehavior: clipBehavior,
-      child: child,
-    );
-  }
-}
-
-class _StyledAnimatedBackgroundBlurContainer extends StatelessWidget {
-  final Widget child;
-  final double sigma;
-
-  _StyledAnimatedBackgroundBlurContainer({
-    this.child,
-    this.sigma,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
-    return _AnimatedBackgroundBlur(
-      duration: animation?.duration,
-      curve: animation?.curve,
-      sigma: sigma,
-    );
+    return builder(animation);
   }
 }
 
@@ -225,7 +46,7 @@ class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   _AnimatedDecorationBox({
     Key key,
     this.decoration,
-    this.position,
+    this.position = DecorationPosition.background,
     this.child,
     Curve curve = Curves.linear,
     @required Duration duration,
@@ -558,7 +379,6 @@ class _AnimatedBackgroundBlur extends ImplicitlyAnimatedWidget {
     Curve curve = Curves.linear,
     @required Duration duration,
     VoidCallback onEnd,
-    this.alwaysIncludeSemantics = false,
   })  : assert(sigma != null && sigma >= 0.0),
         super(
           key: key,
@@ -574,16 +394,6 @@ class _AnimatedBackgroundBlur extends ImplicitlyAnimatedWidget {
 
   final double sigma;
 
-  /// Whether the semantic information of the children is always included.
-  ///
-  /// Defaults to false.
-  ///
-  /// When true, regardless of the opacity settings the child semantic
-  /// information is exposed as if the widget were fully visible. This is
-  /// useful in cases where labels may be hidden during animations that
-  /// would otherwise contribute relevant semantics.
-  final bool alwaysIncludeSemantics;
-
   @override
   _AnimatedBackgroundBlurState createState() => _AnimatedBackgroundBlurState();
 
@@ -597,7 +407,6 @@ class _AnimatedBackgroundBlur extends ImplicitlyAnimatedWidget {
 class _AnimatedBackgroundBlurState
     extends ImplicitlyAnimatedWidgetState<_AnimatedBackgroundBlur> {
   Tween<double> _sigma;
-  Animation<double> _sigmaAnimation;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
@@ -606,16 +415,90 @@ class _AnimatedBackgroundBlurState
   }
 
   @override
-  void didUpdateTweens() {
-    _sigmaAnimation = animation.drive(_sigma);
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: _sigma.evaluate(animation),
+        sigmaY: _sigma.evaluate(animation),
+      ),
+      child: widget.child,
+    );
+  }
+}
+
+class _AnimatedOverflowBox extends ImplicitlyAnimatedWidget {
+  /// Creates a widget that animates its opacity implicitly.
+  ///
+  /// The [opacity] argument must not be null and must be between 0.0 and 1.0,
+  /// inclusive. The [curve] and [duration] arguments must not be null.
+  const _AnimatedOverflowBox({
+    Key key,
+    this.child,
+    this.minWidth,
+    this.maxWidth,
+    this.minHeight,
+    this.maxHeight,
+    this.alignment,
+    Curve curve = Curves.linear,
+    @required Duration duration,
+    VoidCallback onEnd,
+  }) : super(
+          key: key,
+          curve: curve,
+          duration: duration,
+          onEnd: onEnd,
+        );
+
+  /// The widget below this widget in the tree.
+  ///
+  /// {@macro flutter.widgets.child}
+  final Widget child;
+  final AlignmentGeometry alignment;
+  final double minWidth;
+  final double maxWidth;
+  final double minHeight;
+  final double maxHeight;
+
+  @override
+  _AnimatedOverflowBoxState createState() => _AnimatedOverflowBoxState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    // TODO: debug
+  }
+}
+
+class _AnimatedOverflowBoxState
+    extends ImplicitlyAnimatedWidgetState<_AnimatedOverflowBox> {
+  Tween<double> _minWidth;
+  Tween<double> _maxWidth;
+  Tween<double> _minHeight;
+  Tween<double> _maxHeight;
+  AlignmentGeometryTween _alignment;
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _minWidth = visitor(_minWidth, widget.minWidth,
+        (dynamic value) => Tween<double>(begin: value));
+    _maxWidth = visitor(_maxWidth, widget.maxWidth,
+        (dynamic value) => Tween<double>(begin: value));
+    _minHeight = visitor(_minHeight, widget.minHeight,
+        (dynamic value) => Tween<double>(begin: value));
+    _maxHeight = visitor(_maxHeight, widget.maxHeight,
+        (dynamic value) => Tween<double>(begin: value));
+    _alignment = visitor(_alignment, widget.alignment,
+        (dynamic value) => AlignmentGeometryTween(begin: value));
   }
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _sigmaAnimation,
+    return OverflowBox(
+      minWidth: _minWidth.evaluate(animation),
+      maxWidth: _maxWidth.evaluate(animation),
+      minHeight: _minHeight.evaluate(animation),
+      maxHeight: _maxHeight.evaluate(animation),
+      alignment: _alignment.evaluate(animation),
       child: widget.child,
-      alwaysIncludeSemantics: widget.alwaysIncludeSemantics,
     );
   }
 }

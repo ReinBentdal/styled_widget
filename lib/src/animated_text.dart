@@ -1,5 +1,6 @@
 part of '../styled_widget.dart';
 
+// TODO: why extend text
 class _StyledAnimatedTextContainer extends Text {
   final String data;
   final TextStyle style;
@@ -44,7 +45,8 @@ class _StyledAnimatedTextContainer extends Text {
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    _StyledAnimatedModel animation =
+        _StyledInheritedAnimation.of(context)?.animation;
     if (animation == null) {
       return super.build(context);
     }

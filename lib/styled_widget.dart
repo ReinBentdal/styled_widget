@@ -18,5 +18,4 @@ part 'src/animated_widget.dart';
 part 'src/animated_text.dart';
 part 'src/animated_icon.dart';
 
-part 'src/gestures.dart';
 part 'src/Styled.dart';

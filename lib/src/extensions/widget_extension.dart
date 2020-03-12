@@ -3,108 +3,11 @@ part of '../../styled_widget.dart';
 typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
 extension StyledWidget on Widget {
-  Widget _tryMergeConstraints({BoxConstraints constraints}) {
-    // only merge if the duration and curve is the exact same
-    if (this is ConstrainedBox) {
-      return ConstrainedBox(
-        child: (this as ConstrainedBox)?.child,
-        constraints: (this as ConstrainedBox)?.constraints?.copyWith(
-              minWidth: constraints?.minWidth,
-              maxWidth: constraints?.maxWidth,
-              minHeight: constraints?.minHeight,
-              maxHeight: constraints?.maxHeight,
-            ),
-      );
-    }
-    return ConstrainedBox(
-      constraints: constraints,
-      child: this,
-    );
-  }
-
-  Widget _tryMergeAnimatedConstraints({BoxConstraints constraints}) {
-    if (this is _StyledAnimatedConstrainedBoxContainer) {
-      return _StyledAnimatedConstrainedBoxContainer(
-        child: (this as _StyledAnimatedConstrainedBoxContainer)?.child,
-        constraints: (this as _StyledAnimatedConstrainedBoxContainer)
-            ?.constraints
-            ?.copyWith(
-              minWidth: constraints?.minWidth,
-              maxWidth: constraints?.maxWidth,
-              minHeight: constraints?.minHeight,
-              maxHeight: constraints?.maxHeight,
-            ),
-      );
-    }
-    return _StyledAnimatedConstrainedBoxContainer(
-      constraints: constraints,
-      child: this,
-    );
-  }
-
-  Widget _tryMergeDecoration({
-    BoxDecoration decoration,
-    DecorationPosition position = DecorationPosition.background,
-  }) {
-    // merge decoration with child
-    if (this is DecoratedBox && (this as DecoratedBox)?.position == position) {
-      DecoratedBox child = this as DecoratedBox;
-      return DecoratedBox(
-        child: child.child,
-        position: position,
-        decoration: (child.decoration as BoxDecoration)?.copyWith(
-          color: decoration?.color,
-          backgroundBlendMode: decoration?.backgroundBlendMode,
-          border: decoration?.border,
-          borderRadius: decoration?.borderRadius,
-          boxShadow: decoration?.boxShadow,
-          gradient: decoration?.gradient,
-          image: decoration?.image,
-          shape: decoration?.shape,
-        ),
-      );
-    }
-    return DecoratedBox(
-      decoration: decoration,
-      position: position,
-      child: this,
-    );
-  }
-
-  Widget _tryMergeAnimatedDecoration({
-    BoxDecoration decoration,
-    DecorationPosition position = DecorationPosition.background,
-  }) {
-    if (this is _StyledAnimatedDecorationBoxContainer &&
-        (this as _StyledAnimatedDecorationBoxContainer)?.position == position) {
-      _StyledAnimatedDecorationBoxContainer child =
-          this as _StyledAnimatedDecorationBoxContainer;
-      return _StyledAnimatedDecorationBoxContainer(
-        child: child.child,
-        position: position,
-        decoration: child.decoration?.copyWith(
-          color: decoration?.color,
-          backgroundBlendMode: decoration?.backgroundBlendMode,
-          border: decoration?.border,
-          borderRadius: decoration?.borderRadius,
-          boxShadow: decoration?.boxShadow,
-          gradient: decoration?.gradient,
-          image: decoration?.image,
-          shape: decoration?.shape,
-        ),
-      );
-    }
-    return _StyledAnimatedDecorationBoxContainer(
-      child: this,
-      decoration: decoration,
-      position: position,
-    );
-  }
-
   _StyledAnimatedModel _getAnimation(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
-    assert(
-        animation != null, 'You can`t animate without specifying an animation');
+    _StyledAnimatedModel animation =
+        _StyledInheritedAnimation.of(context)?.animation;
+    assert(animation != null,
+        '[styled_widget]: You can`t animate without defining the animation. Call the method animate() higher in your widget hierarchy to define an animation');
     return animation;
   }
 
@@ -113,10 +16,24 @@ extension StyledWidget on Widget {
     Duration duration,
     Curve curve,
   ) =>
-      _StyledAnimated(
+      _StyledInheritedAnimation(
         animation: _StyledAnimatedModel(duration: duration, curve: curve),
         child: this,
       );
+
+  /// Applies a parent to a child
+  /// ```dart
+  /// final parentWidget = ({@required Widget child}) => Styled.widget(child: child)
+  ///   .alignment(Alignment.center)
+  ///
+  /// final childWidget = Text('some text')
+  ///   .padding(all: 10)
+  ///
+  /// Widget build(BuildContext) => childWidget
+  ///   .parent(parentWidget);
+  /// ```
+  Widget parent(Widget Function({@required Widget child}) parent) =>
+      parent(child: this);
 
   Widget padding({
     double all,
@@ -129,14 +46,21 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedPaddingContainer(
-              padding: EdgeInsets.only(
-                top: top ?? vertical ?? all ?? 0.0,
-                bottom: bottom ?? vertical ?? all ?? 0.0,
-                left: left ?? horizontal ?? all ?? 0.0,
-                right: right ?? horizontal ?? all ?? 0.0,
-              ),
-              child: this,
+          ? Builder(
+              builder: (BuildContext context) {
+                _StyledAnimatedModel animation = this._getAnimation(context);
+                return AnimatedPadding(
+                  child: this,
+                  padding: EdgeInsets.only(
+                    top: top ?? vertical ?? all ?? 0.0,
+                    bottom: bottom ?? vertical ?? all ?? 0.0,
+                    left: left ?? horizontal ?? all ?? 0.0,
+                    right: right ?? horizontal ?? all ?? 0.0,
+                  ),
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Padding(
               padding: EdgeInsets.only(
@@ -151,14 +75,21 @@ extension StyledWidget on Widget {
   Widget opacity(
     double opacity, {
     bool animate = false,
+    bool alwaysIncludeSemantics = false,
   }) =>
       animate
-          ? _StyledAnimatedOpacityContainer(
-              opacity: opacity,
-              child: this,
-            )
+          ? _StyledAnimatedBuilder(builder: (animation) {
+              return AnimatedOpacity(
+                child: this,
+                opacity: opacity,
+                alwaysIncludeSemantics: alwaysIncludeSemantics,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            })
           : Opacity(
               opacity: opacity,
+              alwaysIncludeSemantics: alwaysIncludeSemantics,
               child: this,
             );
 
@@ -167,9 +98,16 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedAlignContainer(
-              alignment: alignment,
-              child: this,
+          ? Builder(
+              builder: (BuildContext context) {
+                _StyledAnimatedModel animation = this._getAnimation(context);
+                return AnimatedAlign(
+                  child: this,
+                  alignment: alignment,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Align(
               alignment: alignment,
@@ -177,19 +115,54 @@ extension StyledWidget on Widget {
             );
 
   Widget backgroundColor(Color color, {bool animate = false}) => animate
-      ? _tryMergeAnimatedDecoration(decoration: BoxDecoration(color: color))
-      : _tryMergeDecoration(decoration: BoxDecoration(color: color));
+      ? _StyledAnimatedBuilder(
+          builder: (animation) {
+            return _AnimatedDecorationBox(
+              child: this,
+              decoration: BoxDecoration(color: color),
+              duration: animation?.duration,
+              curve: animation?.curve,
+            );
+          },
+        )
+      : DecoratedBox(
+          child: this,
+          decoration: BoxDecoration(color: color),
+        );
 
   Widget backgroundImage(DecorationImage image, {bool animate = false}) =>
       animate
-          ? _tryMergeAnimatedDecoration(decoration: BoxDecoration(image: image))
-          : _tryMergeDecoration(decoration: BoxDecoration(image: image));
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedDecorationBox(
+                  child: this,
+                  decoration: BoxDecoration(image: image),
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
+            )
+          : DecoratedBox(
+              child: this,
+              decoration: BoxDecoration(image: image),
+            );
 
   Widget backgroundGradient(Gradient gradient, {bool animate = false}) =>
       animate
-          ? _tryMergeAnimatedDecoration(
-              decoration: BoxDecoration(gradient: gradient))
-          : _tryMergeDecoration(decoration: BoxDecoration(gradient: gradient));
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedDecorationBox(
+                  child: this,
+                  decoration: BoxDecoration(gradient: gradient),
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
+            )
+          : DecoratedBox(
+              child: this,
+              decoration: BoxDecoration(gradient: gradient),
+            );
 
   Widget backgroundLinearGradient({
     AlignmentGeometry begin = Alignment.centerLeft,
@@ -211,8 +184,20 @@ extension StyledWidget on Widget {
       ),
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
   Widget backgroundRadialGradient(
@@ -238,8 +223,20 @@ extension StyledWidget on Widget {
       ),
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
   Widget backgroundSweepGradient(
@@ -263,16 +260,36 @@ extension StyledWidget on Widget {
       ),
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
   Widget backgroundBlendMode(BlendMode blendMode, {bool animate = false}) =>
       animate
-          ? _tryMergeAnimatedDecoration(
-              decoration: BoxDecoration(backgroundBlendMode: blendMode),
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedDecorationBox(
+                  child: this,
+                  decoration: BoxDecoration(backgroundBlendMode: blendMode),
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
-          : _tryMergeDecoration(
+          : DecoratedBox(
+              child: this,
               decoration: BoxDecoration(backgroundBlendMode: blendMode),
             );
 
@@ -281,9 +298,15 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedBackgroundBlurContainer(
-              sigma: sigma,
-              child: this,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedBackgroundBlur(
+                  child: this,
+                  sigma: sigma,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : BackdropFilter(
               filter: ImageFilter.blur(
@@ -310,8 +333,20 @@ extension StyledWidget on Widget {
       ),
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
   Widget clipRRect({
@@ -325,14 +360,20 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedClipRRectContainer(
-              child: this,
-              clipper: clipper,
-              clipBehavior: clipBehavior,
-              topLeft: topLeft ?? all ?? 0.0,
-              topRight: topRight ?? all ?? 0.0,
-              bottomLeft: bottomLeft ?? all ?? 0.0,
-              bottomRight: bottomRight ?? all ?? 0.0,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedClipRRect(
+                  child: this,
+                  clipper: clipper,
+                  clipBehavior: clipBehavior,
+                  topLeft: topLeft ?? all ?? 0.0,
+                  topRight: topRight ?? all ?? 0.0,
+                  bottomLeft: bottomLeft ?? all ?? 0.0,
+                  bottomRight: bottomRight ?? all ?? 0.0,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : ClipRRect(
               child: this,
@@ -387,11 +428,23 @@ extension StyledWidget on Widget {
       ),
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
-  Widget decoration({
+  Widget decorated({
     Color color,
     DecorationImage image,
     BoxBorder border,
@@ -414,11 +467,19 @@ extension StyledWidget on Widget {
       shape: shape,
     );
     return animate
-        ? _tryMergeAnimatedDecoration(
-            decoration: decoration,
-            position: position,
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                position: position,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
           )
-        : _tryMergeDecoration(
+        : DecoratedBox(
+            child: this,
             decoration: decoration,
             position: position,
           );
@@ -427,28 +488,51 @@ extension StyledWidget on Widget {
   double _elevationOpacityCurve(double x) =>
       pow(x, 1 / 16) / sqrt(pow(x, 2) + 2) + 0.2;
 
-  Widget elevation(
-    double elevation, {
-    double angle = 0.0,
-    Color shadowColor = const Color(0x33000000),
-    double opacity = 1.0,
-    bool animate = false,
-  }) {
-    double calculatedOpacity = _elevationOpacityCurve(elevation) * opacity;
-    BoxDecoration decoration = BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: shadowColor.withOpacity(calculatedOpacity),
-          blurRadius: elevation,
-          spreadRadius: 0.0,
-          offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
-        ),
-      ],
-    );
-    return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
-  }
+  Widget elevation(double elevation,
+          {BorderRadiusGeometry borderRadius = BorderRadius.zero,
+          Color shadowColor = const Color(0xFF000000)}) =>
+      Material(
+        child: this,
+        color: Colors.transparent,
+        elevation: elevation,
+        borderRadius: borderRadius,
+        shadowColor: shadowColor,
+      );
+
+  // Widget elevation(
+  //   double elevation, {
+  //   double angle = 0.0,
+  //   Color shadowColor = const Color(0x33000000),
+  //   double opacity = 1.0,
+  //   bool animate = false,
+  // }) {
+  //   double calculatedOpacity = _elevationOpacityCurve(elevation) * opacity;
+  //   BoxDecoration decoration = BoxDecoration(
+  //     boxShadow: [
+  //       BoxShadow(
+  //         color: shadowColor.withOpacity(calculatedOpacity),
+  //         blurRadius: elevation,
+  //         spreadRadius: 0.0,
+  //         offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
+  //       ),
+  //     ],
+  //   );
+  //   return animate
+  //       ? _StyledAnimatedBuilder(
+  //           builder: (animation) {
+  //             return _AnimatedDecorationBox(
+  //               child: this,
+  //               decoration: decoration,
+  //               duration: animation?.duration,
+  //               curve: animation?.curve,
+  //             );
+  //           },
+  //         )
+  //       : DecoratedBox(
+  //           child: this,
+  //           decoration: decoration,
+  //         );
+  // }
 
   Widget boxShadow({
     Color color = const Color(0xFF000000),
@@ -468,11 +552,23 @@ extension StyledWidget on Widget {
       ],
     );
     return animate
-        ? _tryMergeAnimatedDecoration(decoration: decoration)
-        : _tryMergeDecoration(decoration: decoration);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
-  Widget constraints({
+  Widget constrained({
     double width,
     double height,
     double minWidth = 0.0,
@@ -492,38 +588,55 @@ extension StyledWidget on Widget {
             BoxConstraints.tightFor(width: width, height: height)
         : constraints;
     return animate
-        ? _tryMergeAnimatedConstraints(constraints: constraints)
-        : _tryMergeConstraints(constraints: constraints);
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedConstrainedBox(
+                child: this,
+                constraints: constraints,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : ConstrainedBox(
+            child: this,
+            constraints: constraints,
+          );
   }
 
   Widget width(double width, {bool animate = false}) => animate
-      ? _tryMergeAnimatedConstraints(
-          constraints: BoxConstraints(
-            minWidth: width,
-            maxWidth: width,
-          ),
+      ? _StyledAnimatedBuilder(
+          builder: (animation) {
+            return _AnimatedConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(width: width),
+              duration: animation?.duration,
+              curve: animation?.curve,
+            );
+          },
         )
-      : _tryMergeConstraints(
-          constraints: BoxConstraints(
-            minWidth: width,
-            maxWidth: width,
-          ),
+      : ConstrainedBox(
+          child: this,
+          constraints: BoxConstraints.tightFor(width: width),
         );
 
   Widget height(double height, {bool animate = false}) => animate
-      ? _tryMergeAnimatedConstraints(
-          constraints: BoxConstraints(
-            minHeight: height,
-            maxHeight: height,
-          ),
+      ? _StyledAnimatedBuilder(
+          builder: (animation) {
+            return _AnimatedConstrainedBox(
+              child: this,
+              constraints: BoxConstraints.tightFor(height: height),
+              duration: animation?.duration,
+              curve: animation?.curve,
+            );
+          },
         )
-      : _tryMergeConstraints(
-          constraints: BoxConstraints(
-            minHeight: height,
-            maxHeight: height,
-          ),
+      : ConstrainedBox(
+          child: this,
+          constraints: BoxConstraints.tightFor(height: height),
         );
 
+  // TODO: FEATURE: ripple animation
   Widget ripple({
     Color focusColor,
     Color hoverColor,
@@ -538,20 +651,31 @@ extension StyledWidget on Widget {
     bool canRequestFocus = true,
     bool autoFocus = false,
   }) =>
-      _StyledRipple(
-        child: this,
-        focusColor: focusColor,
-        hoverColor: hoverColor,
-        highlightColor: highlightColor,
-        splashColor: splashColor,
-        splashFactory: splashFactory,
-        radius: radius,
-        customBorder: customBorder,
-        enableFeedback: enableFeedback,
-        excludeFromSemantics: excludeFromSemantics,
-        focusNode: focusNode,
-        canRequestFocus: canRequestFocus,
-        autoFocus: autoFocus,
+      Builder(
+        builder: (BuildContext context) {
+          // TODO: PERFORMANCE: findAncestorWidgetOfExactType vs InheritedWidget performance
+          GestureDetector gestures =
+              context.findAncestorWidgetOfExactType<GestureDetector>();
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              focusColor: focusColor,
+              hoverColor: hoverColor,
+              highlightColor: highlightColor,
+              splashColor: splashColor,
+              splashFactory: splashFactory,
+              radius: radius,
+              customBorder: customBorder,
+              enableFeedback: enableFeedback,
+              excludeFromSemantics: excludeFromSemantics,
+              focusNode: focusNode,
+              canRequestFocus: canRequestFocus,
+              autofocus: autoFocus,
+              onTap: gestures?.onTap,
+              child: this,
+            ),
+          );
+        },
       );
 
   // TODO: RotatedBox
@@ -563,19 +687,25 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedTransformContainer(
-              child: this,
-              transform: Matrix4.rotationZ(angle),
-              alignment: alignment,
-              origin: origin,
-              transformHitTests: transformHitTests,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedTransform(
+                  child: this,
+                  transform: Matrix4.rotationZ(angle),
+                  alignment: alignment,
+                  origin: origin,
+                  transformHitTests: transformHitTests,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Transform.rotate(
+              child: this,
               angle: angle,
               alignment: alignment,
               origin: origin,
               transformHitTests: transformHitTests,
-              child: this,
             );
 
   Widget scale(
@@ -586,11 +716,17 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedTransformContainer(
-              child: this,
-              transform: Matrix4.diagonal3Values(scale, scale, 1.0),
-              alignment: alignment,
-              transformHitTests: transformHitTests,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedTransform(
+                  child: this,
+                  transform: Matrix4.diagonal3Values(scale, scale, 1.0),
+                  alignment: alignment,
+                  transformHitTests: transformHitTests,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Transform.scale(
               scale: scale,
@@ -606,10 +742,17 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedTransformContainer(
-              child: this,
-              transform: Matrix4.translationValues(offset.dx, offset.dy, 0.0),
-              transformHitTests: transformHitTests,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedTransform(
+                  child: this,
+                  transform:
+                      Matrix4.translationValues(offset.dx, offset.dy, 0.0),
+                  transformHitTests: transformHitTests,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Transform.translate(
               offset: offset,
@@ -625,12 +768,18 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedTransformContainer(
-              child: this,
-              transform: transform,
-              origin: origin,
-              alignment: alignment,
-              transformHitTests: transformHitTests,
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedTransform(
+                  child: this,
+                  transform: transform,
+                  origin: origin,
+                  alignment: alignment,
+                  transformHitTests: transformHitTests,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
             )
           : Transform(
               transform: transform,
@@ -640,22 +789,37 @@ extension StyledWidget on Widget {
               child: this,
             );
 
-  // TODO: animate
   Widget overflow({
     AlignmentGeometry alignment = Alignment.center,
     double minWidth,
     double maxWidth,
     double minHeight,
     double maxHeight,
+    bool animate = false,
   }) =>
-      OverflowBox(
-        alignment: alignment,
-        minWidth: minWidth,
-        maxWidth: minWidth,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
-        child: this,
-      );
+      animate
+          ? _StyledAnimatedBuilder(
+              builder: (animation) {
+                return _AnimatedOverflowBox(
+                  child: this,
+                  alignment: alignment,
+                  minWidth: minWidth,
+                  maxWidth: minWidth,
+                  minHeight: minHeight,
+                  maxHeight: maxHeight,
+                  duration: animation?.duration,
+                  curve: animation?.curve,
+                );
+              },
+            )
+          : OverflowBox(
+              alignment: alignment,
+              minWidth: minWidth,
+              maxWidth: minWidth,
+              minHeight: minHeight,
+              maxHeight: maxHeight,
+              child: this,
+            );
 
   Widget scrollable({
     Axis scrollDirection = Axis.vertical,
@@ -703,8 +867,7 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? Builder(builder: (BuildContext context) {
-              _StyledAnimatedModel animation = this._getAnimation(context);
+          ? _StyledAnimatedBuilder(builder: (animation) {
               return AnimatedPositioned(
                 child: this,
                 duration: animation?.duration,
@@ -773,114 +936,51 @@ extension StyledWidget on Widget {
     bool excludeFromSemantics = false,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
-      _StyledGestureDetector(
-        // exposes the onTap method to children with [InheritedWidget]
-        gestureDetector: GestureDetector(
-          onTapDown: (TapDownDetails tapDownDetails) {
-            if (onTapDown != null) onTapDown(tapDownDetails);
-            if (onTapChange != null) onTapChange(true);
-          },
-          onTapUp: (TapUpDetails tapUpDetails) {
-            if (onTapUp != null) onTapUp(tapUpDetails);
-            if (onTapChange != null) onTapChange(false);
-          },
-          onTapCancel: () {
-            if (onTapCancel != null) onTapCancel();
-            if (onTapChange != null) onTapChange(false);
-          },
-          onTap: onTap,
-          onDoubleTap: onDoubleTap,
-          onLongPress: onLongPress,
-          onLongPressStart: onLongPressStart,
-          onLongPressEnd: onLongPressEnd,
-          onLongPressMoveUpdate: onLongPressMoveUpdate,
-          onLongPressUp: onLongPressUp,
-          onVerticalDragStart: onVerticalDragStart,
-          onVerticalDragEnd: onVerticalDragEnd,
-          onVerticalDragDown: onVerticalDragDown,
-          onVerticalDragCancel: onVerticalDragCancel,
-          onVerticalDragUpdate: onVerticalDragUpdate,
-          onHorizontalDragStart: onHorizontalDragStart,
-          onHorizontalDragEnd: onHorizontalDragEnd,
-          onHorizontalDragCancel: onHorizontalDragCancel,
-          onHorizontalDragUpdate: onHorizontalDragUpdate,
-          onHorizontalDragDown: onHorizontalDragDown,
-          onForcePressStart: onForcePressStart,
-          onForcePressEnd: onForcePressEnd,
-          onForcePressPeak: onForcePressPeak,
-          onForcePressUpdate: onForcePressUpdate,
-          onPanStart: onPanStart,
-          onPanEnd: onPanEnd,
-          onPanCancel: onPanCancel,
-          onPanDown: onPanDown,
-          onPanUpdate: onPanUpdate,
-          onScaleStart: onScaleStart,
-          onScaleEnd: onScaleEnd,
-          onScaleUpdate: onScaleUpdate,
-          behavior: behavior,
-          excludeFromSemantics: excludeFromSemantics,
-          dragStartBehavior: dragStartBehavior,
-          child: this,
-        ),
-      );
-}
-
-class _StyledRipple extends StatelessWidget {
-  final Widget child;
-  final Color focusColor;
-  final Color hoverColor;
-  final Color highlightColor;
-  final Color splashColor;
-  final InteractiveInkFeatureFactory splashFactory;
-  final double radius;
-  final ShapeBorder customBorder;
-  final bool enableFeedback;
-  final bool excludeFromSemantics;
-  final FocusNode focusNode;
-  final bool canRequestFocus;
-  final bool autoFocus;
-  _StyledRipple({
-    this.child,
-    this.focusColor,
-    this.hoverColor,
-    this.highlightColor,
-    this.splashColor,
-    this.splashFactory,
-    this.radius,
-    this.customBorder,
-    this.enableFeedback = true,
-    this.excludeFromSemantics = false,
-    this.focusNode,
-    this.canRequestFocus = true,
-    this.autoFocus = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    GestureDetector gestureDetector =
-        _StyledGestureDetector.of(context)?.gestureDetector;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        focusColor: focusColor,
-        hoverColor: hoverColor,
-        highlightColor: highlightColor,
-        splashColor: splashColor,
-        splashFactory: splashFactory,
-        radius: radius,
-        customBorder: customBorder,
-        enableFeedback: enableFeedback,
+      GestureDetector(
+        onTapDown: (TapDownDetails tapDownDetails) {
+          if (onTapDown != null) onTapDown(tapDownDetails);
+          if (onTapChange != null) onTapChange(true);
+        },
+        onTapCancel: () {
+          if (onTapCancel != null) onTapCancel();
+          if (onTapChange != null) onTapChange(false);
+        },
+        onTap: () {
+          if (onTap != null) onTap();
+          if (onTapChange != null) onTapChange(false);
+        },
+        onTapUp: onTapUp,
+        onDoubleTap: onDoubleTap,
+        onLongPress: onLongPress,
+        onLongPressStart: onLongPressStart,
+        onLongPressEnd: onLongPressEnd,
+        onLongPressMoveUpdate: onLongPressMoveUpdate,
+        onLongPressUp: onLongPressUp,
+        onVerticalDragStart: onVerticalDragStart,
+        onVerticalDragEnd: onVerticalDragEnd,
+        onVerticalDragDown: onVerticalDragDown,
+        onVerticalDragCancel: onVerticalDragCancel,
+        onVerticalDragUpdate: onVerticalDragUpdate,
+        onHorizontalDragStart: onHorizontalDragStart,
+        onHorizontalDragEnd: onHorizontalDragEnd,
+        onHorizontalDragCancel: onHorizontalDragCancel,
+        onHorizontalDragUpdate: onHorizontalDragUpdate,
+        onHorizontalDragDown: onHorizontalDragDown,
+        onForcePressStart: onForcePressStart,
+        onForcePressEnd: onForcePressEnd,
+        onForcePressPeak: onForcePressPeak,
+        onForcePressUpdate: onForcePressUpdate,
+        onPanStart: onPanStart,
+        onPanEnd: onPanEnd,
+        onPanCancel: onPanCancel,
+        onPanDown: onPanDown,
+        onPanUpdate: onPanUpdate,
+        onScaleStart: onScaleStart,
+        onScaleEnd: onScaleEnd,
+        onScaleUpdate: onScaleUpdate,
+        behavior: behavior,
         excludeFromSemantics: excludeFromSemantics,
-        focusNode: focusNode,
-        canRequestFocus: canRequestFocus,
-        autofocus: autoFocus,
-        onTap: gestureDetector?.onTap ?? () {},
-        onDoubleTap: gestureDetector?.onDoubleTap,
-        onTapCancel: gestureDetector?.onTapCancel,
-        // onTapDown: gestureDetector?.onTapDown,
-        onLongPress: gestureDetector?.onLongPress,
-        child: child,
-      ),
-    );
-  }
+        dragStartBehavior: dragStartBehavior,
+        child: this,
+      );
 }

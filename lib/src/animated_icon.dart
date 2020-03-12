@@ -1,5 +1,6 @@
 part of '../styled_widget.dart';
 
+// TODO: why extend icon
 class _StyledAnimatedIconContainer extends Icon {
   final IconData icon;
   final double size;
@@ -23,7 +24,8 @@ class _StyledAnimatedIconContainer extends Icon {
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel animation = _StyledAnimated.of(context)?.animation;
+    _StyledAnimatedModel animation =
+        _StyledInheritedAnimation.of(context)?.animation;
     if (animation == null) {
       return super.build(context);
     }
