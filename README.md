@@ -21,8 +21,10 @@ Thanks to the introduction of [extension methods](https://dart.dev/guides/langua
 final Widget button = Text('button')
   .bold()
   .padding(all: 5)
-  .backgroundColor(Colors.amber)
-  .borderRadius(all: 3);
+  .decorated(
+    color: Colors.amber,
+    borderRadius: BorderRadius.circular(3),
+  );
 ```
 
 ### Showcase
