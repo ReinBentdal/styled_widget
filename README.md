@@ -1,6 +1,6 @@
 <p align="center" >
   <a href="https://pub.dev/packages/styled_widget">
-    <img src="doc/assets/logo.jpg" height="150" />
+    <img src="doc/assets/logo.png" height="150" />
   </a>
 </p>
 
