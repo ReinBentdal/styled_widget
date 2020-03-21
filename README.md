@@ -1,6 +1,6 @@
 <p align="center" >
   <a href="https://pub.dev/packages/styled_widget">
-    <img src="doc/assets/logo.png" height="150" />
+    <img src="https://github.com/ReinBentdal/styled_widget/raw/master/doc/assets/logo.png" height="150" />
   </a>
 </p>
 
@@ -51,7 +51,7 @@ Align(
 ```
 </pre>
 </details>
-<img width="150" src="doc/assets/hello_world_demo.jpg" />
+<img width="150" src="https://github.com/ReinBentdal/styled_widget/raw/master/doc/assets/hello_world_demo.jpg" />
 
 ### Showcase
 | [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://dribbble.com/shots/4514354-Sign-up), [Code](https://github.com/ReinBentdal/styled_widget/wiki/japan-style-example) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
