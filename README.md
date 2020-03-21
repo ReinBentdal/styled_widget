@@ -1,6 +1,6 @@
 <p align="center" >
   <a href="https://pub.dev/packages/styled_widget">
-    <img src="https://github.com/ReinBentdal/styled_widget/raw/master/doc/assets/logo.png" height="150" />
+    <img src="https://github.com/ReinBentdal/styled_widget/raw/master/doc/assets/logo.png"  width="500">
   </a>
 </p>
 
