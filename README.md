@@ -11,7 +11,7 @@
   <br />
   <br />
   <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget?color=blue" /></a>&nbsp;&nbsp;
-  <a href="https://www.buymeacoffee.com/tOTWBs7"><img src="https://camo.githubusercontent.com/be06971baed9105260e0ed5c03746108c30b527f/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f64656661756c742d6f72616e67652e706e67" alt="Buy Me A Coffee" data-canonical-src="https://cdn.buymeacoffee.com/buttons/default-orange.png" width="150px" /></a>
+  <a href="https://www.buymeacoffee.com/tOTWBs7" target="_blank"><img width="150px" src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 </p>
 
 <br />
