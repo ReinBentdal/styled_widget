@@ -1,6 +1,6 @@
 <p align="center" >
   <a href="https://pub.dev/packages/styled_widget">
-    <img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/styled_widget.jpg?raw=true" height="150" />
+    <img src="doc/assets/logo.jpg" height="150" />
   </a>
 </p>
 
@@ -18,14 +18,39 @@
 
 Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget tree\`s more readable and efficient. It is therefore much easier to focus on the actual design of your app.
 ```dart
-final Widget button = Text('button')
-  .bold()
-  .padding(all: 5)
+Text('hello world', style: _textStyle)
+  .padding(all: 20)
   .decorated(
-    color: Colors.amber,
-    borderRadius: BorderRadius.circular(3),
-  );
+    borderRadius: BorderRadius.circular(10),
+    gradient: _gradient,
+  )
+  .alignment(Alignment.center)
 ```
+<details>
+<summary>Raw Flutter (click to show)</summary>
+<pre>
+
+```dart
+Align(
+  alignment: Alignment.center,
+  child: DecoratedBox(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      gradient: _gradient,
+    ),
+    child: Padding(
+      padding: EdgeInsets.all(20),
+      child: Text(
+        'hello world',
+        style: _textStyle,
+      ),
+    ),
+  ),
+);
+```
+</pre>
+</details>
+<img width="200" src="doc/assets/hello_world_demo.jpg" />
 
 ### Showcase
 | [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://dribbble.com/shots/4514354-Sign-up), [Code](https://github.com/ReinBentdal/styled_widget/wiki/japan-style-example) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
