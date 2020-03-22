@@ -65,11 +65,12 @@ DecoratedBox(
                 shape: BoxShape.circle,
               ),
               child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Icon(
-                    OMIcons.home,
-                    color: Colors.white,
-                  )),
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  OMIcons.home,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ),
