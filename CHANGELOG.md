@@ -1,3 +1,7 @@
+## 0.2.1
+* Added `aspectRatio`, `center`, `fittedBox`, `fractionallySizedBox`, `card`
+* Added `seperator` to `toRow` and `toColumn` list methods
+
 ## 0.2.0
 * Major code refactoring
 * Added `parent` as `Widget` extension method

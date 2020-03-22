@@ -983,4 +983,69 @@ extension StyledWidget on Widget {
         dragStartBehavior: dragStartBehavior,
         child: this,
       );
+
+  // TODO: FEATURE: animate aspectRatio widget
+  Widget aspectRatio({
+    @required double aspectRatio,
+  }) =>
+      AspectRatio(
+        aspectRatio: aspectRatio,
+        child: this,
+      );
+
+  // TODO: FEATURE: animate center widget
+  Widget center({
+    double widthFactor,
+    double heightFactor,
+  }) =>
+      Center(
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        child: this,
+      );
+
+  // TODO: FEATURE: animate fittedBox
+  Widget fittedBox({
+    BoxFit fit = BoxFit.contain,
+    AlignmentGeometry alignment = Alignment.center,
+  }) =>
+      FittedBox(
+        fit: fit,
+        alignment: alignment,
+        child: this,
+      );
+
+  // TODO: FEATURE: animate FractionallySizedBox
+  Widget fractionallySizedBox({
+    AlignmentGeometry alignment = Alignment.center,
+    double widthFactor,
+    double heightFactor,
+  }) =>
+      FractionallySizedBox(
+        alignment: alignment,
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        child: this,
+      );
+
+  // TODO: FEATURE: animate card
+  Widget card({
+    Color color,
+    double elevation,
+    ShapeBorder shape,
+    bool borderOnForeground = true,
+    EdgeInsetsGeometry margin,
+    Clip clipBehavior,
+    bool semanticContainer = true,
+  }) =>
+      Card(
+        color: color,
+        elevation: elevation,
+        shape: shape,
+        borderOnForeground: borderOnForeground,
+        margin: margin,
+        clipBehavior: clipBehavior,
+        semanticContainer: semanticContainer,
+        child: this,
+      );
 }

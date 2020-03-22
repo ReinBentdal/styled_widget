@@ -9,6 +9,7 @@ extension StyledList<E> on List<Widget> {
     TextDirection textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline textBaseline,
+    Widget seperator,
     List<Widget> children = const <Widget>[],
   }) =>
       Column(
@@ -19,7 +20,12 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: this,
+        children: seperator == null || children.length == 0
+            ? children
+            : children
+                .expand((child) => [child, seperator])
+                .toList()
+                .removeLast(),
       );
 
   Widget toRow({
@@ -30,6 +36,7 @@ extension StyledList<E> on List<Widget> {
     TextDirection textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline textBaseline,
+    Widget seperator,
     List<Widget> children = const <Widget>[],
   }) =>
       Row(
@@ -40,7 +47,12 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: this,
+        children: seperator == null || children.length == 0
+            ? children
+            : children
+                .expand((child) => [child, seperator])
+                .toList()
+                .removeLast(),
       );
 
   Widget toStack({
