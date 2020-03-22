@@ -19,31 +19,60 @@
 Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget tree\`s more readable and efficient.<br/><br/>
 `styled_widget` is build as a tool to enhance your Flutter development experience and to seamlessly integrate with your codebase. 
 ```dart
-Text('hello world', style: _textStyle)
+Icon(OMIcons.home, color: Colors.white)
+  .padding(all: 10)
+  .decorated(color: Color(0xff7AC1E7), shape: BoxShape.circle)
+  .padding(all: 15)
+  .decorated(color: Color(0xffE8F2F7), shape: BoxShape.circle)
   .padding(all: 20)
-  .decorated(
-    borderRadius: BorderRadius.circular(10),
-    gradient: _gradient,
+  .card(
+    elevation: 10,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
   )
   .alignment(Alignment.center)
+  .backgroundColor(Color(0xffEBECF1));
 ```
 <details>
 <summary>Raw Flutter (click to show)</summary>
 <pre>
 
 ```dart
-Align(
-  alignment: Alignment.center,
-  child: DecoratedBox(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      gradient: _gradient,
-    ),
-    child: Padding(
-      padding: EdgeInsets.all(20),
-      child: Text(
-        'hello world',
-        style: _textStyle,
+DecoratedBox(
+  decoration: BoxDecoration(
+    color: Color(0xffEBECF1),
+  ),
+  child: Align(
+    alignment: Alignment.center,
+    child: Card(
+      elevation: 10,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Color(0xffE8F2F7),
+            shape: BoxShape.circle,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Color(0xff7AC1E7),
+                shape: BoxShape.circle,
+              ),
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Icon(
+                    OMIcons.home,
+                    color: Colors.white,
+                  )),
+            ),
+          ),
+        ),
       ),
     ),
   ),
@@ -51,7 +80,7 @@ Align(
 ```
 </pre>
 </details>
-<img width="150" src="https://github.com/ReinBentdal/styled_widget/raw/master/doc/assets/hello_world_demo.jpg" />
+<img width="400" src="https://github.com/ReinBentdal/styled_widget/blob/master/doc/assets/simple_demo.png?raw=true" />
 
 ### Showcase
 | [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://dribbble.com/shots/4514354-Sign-up), [Code](https://github.com/ReinBentdal/styled_widget/wiki/japan-style-example) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
