@@ -16,11 +16,12 @@
 
 <br />
 
-Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget tree\`s more readable and efficient.<br/><br/>
+Thanks to the introduction of [extension methods](https://dart.dev/guides/language/extension-methods) in Dart 2.7.0, `styled_widget` makes it possible to build widget tree\`s more readable and efficient.
+
 `styled_widget` is build as a tool to enhance your Flutter development experience and to seamlessly integrate with your codebase. 
 
 #### Basic example
-`styled_widget` has a bottom up paradigm where you start with the inner most element and layer widget\`s on top.The following example is structured as follows:<br/>
+`styled_widget` has a bottom up paradigm where you start with the inner most element and layer widget\`s on top.The following example is structured as follows:  
 Icon -> blue circle -> light blue circle -> card -> background
 ```dart
 Icon(OMIcons.home, color: Colors.white)
