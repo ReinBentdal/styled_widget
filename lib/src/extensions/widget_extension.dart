@@ -499,40 +499,60 @@ extension StyledWidget on Widget {
         shadowColor: shadowColor,
       );
 
-  // Widget elevation(
-  //   double elevation, {
-  //   double angle = 0.0,
-  //   Color shadowColor = const Color(0x33000000),
-  //   double opacity = 1.0,
-  //   bool animate = false,
-  // }) {
-  //   double calculatedOpacity = _elevationOpacityCurve(elevation) * opacity;
-  //   BoxDecoration decoration = BoxDecoration(
-  //     boxShadow: [
-  //       BoxShadow(
-  //         color: shadowColor.withOpacity(calculatedOpacity),
-  //         blurRadius: elevation,
-  //         spreadRadius: 0.0,
-  //         offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
-  //       ),
-  //     ],
-  //   );
-  //   return animate
-  //       ? _StyledAnimatedBuilder(
-  //           builder: (animation) {
-  //             return _AnimatedDecorationBox(
-  //               child: this,
-  //               decoration: decoration,
-  //               duration: animation?.duration,
-  //               curve: animation?.curve,
-  //             );
-  //           },
-  //         )
-  //       : DecoratedBox(
-  //           child: this,
-  //           decoration: decoration,
-  //         );
-  // }
+  Widget neumorphism({
+    double elevation,
+    BorderRadius borderRadius = BorderRadius.zero,
+    Color backgroundColor = const Color(0xffEDF1F5),
+    double curve = 0.0,
+  }) {
+    double offset = elevation / 2;
+    int colorOffset = (40 * curve).toInt();
+    final int Function(int, int) adjustColor = (int color, int colorOffset) {
+      int colorVal = color + colorOffset;
+      if (colorVal > 255)
+        return 255;
+      else if (colorVal < 0) return 0;
+      return colorVal;
+    };
+    return DecoratedBox(
+      child: this,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromRGBO(
+              adjustColor(backgroundColor.red, colorOffset),
+              adjustColor(backgroundColor.green, colorOffset),
+              adjustColor(backgroundColor.blue, colorOffset),
+              1.0,
+            ),
+            backgroundColor,
+            Color.fromRGBO(
+              adjustColor(backgroundColor.red, -colorOffset),
+              adjustColor(backgroundColor.green, -colorOffset),
+              adjustColor(backgroundColor.blue, -colorOffset),
+              1.0,
+            ),
+          ],
+          // stops: [0.90, 0.95],
+        ),
+        borderRadius: borderRadius,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: elevation,
+            offset: Offset(-offset, -offset),
+          ),
+          BoxShadow(
+            color: Color(0xAAA3B1C6),
+            blurRadius: elevation,
+            offset: Offset(offset, offset),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget boxShadow({
     Color color = const Color(0xFF000000),
