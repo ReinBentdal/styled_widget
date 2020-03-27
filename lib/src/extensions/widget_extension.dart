@@ -527,7 +527,6 @@ extension StyledWidget on Widget {
               adjustColor(backgroundColor.blue, colorOffset),
               1.0,
             ),
-            backgroundColor,
             Color.fromRGBO(
               adjustColor(backgroundColor.red, -colorOffset),
               adjustColor(backgroundColor.green, -colorOffset),
@@ -541,12 +540,12 @@ extension StyledWidget on Widget {
         boxShadow: [
           BoxShadow(
             color: Colors.white,
-            blurRadius: elevation,
+            blurRadius: elevation.abs(),
             offset: Offset(-offset, -offset),
           ),
           BoxShadow(
             color: Color(0xAAA3B1C6),
-            blurRadius: elevation,
+            blurRadius: elevation.abs(),
             offset: Offset(offset, offset),
           ),
         ],
