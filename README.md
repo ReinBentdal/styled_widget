@@ -20,7 +20,12 @@ Thanks to the introduction of [extension methods](https://dart.dev/guides/langua
 
 `styled_widget` is build as a tool to enhance your Flutter development experience and to seamlessly integrate with your codebase. 
 
-#### Basic example
+### Showcase
+| [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://dribbble.com/shots/4514354-Sign-up), [Code](https://github.com/ReinBentdal/styled_widget/wiki/japan-style-example) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
+|-|-|-|
+|<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif"  width="250">|<img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/japan-style-example.gif?raw=true" width="250" />|<img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/toggle.gif?raw=true" width="250">|
+
+### Basic example
 `styled_widget` has a **bottom up** approach to building widget\`s. This means you start with the inner most element and layer widget\`s on top. The following example is structured as follows:
 Icon -> blue circle -> light blue circle -> card -> background
 ```dart
@@ -87,11 +92,6 @@ DecoratedBox(
 </pre>
 </details>
 <img width="400" src="https://github.com/ReinBentdal/styled_widget/blob/master/doc/assets/simple_demo.png?raw=true" />
-
-### Showcase
-| [Design](https://dribbble.com/shots/6459693-Creative-layout-design),  [Code](https://github.com/ReinBentdal/styled_widget/wiki/demo_app) | [Design](https://dribbble.com/shots/4514354-Sign-up), [Code](https://github.com/ReinBentdal/styled_widget/wiki/japan-style-example) | [Design](https://no.pinterest.com/pin/403283341630104104/), [Code](https://github.com/ReinBentdal/styled_widget/wiki/toggle) |
-|-|-|-|
-|<img src="https://raw.githubusercontent.com/ReinBentdal/styled_widget/master/example/assets/demo_app.gif"  width="250">|<img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/japan-style-example.gif?raw=true" width="250" />|<img src="https://github.com/ReinBentdal/styled_widget/blob/master/example/assets/toggle.gif?raw=true" width="250">|
 
 ### Docs
 <strong>See the documentation at [styled_widget/wiki](https://github.com/ReinBentdal/styled_widget/wiki)</strong> for more information about using `styled_widget`!
