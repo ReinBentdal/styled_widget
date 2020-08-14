@@ -727,8 +727,10 @@ extension StyledWidget on Widget {
               transformHitTests: transformHitTests,
             );
 
-  Widget scale(
-    double scale, {
+  Widget scale({
+    double all,
+    double x,
+    double y,
     Offset origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
@@ -739,7 +741,7 @@ extension StyledWidget on Widget {
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
-                  transform: Matrix4.diagonal3Values(scale, scale, 1.0),
+                  transform: Matrix4.diagonal3Values(x ?? all, y ?? all, 1.0),
                   alignment: alignment,
                   transformHitTests: transformHitTests,
                   duration: animation?.duration,
@@ -747,8 +749,8 @@ extension StyledWidget on Widget {
                 );
               },
             )
-          : Transform.scale(
-              scale: scale,
+          : Transform(
+              transform: Matrix4.diagonal3Values(x ?? all, y ?? all, 1.0),
               alignment: alignment,
               child: this,
               origin: origin,
