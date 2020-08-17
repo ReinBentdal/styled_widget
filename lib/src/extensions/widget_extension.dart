@@ -93,6 +93,15 @@ extension StyledWidget on Widget {
               child: this,
             );
 
+  Widget offstage({
+    bool offstage = true,
+  }) =>
+      Offstage(
+        key: key,
+        offstage: offstage,
+        child: this,
+      );
+
   Widget alignment(
     AlignmentGeometry alignment, {
     bool animate = false,
