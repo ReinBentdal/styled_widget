@@ -1,5 +1,6 @@
 ## 0.2.2
 * Added `offstage` as `Widget` extension method
+* Added `neumorphism` widget as `Widget` extension method
 * Changed `scale` method to accept directional scaling
 
 ## 0.2.1
