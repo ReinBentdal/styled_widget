@@ -1,7 +1,8 @@
 ## 0.2.2
 * Added `offstage` as `Widget` extension method
 * Added `neumorphism` widget as `Widget` extension method
-* Changed `scale` method to accept directional scaling
+* [Breaking] Changed `scale` method to accept directional scaling
+* [Breaking] Renamed `stack` overflow parameter to clipBehavior 
 
 ## 0.2.1
 * Added `aspectRatio`, `center`, `fittedBox`, `fractionallySizedBox`, `card`
