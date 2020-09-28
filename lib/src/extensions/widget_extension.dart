@@ -513,6 +513,7 @@ extension StyledWidget on Widget {
     BorderRadius borderRadius = BorderRadius.zero,
     Color backgroundColor = const Color(0xffEDF1F5),
     double curve = 0.0,
+    bool animate = false,
   }) {
     double offset = elevation / 2;
     int colorOffset = (40 * curve).toInt();
@@ -523,43 +524,57 @@ extension StyledWidget on Widget {
       else if (colorVal < 0) return 0;
       return colorVal;
     };
-    return DecoratedBox(
-      child: this,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromRGBO(
-              adjustColor(backgroundColor.red, colorOffset),
-              adjustColor(backgroundColor.green, colorOffset),
-              adjustColor(backgroundColor.blue, colorOffset),
-              1.0,
-            ),
-            Color.fromRGBO(
-              adjustColor(backgroundColor.red, -colorOffset),
-              adjustColor(backgroundColor.green, -colorOffset),
-              adjustColor(backgroundColor.blue, -colorOffset),
-              1.0,
-            ),
-          ],
-          // stops: [0.90, 0.95],
-        ),
-        borderRadius: borderRadius,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white,
-            blurRadius: elevation.abs(),
-            offset: Offset(-offset, -offset),
+
+    BoxDecoration decoration = BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color.fromRGBO(
+            adjustColor(backgroundColor.red, colorOffset),
+            adjustColor(backgroundColor.green, colorOffset),
+            adjustColor(backgroundColor.blue, colorOffset),
+            1.0,
           ),
-          BoxShadow(
-            color: Color(0xAAA3B1C6),
-            blurRadius: elevation.abs(),
-            offset: Offset(offset, offset),
+          Color.fromRGBO(
+            adjustColor(backgroundColor.red, -colorOffset),
+            adjustColor(backgroundColor.green, -colorOffset),
+            adjustColor(backgroundColor.blue, -colorOffset),
+            1.0,
           ),
         ],
+        // stops: [0.90, 0.95],
       ),
+      borderRadius: borderRadius,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.white,
+          blurRadius: elevation.abs(),
+          offset: Offset(-offset, -offset),
+        ),
+        BoxShadow(
+          color: Color(0xAAA3B1C6),
+          blurRadius: elevation.abs(),
+          offset: Offset(offset, offset),
+        ),
+      ],
     );
+
+    return animate
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation?.duration,
+                curve: animation?.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
   }
 
   Widget boxShadow({
