@@ -9,7 +9,7 @@ extension StyledList<E> on List<Widget> {
     TextDirection textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline textBaseline,
-    Widget seperator,
+    Widget separator,
   }) =>
       Column(
         key: key,
@@ -19,8 +19,9 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: seperator != null && this.length > 0
-            ? this.expand((child) => [child, seperator]).toList().removeLast()
+        children: separator != null && this.length > 0
+            ? (this.expand((child) => [child, separator]).toList()
+              ..removeLast())
             : this,
       );
 
@@ -32,7 +33,7 @@ extension StyledList<E> on List<Widget> {
     TextDirection textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
     TextBaseline textBaseline,
-    Widget seperator,
+    Widget separator,
   }) =>
       Row(
         key: key,
@@ -42,8 +43,9 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: seperator != null && this.length > 0
-            ? this.expand((child) => [child, seperator]).toList().removeLast()
+        children: separator != null && this.length > 0
+            ? (this.expand((child) => [child, separator]).toList()
+              ..removeLast())
             : this,
       );
 
