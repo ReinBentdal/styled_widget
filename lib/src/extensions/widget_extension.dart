@@ -4,11 +4,11 @@ typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
 extension StyledWidget on Widget {
   _StyledAnimatedModel _getAnimation(BuildContext context) {
-    _StyledAnimatedModel animation =
+    _StyledAnimatedModel? animation =
         _StyledInheritedAnimation.of(context)?.animation;
     assert(animation != null,
         '[styled_widget]: You can`t animate without defining the animation. Call the method animate() higher in your widget hierarchy to define an animation');
-    return animation;
+    return animation!;
   }
 
   /// animated all properties before this method
@@ -23,7 +23,7 @@ extension StyledWidget on Widget {
 
   /// Applies a parent to a child
   /// ```dart
-  /// final parentWidget = ({@required Widget child}) => Styled.widget(child: child)
+  /// final parentWidget = ({required Widget child}) => Styled.widget(child: child)
   ///   .alignment(Alignment.center)
   ///
   /// final childWidget = Text('some text')
@@ -32,17 +32,17 @@ extension StyledWidget on Widget {
   /// Widget build(BuildContext) => childWidget
   ///   .parent(parentWidget);
   /// ```
-  Widget parent(Widget Function({@required Widget child}) parent) =>
+  Widget parent(Widget Function({required Widget child}) parent) =>
       parent(child: this);
 
   Widget padding({
-    double all,
-    double horizontal,
-    double vertical,
-    double top,
-    double bottom,
-    double left,
-    double right,
+    double? all,
+    double? horizontal,
+    double? vertical,
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
     bool animate = false,
   }) =>
       animate
@@ -57,8 +57,8 @@ extension StyledWidget on Widget {
                     left: left ?? horizontal ?? all ?? 0.0,
                     right: right ?? horizontal ?? all ?? 0.0,
                   ),
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -83,8 +83,8 @@ extension StyledWidget on Widget {
                 child: this,
                 opacity: opacity,
                 alwaysIncludeSemantics: alwaysIncludeSemantics,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             })
           : Opacity(
@@ -113,8 +113,8 @@ extension StyledWidget on Widget {
                 return AnimatedAlign(
                   child: this,
                   alignment: alignment,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -129,8 +129,8 @@ extension StyledWidget on Widget {
             return _AnimatedDecorationBox(
               child: this,
               decoration: BoxDecoration(color: color),
-              duration: animation?.duration,
-              curve: animation?.curve,
+              duration: animation.duration,
+              curve: animation.curve,
             );
           },
         )
@@ -146,8 +146,8 @@ extension StyledWidget on Widget {
                 return _AnimatedDecorationBox(
                   child: this,
                   decoration: BoxDecoration(image: image),
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -163,8 +163,8 @@ extension StyledWidget on Widget {
                 return _AnimatedDecorationBox(
                   child: this,
                   decoration: BoxDecoration(gradient: gradient),
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -176,17 +176,17 @@ extension StyledWidget on Widget {
   Widget backgroundLinearGradient({
     AlignmentGeometry begin = Alignment.centerLeft,
     AlignmentGeometry end = Alignment.centerRight,
-    List<Color> colors,
-    List<double> stops,
+    List<Color>? colors,
+    List<double>? stops,
     TileMode tileMode = TileMode.clamp,
-    GradientTransform transform,
+    GradientTransform? transform,
     bool animate = false,
   }) {
     BoxDecoration decoration = BoxDecoration(
       gradient: LinearGradient(
         begin: begin,
         end: end,
-        colors: colors,
+        colors: colors ?? [],
         stops: stops,
         tileMode: tileMode,
         transform: transform,
@@ -198,8 +198,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -212,18 +212,18 @@ extension StyledWidget on Widget {
   Widget backgroundRadialGradient(
       {AlignmentGeometry center = Alignment.center,
       double radius = 0.5,
-      List<Color> colors,
-      List<double> stops,
+      List<Color>? colors,
+      List<double>? stops,
       TileMode tileMode = TileMode.clamp,
-      AlignmentGeometry focal,
+      AlignmentGeometry? focal,
       double focalRadius = 0.0,
-      GradientTransform transform,
+      GradientTransform? transform,
       bool animate = false}) {
     BoxDecoration decoration = BoxDecoration(
       gradient: RadialGradient(
         center: center,
         radius: radius,
-        colors: colors,
+        colors: colors ?? [],
         stops: stops,
         tileMode: tileMode,
         focal: focal,
@@ -237,8 +237,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -252,17 +252,17 @@ extension StyledWidget on Widget {
       {AlignmentGeometry center = Alignment.center,
       double startAngle = 0.0,
       double endAngle = pi * 2,
-      List<Color> colors,
-      List<double> stops,
+      List<Color>? colors,
+      List<double>? stops,
       TileMode tileMode = TileMode.clamp,
-      GradientTransform transform,
+      GradientTransform? transform,
       bool animate = false}) {
     BoxDecoration decoration = BoxDecoration(
       gradient: SweepGradient(
         center: center,
         startAngle: startAngle,
         endAngle: endAngle,
-        colors: colors,
+        colors: colors ?? [],
         stops: stops,
         tileMode: tileMode,
         transform: transform,
@@ -274,8 +274,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -292,8 +292,8 @@ extension StyledWidget on Widget {
                 return _AnimatedDecorationBox(
                   child: this,
                   decoration: BoxDecoration(backgroundBlendMode: blendMode),
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -312,8 +312,8 @@ extension StyledWidget on Widget {
                 return _AnimatedBackgroundBlur(
                   child: this,
                   sigma: sigma,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -326,11 +326,11 @@ extension StyledWidget on Widget {
             );
 
   Widget borderRadius({
-    double all,
-    double topLeft,
-    double topRight,
-    double bottomLeft,
-    double bottomRight,
+    double? all,
+    double? topLeft,
+    double? topRight,
+    double? bottomLeft,
+    double? bottomRight,
     bool animate = false,
   }) {
     BoxDecoration decoration = BoxDecoration(
@@ -347,8 +347,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -359,12 +359,12 @@ extension StyledWidget on Widget {
   }
 
   Widget clipRRect({
-    double all,
-    double topLeft,
-    double topRight,
-    double bottomLeft,
-    double bottomRight,
-    CustomClipper<RRect> clipper,
+    double? all,
+    double? topLeft,
+    double? topRight,
+    double? bottomLeft,
+    double? bottomRight,
+    CustomClipper<RRect>? clipper,
     Clip clipBehavior = Clip.antiAlias,
     bool animate = false,
   }) =>
@@ -379,15 +379,15 @@ extension StyledWidget on Widget {
                   topRight: topRight ?? all ?? 0.0,
                   bottomLeft: bottomLeft ?? all ?? 0.0,
                   bottomRight: bottomRight ?? all ?? 0.0,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
           : ClipRRect(
               child: this,
               clipper: clipper ?? null,
-              clipBehavior: clipBehavior ?? null,
+              clipBehavior: clipBehavior,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
                 topRight: Radius.circular(topRight ?? all ?? 0.0),
@@ -397,7 +397,7 @@ extension StyledWidget on Widget {
             );
 
   Widget clipRect({
-    CustomClipper<Rect> clipper,
+    CustomClipper<Rect>? clipper,
     Clip clipBehavior = Clip.hardEdge,
   }) =>
       ClipRect(
@@ -411,11 +411,11 @@ extension StyledWidget on Widget {
       );
 
   Widget border({
-    double all,
-    double left,
-    double right,
-    double top,
-    double bottom,
+    double? all,
+    double? left,
+    double? right,
+    double? top,
+    double? bottom,
     Color color = const Color(0xFF000000),
     BorderStyle style = BorderStyle.solid,
     bool animate = false,
@@ -424,16 +424,16 @@ extension StyledWidget on Widget {
       border: Border(
         left: (left ?? all) == null
             ? BorderSide.none
-            : BorderSide(color: color, width: left ?? all, style: style),
+            : BorderSide(color: color, width: left ?? all ?? 0, style: style),
         right: (right ?? all) == null
             ? BorderSide.none
-            : BorderSide(color: color, width: right ?? all, style: style),
+            : BorderSide(color: color, width: right ?? all ?? 0, style: style),
         top: (top ?? all) == null
             ? BorderSide.none
-            : BorderSide(color: color, width: top ?? all, style: style),
+            : BorderSide(color: color, width: top ?? all ?? 0, style: style),
         bottom: (bottom ?? all) == null
             ? BorderSide.none
-            : BorderSide(color: color, width: bottom ?? all, style: style),
+            : BorderSide(color: color, width: bottom ?? all ?? 0, style: style),
       ),
     );
     return animate
@@ -442,8 +442,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -454,13 +454,13 @@ extension StyledWidget on Widget {
   }
 
   Widget decorated({
-    Color color,
-    DecorationImage image,
-    BoxBorder border,
-    BorderRadius borderRadius,
-    List<BoxShadow> boxShadow,
-    Gradient gradient,
-    BlendMode backgroundBlendMode,
+    Color? color,
+    DecorationImage? image,
+    BoxBorder? border,
+    BorderRadius? borderRadius,
+    List<BoxShadow>? boxShadow,
+    Gradient? gradient,
+    BlendMode? backgroundBlendMode,
     BoxShape shape = BoxShape.rectangle,
     DecorationPosition position = DecorationPosition.background,
     bool animate = false,
@@ -482,8 +482,8 @@ extension StyledWidget on Widget {
                 child: this,
                 decoration: decoration,
                 position: position,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -509,7 +509,7 @@ extension StyledWidget on Widget {
       );
 
   Widget neumorphism({
-    double elevation,
+    required double elevation,
     BorderRadius borderRadius = BorderRadius.zero,
     Color backgroundColor = const Color(0xffEDF1F5),
     double curve = 0.0,
@@ -566,8 +566,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -600,8 +600,8 @@ extension StyledWidget on Widget {
               return _AnimatedDecorationBox(
                 child: this,
                 decoration: decoration,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -612,8 +612,8 @@ extension StyledWidget on Widget {
   }
 
   Widget constrained({
-    double width,
-    double height,
+    double? width,
+    double? height,
     double minWidth = 0.0,
     double maxWidth = double.infinity,
     double minHeight = 0.0,
@@ -627,8 +627,7 @@ extension StyledWidget on Widget {
       maxHeight: maxHeight,
     );
     constraints = (width != null || height != null)
-        ? constraints?.tighten(width: width, height: height) ??
-            BoxConstraints.tightFor(width: width, height: height)
+        ? constraints.tighten(width: width, height: height)
         : constraints;
     return animate
         ? _StyledAnimatedBuilder(
@@ -636,8 +635,8 @@ extension StyledWidget on Widget {
               return _AnimatedConstrainedBox(
                 child: this,
                 constraints: constraints,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
               );
             },
           )
@@ -653,8 +652,8 @@ extension StyledWidget on Widget {
             return _AnimatedConstrainedBox(
               child: this,
               constraints: BoxConstraints.tightFor(width: width),
-              duration: animation?.duration,
-              curve: animation?.curve,
+              duration: animation.duration,
+              curve: animation.curve,
             );
           },
         )
@@ -669,8 +668,8 @@ extension StyledWidget on Widget {
             return _AnimatedConstrainedBox(
               child: this,
               constraints: BoxConstraints.tightFor(height: height),
-              duration: animation?.duration,
-              curve: animation?.curve,
+              duration: animation.duration,
+              curve: animation.curve,
             );
           },
         )
@@ -681,23 +680,23 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: ripple animation
   Widget ripple({
-    Color focusColor,
-    Color hoverColor,
-    Color highlightColor,
-    Color splashColor,
-    InteractiveInkFeatureFactory splashFactory,
-    double radius,
-    ShapeBorder customBorder,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? splashColor,
+    InteractiveInkFeatureFactory? splashFactory,
+    double? radius,
+    ShapeBorder? customBorder,
     bool enableFeedback = true,
     bool excludeFromSemantics = false,
-    FocusNode focusNode,
+    FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autoFocus = false,
   }) =>
       Builder(
         builder: (BuildContext context) {
           // TODO: PERFORMANCE: findAncestorWidgetOfExactType vs InheritedWidget performance
-          GestureDetector gestures =
+          GestureDetector? gestures =
               context.findAncestorWidgetOfExactType<GestureDetector>();
           return Material(
             color: Colors.transparent,
@@ -723,8 +722,8 @@ extension StyledWidget on Widget {
 
   // TODO: RotatedBox
   Widget rotate({
-    @required double angle,
-    Offset origin,
+    required double angle,
+    Offset? origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
     bool animate = false,
@@ -738,8 +737,8 @@ extension StyledWidget on Widget {
                   alignment: alignment,
                   origin: origin,
                   transformHitTests: transformHitTests,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -752,10 +751,10 @@ extension StyledWidget on Widget {
             );
 
   Widget scale({
-    double all,
-    double x,
-    double y,
-    Offset origin,
+    double? all,
+    double? x,
+    double? y,
+    Offset? origin,
     AlignmentGeometry alignment = Alignment.center,
     bool transformHitTests = true,
     bool animate = false,
@@ -765,16 +764,18 @@ extension StyledWidget on Widget {
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
-                  transform: Matrix4.diagonal3Values(x ?? all, y ?? all, 1.0),
+                  transform: Matrix4.diagonal3Values(
+                      x ?? all ?? 0, y ?? all ?? 0, 1.0),
                   alignment: alignment,
                   transformHitTests: transformHitTests,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
           : Transform(
-              transform: Matrix4.diagonal3Values(x ?? all, y ?? all, 1.0),
+              transform:
+                  Matrix4.diagonal3Values(x ?? all ?? 0, y ?? all ?? 0, 1.0),
               alignment: alignment,
               child: this,
               origin: origin,
@@ -782,7 +783,7 @@ extension StyledWidget on Widget {
             );
 
   Widget translate({
-    @required Offset offset,
+    required Offset offset,
     bool transformHitTests = true,
     bool animate = false,
   }) =>
@@ -794,8 +795,8 @@ extension StyledWidget on Widget {
                   transform:
                       Matrix4.translationValues(offset.dx, offset.dy, 0.0),
                   transformHitTests: transformHitTests,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -806,9 +807,9 @@ extension StyledWidget on Widget {
             );
 
   Widget transform({
-    @required Matrix4 transform,
-    Offset origin,
-    AlignmentGeometry alignment,
+    required Matrix4 transform,
+    Offset? origin,
+    AlignmentGeometry? alignment,
     bool transformHitTests = true,
     bool animate = false,
   }) =>
@@ -821,8 +822,8 @@ extension StyledWidget on Widget {
                   origin: origin,
                   alignment: alignment,
                   transformHitTests: transformHitTests,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -836,10 +837,10 @@ extension StyledWidget on Widget {
 
   Widget overflow({
     AlignmentGeometry alignment = Alignment.center,
-    double minWidth,
-    double maxWidth,
-    double minHeight,
-    double maxHeight,
+    double? minWidth,
+    double? maxWidth,
+    double? minHeight,
+    double? maxHeight,
     bool animate = false,
   }) =>
       animate
@@ -852,8 +853,8 @@ extension StyledWidget on Widget {
                   maxWidth: minWidth,
                   minHeight: minHeight,
                   maxHeight: maxHeight,
-                  duration: animation?.duration,
-                  curve: animation?.curve,
+                  duration: animation.duration,
+                  curve: animation.curve,
                 );
               },
             )
@@ -869,9 +870,9 @@ extension StyledWidget on Widget {
   Widget scrollable({
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    bool primary,
-    ScrollPhysics physics,
-    ScrollController controller,
+    bool? primary,
+    ScrollPhysics? physics,
+    ScrollController? controller,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
       SingleChildScrollView(
@@ -903,20 +904,20 @@ extension StyledWidget on Widget {
       );
 
   Widget positioned({
-    double left,
-    double top,
-    double right,
-    double bottom,
-    double width,
-    double height,
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+    double? width,
+    double? height,
     bool animate = false,
   }) =>
       animate
           ? _StyledAnimatedBuilder(builder: (animation) {
               return AnimatedPositioned(
                 child: this,
-                duration: animation?.duration,
-                curve: animation?.curve,
+                duration: animation.duration,
+                curve: animation.curve,
                 left: left,
                 top: top,
                 right: right,
@@ -941,43 +942,43 @@ extension StyledWidget on Widget {
       );
 
   Widget gestures({
-    GestureOnTapChangeCallback onTapChange,
-    GestureTapDownCallback onTapDown,
-    GestureTapUpCallback onTapUp,
-    GestureTapCallback onTap,
-    GestureTapCancelCallback onTapCancel,
-    GestureTapDownCallback onSecondaryTapDown,
-    GestureTapUpCallback onSecondaryTapUp,
-    GestureTapCancelCallback onSecondaryTapCancel,
-    GestureTapCallback onDoubleTap,
-    GestureLongPressCallback onLongPress,
-    GestureLongPressStartCallback onLongPressStart,
-    GestureLongPressMoveUpdateCallback onLongPressMoveUpdate,
-    GestureLongPressUpCallback onLongPressUp,
-    GestureLongPressEndCallback onLongPressEnd,
-    GestureDragDownCallback onVerticalDragDown,
-    GestureDragStartCallback onVerticalDragStart,
-    GestureDragUpdateCallback onVerticalDragUpdate,
-    GestureDragEndCallback onVerticalDragEnd,
-    GestureDragCancelCallback onVerticalDragCancel,
-    GestureDragDownCallback onHorizontalDragDown,
-    GestureDragStartCallback onHorizontalDragStart,
-    GestureDragUpdateCallback onHorizontalDragUpdate,
-    GestureDragEndCallback onHorizontalDragEnd,
-    GestureDragCancelCallback onHorizontalDragCancel,
-    GestureDragDownCallback onPanDown,
-    GestureDragStartCallback onPanStart,
-    GestureDragUpdateCallback onPanUpdate,
-    GestureDragEndCallback onPanEnd,
-    GestureDragCancelCallback onPanCancel,
-    GestureScaleStartCallback onScaleStart,
-    GestureScaleUpdateCallback onScaleUpdate,
-    GestureScaleEndCallback onScaleEnd,
-    GestureForcePressStartCallback onForcePressStart,
-    GestureForcePressPeakCallback onForcePressPeak,
-    GestureForcePressUpdateCallback onForcePressUpdate,
-    GestureForcePressEndCallback onForcePressEnd,
-    HitTestBehavior behavior,
+    GestureOnTapChangeCallback? onTapChange,
+    GestureTapDownCallback? onTapDown,
+    GestureTapUpCallback? onTapUp,
+    GestureTapCallback? onTap,
+    GestureTapCancelCallback? onTapCancel,
+    GestureTapDownCallback? onSecondaryTapDown,
+    GestureTapUpCallback? onSecondaryTapUp,
+    GestureTapCancelCallback? onSecondaryTapCancel,
+    GestureTapCallback? onDoubleTap,
+    GestureLongPressCallback? onLongPress,
+    GestureLongPressStartCallback? onLongPressStart,
+    GestureLongPressMoveUpdateCallback? onLongPressMoveUpdate,
+    GestureLongPressUpCallback? onLongPressUp,
+    GestureLongPressEndCallback? onLongPressEnd,
+    GestureDragDownCallback? onVerticalDragDown,
+    GestureDragStartCallback? onVerticalDragStart,
+    GestureDragUpdateCallback? onVerticalDragUpdate,
+    GestureDragEndCallback? onVerticalDragEnd,
+    GestureDragCancelCallback? onVerticalDragCancel,
+    GestureDragDownCallback? onHorizontalDragDown,
+    GestureDragStartCallback? onHorizontalDragStart,
+    GestureDragUpdateCallback? onHorizontalDragUpdate,
+    GestureDragEndCallback? onHorizontalDragEnd,
+    GestureDragCancelCallback? onHorizontalDragCancel,
+    GestureDragDownCallback? onPanDown,
+    GestureDragStartCallback? onPanStart,
+    GestureDragUpdateCallback? onPanUpdate,
+    GestureDragEndCallback? onPanEnd,
+    GestureDragCancelCallback? onPanCancel,
+    GestureScaleStartCallback? onScaleStart,
+    GestureScaleUpdateCallback? onScaleUpdate,
+    GestureScaleEndCallback? onScaleEnd,
+    GestureForcePressStartCallback? onForcePressStart,
+    GestureForcePressPeakCallback? onForcePressPeak,
+    GestureForcePressUpdateCallback? onForcePressUpdate,
+    GestureForcePressEndCallback? onForcePressEnd,
+    HitTestBehavior? behavior,
     bool excludeFromSemantics = false,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
@@ -1031,7 +1032,7 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate aspectRatio widget
   Widget aspectRatio({
-    @required double aspectRatio,
+    required double aspectRatio,
   }) =>
       AspectRatio(
         aspectRatio: aspectRatio,
@@ -1040,8 +1041,8 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate center widget
   Widget center({
-    double widthFactor,
-    double heightFactor,
+    double? widthFactor,
+    double? heightFactor,
   }) =>
       Center(
         widthFactor: widthFactor,
@@ -1063,8 +1064,8 @@ extension StyledWidget on Widget {
   // TODO: FEATURE: animate FractionallySizedBox
   Widget fractionallySizedBox({
     AlignmentGeometry alignment = Alignment.center,
-    double widthFactor,
-    double heightFactor,
+    double? widthFactor,
+    double? heightFactor,
   }) =>
       FractionallySizedBox(
         alignment: alignment,
@@ -1075,12 +1076,12 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate card
   Widget card({
-    Color color,
-    double elevation,
-    ShapeBorder shape,
+    Color? color,
+    double? elevation,
+    ShapeBorder? shape,
     bool borderOnForeground = true,
-    EdgeInsetsGeometry margin,
-    Clip clipBehavior,
+    EdgeInsetsGeometry? margin,
+    Clip? clipBehavior,
     bool semanticContainer = true,
   }) =>
       Card(

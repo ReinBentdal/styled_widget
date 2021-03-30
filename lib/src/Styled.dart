@@ -1,7 +1,7 @@
 part of '../styled_widget.dart';
 
 class Styled {
-  static Widget widget({Widget child}) =>
+  static Widget widget({Widget? child}) =>
       child ??
       LimitedBox(
         maxWidth: 0.0,
@@ -13,17 +13,17 @@ class Styled {
 
   static Text text(
     String data, {
-    TextStyle style,
-    StrutStyle strutStyle,
-    TextAlign textAlign,
-    TextDirection textDirection,
-    Locale locale,
-    bool softWrap,
-    TextOverflow overflow,
-    double textScaleFactor,
-    int maxLines,
-    String semanticsLabel,
-    TextWidthBasis textWidthBasis,
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    TextDirection? textDirection,
+    Locale? locale,
+    bool? softWrap,
+    TextOverflow? overflow,
+    double? textScaleFactor,
+    int? maxLines,
+    String? semanticsLabel,
+    TextWidthBasis? textWidthBasis,
     bool animate = false,
   }) =>
       animate
@@ -56,13 +56,15 @@ class Styled {
               textWidthBasis: textWidthBasis,
             );
 
-  static Icon icon(IconData icon,
-          {Key key,
-          double size,
-          Color color,
-          String semanticLabel,
-          TextDirection textDirection,
-          bool animate = false}) =>
+  static Icon icon(
+    IconData icon, {
+    Key? key,
+    double? size,
+    Color? color,
+    String? semanticLabel,
+    TextDirection? textDirection,
+    bool animate = false,
+  }) =>
       animate
           ? _StyledAnimatedIconContainer(
               icon,

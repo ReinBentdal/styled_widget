@@ -1,10 +1,10 @@
 part of '../../styled_widget.dart';
 
 extension StyledTextSpan<T extends TextSpan> on T {
-  TextSpan copyWith({
-    TextStyle style,
-    GestureRecognizer recognizer,
-    String semanticsLabel,
+  T copyWith({
+    TextStyle? style,
+    GestureRecognizer? recognizer,
+    String? semanticsLabel,
   }) =>
       TextSpan(
         text: this.text,
@@ -12,32 +12,32 @@ extension StyledTextSpan<T extends TextSpan> on T {
         style: style ?? this.style,
         recognizer: recognizer ?? this.recognizer,
         semanticsLabel: semanticsLabel ?? this.semanticsLabel,
-      );
+      ) as T;
 
   T textStyle(TextStyle style) => this.copyWith(
-        style: this.style.copyWith(
-              background: style?.background,
-              backgroundColor: style?.backgroundColor,
-              color: style?.color,
-              debugLabel: style?.debugLabel,
-              decoration: style?.decoration,
-              decorationColor: style?.decorationColor,
-              decorationStyle: style?.decorationStyle,
-              decorationThickness: style?.decorationThickness,
-              fontFamily: style?.fontFamily,
-              fontFamilyFallback: style?.fontFamilyFallback,
-              fontFeatures: style?.fontFeatures,
-              fontSize: style?.fontSize,
-              fontStyle: style?.fontStyle,
-              fontWeight: style?.fontWeight,
-              foreground: style?.foreground,
-              height: style?.height,
-              inherit: style?.inherit,
-              letterSpacing: style?.letterSpacing,
-              locale: style?.locale,
-              shadows: style?.shadows,
-              textBaseline: style?.textBaseline,
-              wordSpacing: style?.wordSpacing,
+        style: this.style?.copyWith(
+              background: style.background,
+              backgroundColor: style.backgroundColor,
+              color: style.color,
+              debugLabel: style.debugLabel,
+              decoration: style.decoration,
+              decorationColor: style.decorationColor,
+              decorationStyle: style.decorationStyle,
+              decorationThickness: style.decorationThickness,
+              fontFamily: style.fontFamily,
+              fontFamilyFallback: style.fontFamilyFallback,
+              fontFeatures: style.fontFeatures,
+              fontSize: style.fontSize,
+              fontStyle: style.fontStyle,
+              fontWeight: style.fontWeight,
+              foreground: style.foreground,
+              height: style.height,
+              inherit: style.inherit,
+              letterSpacing: style.letterSpacing,
+              locale: style.locale,
+              shadows: style.shadows,
+              textBaseline: style.textBaseline,
+              wordSpacing: style.wordSpacing,
             ),
       );
 
