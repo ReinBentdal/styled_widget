@@ -1,3 +1,7 @@
+## 0.3.0
+* Null safety
+* Minor fixes
+
 ## 0.2.2
 * Added `offstage` as `Widget` extension method
 * Added `neumorphism` widget as `Widget` extension method
