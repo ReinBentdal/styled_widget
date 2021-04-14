@@ -1,0 +1,18 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  errors:
+
+  exclude:
+    - "android/**"
+    - "ios/**"
+    - "build/**"
+    - "vendors/**"
+    - "resources/**"
