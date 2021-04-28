@@ -1197,4 +1197,6 @@ extension StyledWidget on Widget {
         semanticContainer: semanticContainer,
         child: this,
       );
+
+  Widget safeArea() => SafeArea(child: this);
 }
