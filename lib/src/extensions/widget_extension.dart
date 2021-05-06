@@ -72,6 +72,43 @@ extension StyledWidget on Widget {
               child: this,
             );
 
+  Widget paddingDirectional({
+    double? all,
+    double? horizontal,
+    double? vertical,
+    double? top,
+    double? bottom,
+    double? start,
+    double? end,
+    bool animate = false,
+  }) =>
+      animate
+          ? Builder(
+              builder: (BuildContext context) {
+                _StyledAnimatedModel animation = this._getAnimation(context);
+                return AnimatedPadding(
+                  child: this,
+                  padding: EdgeInsetsDirectional.only(
+                    top: top ?? vertical ?? all ?? 0.0,
+                    bottom: bottom ?? vertical ?? all ?? 0.0,
+                    start: start ?? horizontal ?? all ?? 0.0,
+                    end: end ?? horizontal ?? all ?? 0.0,
+                  ),
+                  duration: animation.duration,
+                  curve: animation.curve,
+                );
+              },
+            )
+          : Padding(
+              padding: EdgeInsetsDirectional.only(
+                top: top ?? vertical ?? all ?? 0.0,
+                bottom: bottom ?? vertical ?? all ?? 0.0,
+                start: start ?? horizontal ?? all ?? 0.0,
+                end: end ?? horizontal ?? all ?? 0.0,
+              ),
+              child: this,
+            );
+
   Widget opacity(
     double opacity, {
     bool animate = false,
@@ -339,6 +376,39 @@ extension StyledWidget on Widget {
         topRight: Radius.circular(topRight ?? all ?? 0.0),
         bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
         bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
+      ),
+    );
+    return animate
+        ? _StyledAnimatedBuilder(
+            builder: (animation) {
+              return _AnimatedDecorationBox(
+                child: this,
+                decoration: decoration,
+                duration: animation.duration,
+                curve: animation.curve,
+              );
+            },
+          )
+        : DecoratedBox(
+            child: this,
+            decoration: decoration,
+          );
+  }
+
+  Widget borderRadiusDirectional({
+    double? all,
+    double? topStart,
+    double? topEnd,
+    double? bottomStart,
+    double? bottomEnd,
+    bool animate = false,
+  }) {
+    BoxDecoration decoration = BoxDecoration(
+      borderRadius: BorderRadiusDirectional.only(
+        topStart: Radius.circular(topStart ?? all ?? 0.0),
+        topEnd: Radius.circular(topEnd ?? all ?? 0.0),
+        bottomStart: Radius.circular(bottomStart ?? all ?? 0.0),
+        bottomEnd: Radius.circular(bottomEnd ?? all ?? 0.0),
       ),
     );
     return animate
@@ -936,6 +1006,39 @@ extension StyledWidget on Widget {
               height: height,
             );
 
+  Widget positionedDirectional({
+    double? start,
+    double? end,
+    double? top,
+    double? bottom,
+    double? width,
+    double? height,
+    bool animate = false,
+  }) =>
+      animate
+          ? _StyledAnimatedBuilder(builder: (animation) {
+              return AnimatedPositionedDirectional(
+                child: this,
+                duration: animation.duration,
+                curve: animation.curve,
+                start: start,
+                end: end,
+                top: top,
+                bottom: bottom,
+                width: width,
+                height: height,
+              );
+            })
+          : PositionedDirectional(
+              child: this,
+              start: start,
+              end: end,
+              top: top,
+              bottom: bottom,
+              width: width,
+              height: height,
+            );
+
   Widget semanticsLabel(String label) => Semantics.fromProperties(
         properties: SemanticsProperties(label: label),
         child: this,
@@ -1094,4 +1197,6 @@ extension StyledWidget on Widget {
         semanticContainer: semanticContainer,
         child: this,
       );
+
+  Widget safeArea() => SafeArea(child: this);
 }
