@@ -1,3 +1,6 @@
+## 0.3.1
+* Added `paddingDirectional`, `positionedDirectional` and `borderRadiusDirectional`
+
 ## 0.3.0
 * Null safety
 * Minor fixes
