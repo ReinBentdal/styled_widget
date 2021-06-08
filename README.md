@@ -42,51 +42,55 @@ Icon(OMIcons.home, color: Colors.white)
     ),
   )
   .alignment(Alignment.center)
-  .backgroundColor(Color(0xffEBECF1));
+  .backgroundColor(Color(0xffEBECF1))
+  .onTapGesture(() {});
 ```
 <details>
   <summary>Raw Flutter (click to show)</summary>
 <pre>
 
 ```dart
-DecoratedBox(
-  decoration: BoxDecoration(
-    color: Color(0xffEBECF1),
-  ),
-  child: Align(
-    alignment: Alignment.center,
-    child: Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Color(0xffE8F2F7),
-            shape: BoxShape.circle,
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Color(0xff7AC1E7),
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Icon(
-                  OMIcons.home,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
+GestureDetector(
+  onTap: () {}
+  child: DecoratedBox(
+   decoration: BoxDecoration(
+     color: Color(0xffEBECF1),
+   ),
+   child: Align(
+     alignment: Alignment.center,
+     child: Card(
+       elevation: 10,
+       shape: RoundedRectangleBorder(
+         borderRadius: BorderRadius.circular(20),
+       ),
+       child: Padding(
+         padding: EdgeInsets.all(20),
+         child: DecoratedBox(
+           decoration: BoxDecoration(
+             color: Color(0xffE8F2F7),
+             shape: BoxShape.circle,
+           ),
+           child: Padding(
+             padding: EdgeInsets.all(15),
+             child: DecoratedBox(
+               decoration: BoxDecoration(
+                 color: Color(0xff7AC1E7),
+                 shape: BoxShape.circle,
+               ),
+               child: Padding(
+                 padding: EdgeInsets.all(10),
+                 child: Icon(
+                   OMIcons.home,
+                   color: Colors.white,
+                 ),
+               ),
+             ),
+           ),
+         ),
+       ),
+     ),
+   ),
+ )
 );
 ```
 </pre>
