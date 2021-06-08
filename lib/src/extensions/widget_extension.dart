@@ -1199,4 +1199,7 @@ extension StyledWidget on Widget {
       );
 
   Widget safeArea() => SafeArea(child: this);
+
+  /// Wraps widget in `GestureDetector`
+  Widget onTapGesture(GestureTapCallback onTap) => GestureDetector(child: this, onTap: onTap);
 }
