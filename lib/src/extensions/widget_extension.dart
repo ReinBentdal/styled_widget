@@ -4,8 +4,7 @@ typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
 extension StyledWidget on Widget {
   _StyledAnimatedModel _getAnimation(BuildContext context) {
-    _StyledAnimatedModel? animation =
-        _StyledInheritedAnimation.of(context)?.animation;
+    _StyledAnimatedModel? animation = _StyledInheritedAnimation.of(context)?.animation;
     assert(animation != null,
         '[styled_widget]: You can`t animate without defining the animation. Call the method animate() higher in your widget hierarchy to define an animation');
     return animation!;
@@ -13,10 +12,12 @@ extension StyledWidget on Widget {
 
   /// animated all properties before this method
   Widget animate(
+    Key? key,
     Duration duration,
     Curve curve,
   ) =>
       _StyledInheritedAnimation(
+        key: key,
         animation: _StyledAnimatedModel(duration: duration, curve: curve),
         child: this,
       );
@@ -32,10 +33,10 @@ extension StyledWidget on Widget {
   /// Widget build(BuildContext) => childWidget
   ///   .parent(parentWidget);
   /// ```
-  Widget parent(Widget Function({required Widget child}) parent) =>
-      parent(child: this);
+  Widget parent(Widget Function({required Widget child}) parent) => parent(child: this);
 
   Widget padding({
+    Key? key,
     double? all,
     double? horizontal,
     double? vertical,
@@ -47,6 +48,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? Builder(
+              key: key,
               builder: (BuildContext context) {
                 _StyledAnimatedModel animation = this._getAnimation(context);
                 return AnimatedPadding(
@@ -63,6 +65,7 @@ extension StyledWidget on Widget {
               },
             )
           : Padding(
+              key: key,
               padding: EdgeInsets.only(
                 top: top ?? vertical ?? all ?? 0.0,
                 bottom: bottom ?? vertical ?? all ?? 0.0,
@@ -73,6 +76,7 @@ extension StyledWidget on Widget {
             );
 
   Widget paddingDirectional({
+    Key? key,
     double? all,
     double? horizontal,
     double? vertical,
@@ -84,6 +88,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? Builder(
+              key: key,
               builder: (BuildContext context) {
                 _StyledAnimatedModel animation = this._getAnimation(context);
                 return AnimatedPadding(
@@ -100,6 +105,7 @@ extension StyledWidget on Widget {
               },
             )
           : Padding(
+              key: key,
               padding: EdgeInsetsDirectional.only(
                 top: top ?? vertical ?? all ?? 0.0,
                 bottom: bottom ?? vertical ?? all ?? 0.0,
@@ -110,27 +116,32 @@ extension StyledWidget on Widget {
             );
 
   Widget opacity(
+    Key? key,
     double opacity, {
     bool animate = false,
     bool alwaysIncludeSemantics = false,
   }) =>
       animate
-          ? _StyledAnimatedBuilder(builder: (animation) {
-              return AnimatedOpacity(
-                child: this,
-                opacity: opacity,
-                alwaysIncludeSemantics: alwaysIncludeSemantics,
-                duration: animation.duration,
-                curve: animation.curve,
-              );
-            })
+          ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return AnimatedOpacity(
+                  child: this,
+                  opacity: opacity,
+                  alwaysIncludeSemantics: alwaysIncludeSemantics,
+                  duration: animation.duration,
+                  curve: animation.curve,
+                );
+              })
           : Opacity(
+              key: key,
               opacity: opacity,
               alwaysIncludeSemantics: alwaysIncludeSemantics,
               child: this,
             );
 
   Widget offstage({
+    Key? key,
     bool offstage = true,
   }) =>
       Offstage(
@@ -140,11 +151,13 @@ extension StyledWidget on Widget {
       );
 
   Widget alignment(
+    Key? key,
     AlignmentGeometry alignment, {
     bool animate = false,
   }) =>
       animate
           ? Builder(
+              key: key,
               builder: (BuildContext context) {
                 _StyledAnimatedModel animation = this._getAnimation(context);
                 return AnimatedAlign(
@@ -156,29 +169,42 @@ extension StyledWidget on Widget {
               },
             )
           : Align(
+              key: key,
               alignment: alignment,
               child: this,
             );
 
-  Widget backgroundColor(Color color, {bool animate = false}) => animate
-      ? _StyledAnimatedBuilder(
-          builder: (animation) {
-            return _AnimatedDecorationBox(
-              child: this,
-              decoration: BoxDecoration(color: color),
-              duration: animation.duration,
-              curve: animation.curve,
-            );
-          },
-        )
-      : DecoratedBox(
-          child: this,
-          decoration: BoxDecoration(color: color),
-        );
-
-  Widget backgroundImage(DecorationImage image, {bool animate = false}) =>
+  Widget backgroundColor(
+    Color color, {
+    Key? key,
+    bool animate = false,
+  }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return _AnimatedDecorationBox(
+                  child: this,
+                  decoration: BoxDecoration(color: color),
+                  duration: animation.duration,
+                  curve: animation.curve,
+                );
+              },
+            )
+          : DecoratedBox(
+              key: key,
+              child: this,
+              decoration: BoxDecoration(color: color),
+            );
+
+  Widget backgroundImage(
+    DecorationImage image, {
+    Key? key,
+    bool animate = false,
+  }) =>
+      animate
+          ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
                   child: this,
@@ -189,13 +215,19 @@ extension StyledWidget on Widget {
               },
             )
           : DecoratedBox(
+              key: key,
               child: this,
               decoration: BoxDecoration(image: image),
             );
 
-  Widget backgroundGradient(Gradient gradient, {bool animate = false}) =>
+  Widget backgroundGradient(
+    Gradient gradient, {
+    Key? key,
+    bool animate = false,
+  }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
                   child: this,
@@ -206,11 +238,13 @@ extension StyledWidget on Widget {
               },
             )
           : DecoratedBox(
+              key: key,
               child: this,
               decoration: BoxDecoration(gradient: gradient),
             );
 
   Widget backgroundLinearGradient({
+    Key? key,
     AlignmentGeometry begin = Alignment.centerLeft,
     AlignmentGeometry end = Alignment.centerRight,
     List<Color>? colors,
@@ -231,6 +265,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -241,21 +276,24 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
-  Widget backgroundRadialGradient(
-      {AlignmentGeometry center = Alignment.center,
-      double radius = 0.5,
-      List<Color>? colors,
-      List<double>? stops,
-      TileMode tileMode = TileMode.clamp,
-      AlignmentGeometry? focal,
-      double focalRadius = 0.0,
-      GradientTransform? transform,
-      bool animate = false}) {
+  Widget backgroundRadialGradient({
+    Key? key,
+    AlignmentGeometry center = Alignment.center,
+    double radius = 0.5,
+    List<Color>? colors,
+    List<double>? stops,
+    TileMode tileMode = TileMode.clamp,
+    AlignmentGeometry? focal,
+    double focalRadius = 0.0,
+    GradientTransform? transform,
+    bool animate = false,
+  }) {
     BoxDecoration decoration = BoxDecoration(
       gradient: RadialGradient(
         center: center,
@@ -270,6 +308,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -280,20 +319,23 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
-  Widget backgroundSweepGradient(
-      {AlignmentGeometry center = Alignment.center,
-      double startAngle = 0.0,
-      double endAngle = pi * 2,
-      List<Color>? colors,
-      List<double>? stops,
-      TileMode tileMode = TileMode.clamp,
-      GradientTransform? transform,
-      bool animate = false}) {
+  Widget backgroundSweepGradient({
+    Key? key,
+    AlignmentGeometry center = Alignment.center,
+    double startAngle = 0.0,
+    double endAngle = pi * 2,
+    List<Color>? colors,
+    List<double>? stops,
+    TileMode tileMode = TileMode.clamp,
+    GradientTransform? transform,
+    bool animate = false,
+  }) {
     BoxDecoration decoration = BoxDecoration(
       gradient: SweepGradient(
         center: center,
@@ -307,6 +349,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -317,14 +360,20 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
-  Widget backgroundBlendMode(BlendMode blendMode, {bool animate = false}) =>
+  Widget backgroundBlendMode(
+    BlendMode blendMode, {
+    Key? key,
+    bool animate = false,
+  }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
                   child: this,
@@ -335,16 +384,19 @@ extension StyledWidget on Widget {
               },
             )
           : DecoratedBox(
+              key: key,
               child: this,
               decoration: BoxDecoration(backgroundBlendMode: blendMode),
             );
 
   Widget backgroundBlur(
     double sigma, {
+    Key? key,
     bool animate = false,
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedBackgroundBlur(
                   child: this,
@@ -355,6 +407,7 @@ extension StyledWidget on Widget {
               },
             )
           : BackdropFilter(
+              key: key,
               filter: ImageFilter.blur(
                 sigmaX: sigma,
                 sigmaY: sigma,
@@ -363,6 +416,7 @@ extension StyledWidget on Widget {
             );
 
   Widget borderRadius({
+    Key? key,
     double? all,
     double? topLeft,
     double? topRight,
@@ -380,6 +434,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -390,12 +445,14 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
   Widget borderRadiusDirectional({
+    Key? key,
     double? all,
     double? topStart,
     double? topEnd,
@@ -413,6 +470,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -423,12 +481,14 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
   Widget clipRRect({
+    Key? key,
     double? all,
     double? topLeft,
     double? topRight,
@@ -440,6 +500,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedClipRRect(
                   child: this,
@@ -455,6 +516,7 @@ extension StyledWidget on Widget {
               },
             )
           : ClipRRect(
+              key: key,
               child: this,
               clipper: clipper ?? null,
               clipBehavior: clipBehavior,
@@ -467,20 +529,24 @@ extension StyledWidget on Widget {
             );
 
   Widget clipRect({
+    Key? key,
     CustomClipper<Rect>? clipper,
     Clip clipBehavior = Clip.hardEdge,
   }) =>
       ClipRect(
+        key: key,
         clipper: clipper,
         clipBehavior: clipBehavior,
         child: this,
       );
 
-  Widget clipOval() => ClipOval(
+  Widget clipOval({Key? key}) => ClipOval(
+        key: key,
         child: this,
       );
 
   Widget border({
+    Key? key,
     double? all,
     double? left,
     double? right,
@@ -492,15 +558,10 @@ extension StyledWidget on Widget {
   }) {
     BoxDecoration decoration = BoxDecoration(
       border: Border(
-        left: (left ?? all) == null
-            ? BorderSide.none
-            : BorderSide(color: color, width: left ?? all ?? 0, style: style),
-        right: (right ?? all) == null
-            ? BorderSide.none
-            : BorderSide(color: color, width: right ?? all ?? 0, style: style),
-        top: (top ?? all) == null
-            ? BorderSide.none
-            : BorderSide(color: color, width: top ?? all ?? 0, style: style),
+        left: (left ?? all) == null ? BorderSide.none : BorderSide(color: color, width: left ?? all ?? 0, style: style),
+        right:
+            (right ?? all) == null ? BorderSide.none : BorderSide(color: color, width: right ?? all ?? 0, style: style),
+        top: (top ?? all) == null ? BorderSide.none : BorderSide(color: color, width: top ?? all ?? 0, style: style),
         bottom: (bottom ?? all) == null
             ? BorderSide.none
             : BorderSide(color: color, width: bottom ?? all ?? 0, style: style),
@@ -508,6 +569,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -518,12 +580,14 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
   Widget decorated({
+    Key? key,
     Color? color,
     DecorationImage? image,
     BoxBorder? border,
@@ -547,6 +611,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -558,19 +623,24 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
             position: position,
           );
   }
 
-  double _elevationOpacityCurve(double x) =>
-      pow(x, 1 / 16) / sqrt(pow(x, 2) + 2) + 0.2;
+  double _elevationOpacityCurve(double x) => pow(x, 1 / 16) / sqrt(pow(x, 2) + 2) + 0.2;
 
-  Widget elevation(double elevation,
-          {BorderRadiusGeometry borderRadius = BorderRadius.zero,
-          Color shadowColor = const Color(0xFF000000)}) =>
+  // TODO: Animate elevation
+  Widget elevation(
+    double elevation, {
+    Key? key,
+    BorderRadiusGeometry borderRadius = BorderRadius.zero,
+    Color shadowColor = const Color(0xFF000000),
+  }) =>
       Material(
+        key: key,
         child: this,
         color: Colors.transparent,
         elevation: elevation,
@@ -579,6 +649,7 @@ extension StyledWidget on Widget {
       );
 
   Widget neumorphism({
+    Key? key,
     required double elevation,
     BorderRadius borderRadius = BorderRadius.zero,
     Color backgroundColor = const Color(0xffEDF1F5),
@@ -632,6 +703,7 @@ extension StyledWidget on Widget {
 
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -642,12 +714,14 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
   Widget boxShadow({
+    Key? key,
     Color color = const Color(0xFF000000),
     Offset offset = Offset.zero,
     double blurRadius = 0.0,
@@ -666,6 +740,7 @@ extension StyledWidget on Widget {
     );
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
                 child: this,
@@ -676,12 +751,14 @@ extension StyledWidget on Widget {
             },
           )
         : DecoratedBox(
+            key: key,
             child: this,
             decoration: decoration,
           );
   }
 
   Widget constrained({
+    Key? key,
     double? width,
     double? height,
     double minWidth = 0.0,
@@ -696,11 +773,10 @@ extension StyledWidget on Widget {
       minHeight: minHeight,
       maxHeight: maxHeight,
     );
-    constraints = (width != null || height != null)
-        ? constraints.tighten(width: width, height: height)
-        : constraints;
+    constraints = (width != null || height != null) ? constraints.tighten(width: width, height: height) : constraints;
     return animate
         ? _StyledAnimatedBuilder(
+            key: key,
             builder: (animation) {
               return _AnimatedConstrainedBox(
                 child: this,
@@ -711,45 +787,61 @@ extension StyledWidget on Widget {
             },
           )
         : ConstrainedBox(
+            key: key,
             child: this,
             constraints: constraints,
           );
   }
 
-  Widget width(double width, {bool animate = false}) => animate
-      ? _StyledAnimatedBuilder(
-          builder: (animation) {
-            return _AnimatedConstrainedBox(
+  Widget width(
+    double width, {
+    Key? key,
+    bool animate = false,
+  }) =>
+      animate
+          ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return _AnimatedConstrainedBox(
+                  child: this,
+                  constraints: BoxConstraints.tightFor(width: width),
+                  duration: animation.duration,
+                  curve: animation.curve,
+                );
+              },
+            )
+          : ConstrainedBox(
+              key: key,
               child: this,
               constraints: BoxConstraints.tightFor(width: width),
-              duration: animation.duration,
-              curve: animation.curve,
             );
-          },
-        )
-      : ConstrainedBox(
-          child: this,
-          constraints: BoxConstraints.tightFor(width: width),
-        );
 
-  Widget height(double height, {bool animate = false}) => animate
-      ? _StyledAnimatedBuilder(
-          builder: (animation) {
-            return _AnimatedConstrainedBox(
+  Widget height(
+    double height, {
+    Key? key,
+    bool animate = false,
+  }) =>
+      animate
+          ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return _AnimatedConstrainedBox(
+                  child: this,
+                  constraints: BoxConstraints.tightFor(height: height),
+                  duration: animation.duration,
+                  curve: animation.curve,
+                );
+              },
+            )
+          : ConstrainedBox(
+              key: key,
               child: this,
               constraints: BoxConstraints.tightFor(height: height),
-              duration: animation.duration,
-              curve: animation.curve,
             );
-          },
-        )
-      : ConstrainedBox(
-          child: this,
-          constraints: BoxConstraints.tightFor(height: height),
-        );
 
   // TODO: FEATURE: ripple animation
   Widget ripple({
+    Key? key,
     Color? focusColor,
     Color? hoverColor,
     Color? highlightColor,
@@ -762,36 +854,43 @@ extension StyledWidget on Widget {
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autoFocus = false,
+    bool enable = true,
   }) =>
-      Builder(
-        builder: (BuildContext context) {
-          // TODO: PERFORMANCE: findAncestorWidgetOfExactType vs InheritedWidget performance
-          GestureDetector? gestures =
-              context.findAncestorWidgetOfExactType<GestureDetector>();
-          return Material(
-            color: Colors.transparent,
-            child: InkWell(
-              focusColor: focusColor,
-              hoverColor: hoverColor,
-              highlightColor: highlightColor,
-              splashColor: splashColor,
-              splashFactory: splashFactory,
-              radius: radius,
-              customBorder: customBorder,
-              enableFeedback: enableFeedback,
-              excludeFromSemantics: excludeFromSemantics,
-              focusNode: focusNode,
-              canRequestFocus: canRequestFocus,
-              autofocus: autoFocus,
-              onTap: gestures?.onTap,
-              child: this,
-            ),
-          );
-        },
-      );
+      enable
+          ? Builder(
+              key: key,
+              builder: (BuildContext context) {
+                // TODO: PERFORMANCE: findAncestorWidgetOfExactType vs InheritedWidget performance
+                GestureDetector? gestures = context.findAncestorWidgetOfExactType<GestureDetector>();
+                return Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    focusColor: focusColor,
+                    hoverColor: hoverColor,
+                    highlightColor: highlightColor,
+                    splashColor: splashColor,
+                    splashFactory: splashFactory,
+                    radius: radius,
+                    customBorder: customBorder,
+                    enableFeedback: enableFeedback,
+                    excludeFromSemantics: excludeFromSemantics,
+                    focusNode: focusNode,
+                    canRequestFocus: canRequestFocus,
+                    autofocus: autoFocus,
+                    onTap: gestures?.onTap,
+                    child: this,
+                  ),
+                );
+              },
+            )
+          : Builder(
+              key: key,
+              builder: (context) => this,
+            );
 
   // TODO: RotatedBox
   Widget rotate({
+    Key? key,
     required double angle,
     Offset? origin,
     AlignmentGeometry alignment = Alignment.center,
@@ -800,6 +899,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
@@ -813,6 +913,7 @@ extension StyledWidget on Widget {
               },
             )
           : Transform.rotate(
+              key: key,
               child: this,
               angle: angle,
               alignment: alignment,
@@ -821,6 +922,7 @@ extension StyledWidget on Widget {
             );
 
   Widget scale({
+    Key? key,
     double? all,
     double? x,
     double? y,
@@ -831,11 +933,11 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
-                  transform: Matrix4.diagonal3Values(
-                      x ?? all ?? 0, y ?? all ?? 0, 1.0),
+                  transform: Matrix4.diagonal3Values(x ?? all ?? 0, y ?? all ?? 0, 1.0),
                   alignment: alignment,
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
@@ -844,8 +946,8 @@ extension StyledWidget on Widget {
               },
             )
           : Transform(
-              transform:
-                  Matrix4.diagonal3Values(x ?? all ?? 0, y ?? all ?? 0, 1.0),
+              key: key,
+              transform: Matrix4.diagonal3Values(x ?? all ?? 0, y ?? all ?? 0, 1.0),
               alignment: alignment,
               child: this,
               origin: origin,
@@ -853,17 +955,18 @@ extension StyledWidget on Widget {
             );
 
   Widget translate({
+    Key? key,
     required Offset offset,
     bool transformHitTests = true,
     bool animate = false,
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
-                  transform:
-                      Matrix4.translationValues(offset.dx, offset.dy, 0.0),
+                  transform: Matrix4.translationValues(offset.dx, offset.dy, 0.0),
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
                   curve: animation.curve,
@@ -871,12 +974,14 @@ extension StyledWidget on Widget {
               },
             )
           : Transform.translate(
+              key: key,
               offset: offset,
               transformHitTests: transformHitTests,
               child: this,
             );
 
   Widget transform({
+    Key? key,
     required Matrix4 transform,
     Offset? origin,
     AlignmentGeometry? alignment,
@@ -885,6 +990,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedTransform(
                   child: this,
@@ -898,6 +1004,7 @@ extension StyledWidget on Widget {
               },
             )
           : Transform(
+              key: key,
               transform: transform,
               alignment: alignment,
               origin: origin,
@@ -906,6 +1013,7 @@ extension StyledWidget on Widget {
             );
 
   Widget overflow({
+    Key? key,
     AlignmentGeometry alignment = Alignment.center,
     double? minWidth,
     double? maxWidth,
@@ -915,6 +1023,7 @@ extension StyledWidget on Widget {
   }) =>
       animate
           ? _StyledAnimatedBuilder(
+              key: key,
               builder: (animation) {
                 return _AnimatedOverflowBox(
                   child: this,
@@ -929,6 +1038,7 @@ extension StyledWidget on Widget {
               },
             )
           : OverflowBox(
+              key: key,
               alignment: alignment,
               minWidth: minWidth,
               maxWidth: minWidth,
@@ -938,6 +1048,7 @@ extension StyledWidget on Widget {
             );
 
   Widget scrollable({
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
     bool? primary,
@@ -946,6 +1057,7 @@ extension StyledWidget on Widget {
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
       SingleChildScrollView(
+        key: key,
         child: this,
         scrollDirection: scrollDirection,
         reverse: reverse,
@@ -956,24 +1068,29 @@ extension StyledWidget on Widget {
       );
 
   Widget expanded({
+    Key? key,
     int flex = 1,
   }) =>
       Expanded(
+        key: key,
         child: this,
         flex: flex,
       );
 
   Widget flexible({
+    Key? key,
     int flex = 1,
     FlexFit fit = FlexFit.loose,
   }) =>
       Flexible(
+        key: key,
         child: this,
         flex: flex,
         fit: fit,
       );
 
   Widget positioned({
+    Key? key,
     double? left,
     double? top,
     double? right,
@@ -983,20 +1100,24 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedBuilder(builder: (animation) {
-              return AnimatedPositioned(
-                child: this,
-                duration: animation.duration,
-                curve: animation.curve,
-                left: left,
-                top: top,
-                right: right,
-                bottom: bottom,
-                width: width,
-                height: height,
-              );
-            })
+          ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return AnimatedPositioned(
+                  child: this,
+                  duration: animation.duration,
+                  curve: animation.curve,
+                  left: left,
+                  top: top,
+                  right: right,
+                  bottom: bottom,
+                  width: width,
+                  height: height,
+                );
+              },
+            )
           : Positioned(
+              key: key,
               child: this,
               left: left,
               top: top,
@@ -1007,6 +1128,7 @@ extension StyledWidget on Widget {
             );
 
   Widget positionedDirectional({
+    Key? key,
     double? start,
     double? end,
     double? top,
@@ -1016,20 +1138,24 @@ extension StyledWidget on Widget {
     bool animate = false,
   }) =>
       animate
-          ? _StyledAnimatedBuilder(builder: (animation) {
-              return AnimatedPositionedDirectional(
-                child: this,
-                duration: animation.duration,
-                curve: animation.curve,
-                start: start,
-                end: end,
-                top: top,
-                bottom: bottom,
-                width: width,
-                height: height,
-              );
-            })
+          ? _StyledAnimatedBuilder(
+              key: key,
+              builder: (animation) {
+                return AnimatedPositionedDirectional(
+                  child: this,
+                  duration: animation.duration,
+                  curve: animation.curve,
+                  start: start,
+                  end: end,
+                  top: top,
+                  bottom: bottom,
+                  width: width,
+                  height: height,
+                );
+              },
+            )
           : PositionedDirectional(
+              key: key,
               child: this,
               start: start,
               end: end,
@@ -1039,12 +1165,34 @@ extension StyledWidget on Widget {
               height: height,
             );
 
-  Widget semanticsLabel(String label) => Semantics.fromProperties(
+  Widget safeArea({
+    Key? key,
+    bool top = true,
+    bool bottom = true,
+    bool left = true,
+    bool right = true,
+  }) =>
+      SafeArea(
+        key: key,
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+        child: this,
+      );
+
+  Widget semanticsLabel(
+    String label, {
+    Key? key,
+  }) =>
+      Semantics.fromProperties(
+        key: key,
         properties: SemanticsProperties(label: label),
         child: this,
       );
 
   Widget gestures({
+    Key? key,
     GestureOnTapChangeCallback? onTapChange,
     GestureTapDownCallback? onTapDown,
     GestureTapUpCallback? onTapUp,
@@ -1086,6 +1234,7 @@ extension StyledWidget on Widget {
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
   }) =>
       GestureDetector(
+        key: key,
         onTapDown: (TapDownDetails tapDownDetails) {
           if (onTapDown != null) onTapDown(tapDownDetails);
           if (onTapChange != null) onTapChange(true);
@@ -1135,19 +1284,23 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate aspectRatio widget
   Widget aspectRatio({
+    Key? key,
     required double aspectRatio,
   }) =>
       AspectRatio(
+        key: key,
         aspectRatio: aspectRatio,
         child: this,
       );
 
   // TODO: FEATURE: animate center widget
   Widget center({
+    Key? key,
     double? widthFactor,
     double? heightFactor,
   }) =>
       Center(
+        key: key,
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         child: this,
@@ -1155,10 +1308,12 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate fittedBox
   Widget fittedBox({
+    Key? key,
     BoxFit fit = BoxFit.contain,
     AlignmentGeometry alignment = Alignment.center,
   }) =>
       FittedBox(
+        key: key,
         fit: fit,
         alignment: alignment,
         child: this,
@@ -1166,11 +1321,13 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate FractionallySizedBox
   Widget fractionallySizedBox({
+    Key? key,
     AlignmentGeometry alignment = Alignment.center,
     double? widthFactor,
     double? heightFactor,
   }) =>
       FractionallySizedBox(
+        key: key,
         alignment: alignment,
         widthFactor: widthFactor,
         heightFactor: heightFactor,
@@ -1179,6 +1336,7 @@ extension StyledWidget on Widget {
 
   // TODO: FEATURE: animate card
   Widget card({
+    Key? key,
     Color? color,
     double? elevation,
     ShapeBorder? shape,
@@ -1188,6 +1346,7 @@ extension StyledWidget on Widget {
     bool semanticContainer = true,
   }) =>
       Card(
+        key: key,
         color: color,
         elevation: elevation,
         shape: shape,
@@ -1197,6 +1356,4 @@ extension StyledWidget on Widget {
         semanticContainer: semanticContainer,
         child: this,
       );
-
-  Widget safeArea() => SafeArea(child: this);
 }
