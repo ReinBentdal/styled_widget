@@ -12,10 +12,10 @@ extension StyledWidget on Widget {
 
   /// animated all properties before this method
   Widget animate(
-    Key? key,
     Duration duration,
-    Curve curve,
-  ) =>
+    Curve curve, {
+    Key? key,
+  }) =>
       _StyledInheritedAnimation(
         key: key,
         animation: _StyledAnimatedModel(duration: duration, curve: curve),
@@ -151,8 +151,8 @@ extension StyledWidget on Widget {
       );
 
   Widget alignment(
-    Key? key,
     AlignmentGeometry alignment, {
+    Key? key,
     bool animate = false,
   }) =>
       animate
