@@ -8,8 +8,6 @@ analyzer:
     implicit-casts: false
     implicit-dynamic: false
 
-  errors:
-
   exclude:
     - "android/**"
     - "ios/**"

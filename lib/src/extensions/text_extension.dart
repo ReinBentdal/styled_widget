@@ -87,31 +87,31 @@ extension StyledText<T extends Text> on T {
         ),
       );
 
-  T fontWeight(FontWeight fontWeight) => this.copyWith(
+  T fontWeight(FontWeight? fontWeight) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontWeight: fontWeight,
         ),
       );
 
-  T fontSize(double size) => this.copyWith(
+  T fontSize(double? size) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontSize: size,
         ),
       );
 
-  T fontFamily(String font) => this.copyWith(
+  T fontFamily(String? font) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           fontFamily: font,
         ),
       );
 
-  T letterSpacing(double space) => this.copyWith(
+  T letterSpacing(double? space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           letterSpacing: space,
         ),
       );
 
-  T wordSpacing(double space) => this.copyWith(
+  T wordSpacing(double? space) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           wordSpacing: space,
         ),
@@ -156,23 +156,23 @@ extension StyledText<T extends Text> on T {
     );
   }
 
-  T textColor(Color color) => this.copyWith(
+  T textColor(Color? color) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           color: color,
         ),
       );
 
-  T textAlignment(TextAlign align) => this.copyWith(textAlign: align);
+  T textAlignment(TextAlign? align) => this.copyWith(textAlign: align);
 
-  T textDirection(TextDirection direction) =>
+  T textDirection(TextDirection? direction) =>
       this.copyWith(textDirection: direction);
 
-  T textBaseline(TextBaseline textBaseline) => this.copyWith(
+  T textBaseline(TextBaseline? textBaseline) => this.copyWith(
         style: (this.style ?? TextStyle()).copyWith(
           textBaseline: textBaseline,
         ),
       );
 
-  T textWidthBasis(TextWidthBasis textWidthBasis) =>
+  T textWidthBasis(TextWidthBasis? textWidthBasis) =>
       this.copyWith(textWidthBasis: textWidthBasis);
 }

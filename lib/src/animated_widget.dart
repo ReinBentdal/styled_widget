@@ -12,8 +12,8 @@ class _StyledAnimatedModel {
 class _StyledInheritedAnimation extends InheritedWidget {
   final _StyledAnimatedModel? animation;
 
-  _StyledInheritedAnimation({this.animation, required Widget child})
-      : super(child: child);
+  _StyledInheritedAnimation({Key? key, this.animation, required Widget child})
+      : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(_StyledInheritedAnimation oldAnimation) =>
@@ -25,7 +25,7 @@ class _StyledInheritedAnimation extends InheritedWidget {
 }
 
 class _StyledAnimatedBuilder extends StatelessWidget {
-  _StyledAnimatedBuilder({required this.builder});
+  _StyledAnimatedBuilder({Key? key, required this.builder}) : super(key: key);
 
   final Widget Function(_StyledAnimatedModel) builder;
 
@@ -96,9 +96,11 @@ class _AnimatedDecorationBoxState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _decoration = visitor(_decoration, widget.decoration,
-            (dynamic value) => DecorationTween(begin: value as Decoration))
-        as DecorationTween;
+    _decoration = visitor(
+      _decoration,
+      widget.decoration,
+      (dynamic value) => DecorationTween(begin: value as Decoration),
+    ) as DecorationTween?;
   }
 
   @override
@@ -172,11 +174,10 @@ class _AnimatedConstrainedBoxState
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _constraints = visitor(
-            _constraints,
-            widget.constraints,
-            (dynamic value) =>
-                BoxConstraintsTween(begin: value as BoxConstraints))
-        as BoxConstraintsTween;
+      _constraints,
+      widget.constraints,
+      (dynamic value) => BoxConstraintsTween(begin: value as BoxConstraints),
+    ) as BoxConstraintsTween?;
   }
 
   @override
@@ -256,14 +257,19 @@ class _AnimatedTransformState
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _alignment = visitor(
-            _alignment,
-            widget.alignment,
-            (dynamic value) =>
-                AlignmentGeometryTween(begin: value as AlignmentGeometry))
-        as AlignmentGeometryTween;
-    _transform = visitor(_transform, widget.transform,
-            (dynamic value) => Matrix4Tween(begin: value as Matrix4))
-        as Matrix4Tween;
+      _alignment,
+      widget.alignment,
+      (dynamic value) => AlignmentGeometryTween(
+        begin: value as AlignmentGeometry?,
+      ),
+    ) as AlignmentGeometryTween?;
+    _transform = visitor(
+      _transform,
+      widget.transform,
+      (dynamic value) => Matrix4Tween(
+        begin: value as Matrix4?,
+      ),
+    ) as Matrix4Tween?;
   }
 
   @override
@@ -345,18 +351,26 @@ class _AnimatedClipRRectState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _topLeft = visitor(_topLeft, widget.topLeft,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _topRight = visitor(_topRight, widget.topRight,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _bottomLeft = visitor(_bottomLeft, widget.bottomLeft,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _bottomRight = visitor(_bottomRight, widget.bottomRight,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+    _topLeft = visitor(
+      _topLeft,
+      widget.topLeft,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _topRight = visitor(
+      _topRight,
+      widget.topRight,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _bottomLeft = visitor(
+      _bottomLeft,
+      widget.bottomLeft,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _bottomRight = visitor(
+      _bottomRight,
+      widget.bottomRight,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
   }
 
   @override
@@ -432,9 +446,11 @@ class _AnimatedBackgroundBlurState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _sigma = visitor(_sigma, widget.opacity,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+    _sigma = visitor(
+      _sigma,
+      widget.opacity,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
   }
 
   @override
@@ -501,18 +517,26 @@ class _AnimatedOverflowBoxState
   AlignmentGeometryTween? _alignment;
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _minWidth = visitor(_minWidth, widget.minWidth,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _maxWidth = visitor(_maxWidth, widget.maxWidth,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _minHeight = visitor(_minHeight, widget.minHeight,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _maxHeight = visitor(_maxHeight, widget.maxHeight,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+    _minWidth = visitor(
+      _minWidth,
+      widget.minWidth,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _maxWidth = visitor(
+      _maxWidth,
+      widget.maxWidth,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _minHeight = visitor(
+      _minHeight,
+      widget.minHeight,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _maxHeight = visitor(
+      _maxHeight,
+      widget.maxHeight,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
     _alignment = visitor(
             _alignment,
             widget.alignment,

@@ -84,11 +84,16 @@ class _AnimatedIconState extends AnimatedWidgetBaseState<_AnimatedIcon> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _color = visitor(_color, widget.color,
-        (dynamic value) => ColorTween(begin: value as Color)) as ColorTween;
-    _size = visitor(_size, widget.size,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+    _color = visitor(
+      _color,
+      widget.color,
+      (dynamic value) => ColorTween(begin: value as Color),
+    ) as ColorTween?;
+    _size = visitor(
+      _size,
+      widget.size,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
   }
 
   @override

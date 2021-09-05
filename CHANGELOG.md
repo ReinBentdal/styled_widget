@@ -1,3 +1,13 @@
+## 0.4.0
+* Added key parameter to all widget methods
+* Added `Styled.builder()` method
+
+## 0.3.1+2
+* Text extensions nullable
+
+## 0.3.1+1
+* Animation null-exeption fix
+
 ## 0.3.1
 * Added `paddingDirectional`, `positionedDirectional` and `borderRadiusDirectional`
 

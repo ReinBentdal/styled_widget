@@ -133,30 +133,39 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _textScaleFactor = visitor(_textScaleFactor, widget.textScaleFactor,
             (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+        as Tween<double>?;
     _fontSize = visitor(_fontSize, widget.style?.fontSize,
             (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+        as Tween<double>?;
     _letterSpacing = visitor(_letterSpacing, widget.style?.letterSpacing,
             (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+        as Tween<double>?;
     _wordSpacing = visitor(_wordSpacing, widget.style?.wordSpacing,
             (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+        as Tween<double>?;
     _height = visitor(_height, widget.style?.height,
             (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
+        as Tween<double>?;
     _decorationThickness = visitor(
-            _decorationThickness,
-            widget.style?.decorationThickness,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>;
-    _maxLines = visitor(_maxLines, widget.maxLines,
-        (dynamic value) => Tween<int>(begin: value as int)) as Tween<int>;
-    _color = visitor(_color, widget.style?.color,
-        (dynamic value) => ColorTween(begin: value as Color)) as ColorTween;
-    _decorationColor = visitor(_decorationColor, widget.style?.decorationColor,
-        (dynamic value) => ColorTween(begin: value as Color)) as ColorTween;
+      _decorationThickness,
+      widget.style?.decorationThickness,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _maxLines = visitor(
+      _maxLines,
+      widget.maxLines,
+      (dynamic value) => Tween<int>(begin: value as int),
+    ) as Tween<int>?;
+    _color = visitor(
+      _color,
+      widget.style?.color,
+      (dynamic value) => ColorTween(begin: value as Color),
+    ) as ColorTween?;
+    _decorationColor = visitor(
+      _decorationColor,
+      widget.style?.decorationColor,
+      (dynamic value) => ColorTween(begin: value as Color),
+    ) as ColorTween?;
   }
 
   @override
