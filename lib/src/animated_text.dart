@@ -45,8 +45,7 @@ class _StyledAnimatedTextContainer extends Text {
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel? animation =
-        _StyledInheritedAnimation.of(context)?.animation;
+    _StyledAnimatedModel? animation = _StyledInheritedAnimation.of(context)?.animation;
     if (animation == null) {
       return super.build(context);
     }
@@ -124,27 +123,25 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
   Tween<double>? _wordSpacing;
   Tween<double>? _height;
   Tween<double>? _decorationThickness;
-  Tween<int>? _maxLines;
+  IntTween? _maxLines;
   ColorTween? _color;
   ColorTween? _decorationColor;
   // TODO: animate background and foreground?
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _textScaleFactor = visitor(_textScaleFactor, widget.textScaleFactor,
-            (dynamic value) => Tween<double>(begin: value as double))
+    _textScaleFactor =
+        visitor(_textScaleFactor, widget.textScaleFactor, (dynamic value) => Tween<double>(begin: value as double))
+            as Tween<double>?;
+    _fontSize = visitor(_fontSize, widget.style?.fontSize, (dynamic value) => Tween<double>(begin: value as double))
         as Tween<double>?;
-    _fontSize = visitor(_fontSize, widget.style?.fontSize,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _letterSpacing = visitor(_letterSpacing, widget.style?.letterSpacing,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _wordSpacing = visitor(_wordSpacing, widget.style?.wordSpacing,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _height = visitor(_height, widget.style?.height,
-            (dynamic value) => Tween<double>(begin: value as double))
+    _letterSpacing =
+        visitor(_letterSpacing, widget.style?.letterSpacing, (dynamic value) => Tween<double>(begin: value as double))
+            as Tween<double>?;
+    _wordSpacing =
+        visitor(_wordSpacing, widget.style?.wordSpacing, (dynamic value) => Tween<double>(begin: value as double))
+            as Tween<double>?;
+    _height = visitor(_height, widget.style?.height, (dynamic value) => Tween<double>(begin: value as double))
         as Tween<double>?;
     _decorationThickness = visitor(
       _decorationThickness,
@@ -154,8 +151,8 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
     _maxLines = visitor(
       _maxLines,
       widget.maxLines,
-      (dynamic value) => Tween<int>(begin: value as int),
-    ) as Tween<int>?;
+      (dynamic value) => IntTween(begin: value as int),
+    ) as IntTween?;
     _color = visitor(
       _color,
       widget.style?.color,
