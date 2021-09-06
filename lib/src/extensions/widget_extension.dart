@@ -116,8 +116,8 @@ extension StyledWidget on Widget {
             );
 
   Widget opacity(
-    Key? key,
     double opacity, {
+    Key? key,
     bool animate = false,
     bool alwaysIncludeSemantics = false,
   }) =>
