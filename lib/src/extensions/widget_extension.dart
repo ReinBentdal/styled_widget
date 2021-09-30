@@ -1055,6 +1055,7 @@ extension StyledWidget on Widget {
     ScrollPhysics? physics,
     ScrollController? controller,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
+    EdgeInsetsGeometry? padding,
   }) =>
       SingleChildScrollView(
         key: key,
@@ -1065,6 +1066,7 @@ extension StyledWidget on Widget {
         physics: physics,
         controller: controller,
         dragStartBehavior: dragStartBehavior,
+        padding: padding,
       );
 
   Widget expanded({
