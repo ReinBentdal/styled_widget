@@ -1412,4 +1412,22 @@ extension StyledWidget on Widget {
         animationDuration: animationDuration,
         child: this,
       );
+
+  Widget mouseRegion({
+    Key? key,
+    void Function(PointerEnterEvent)? onEnter,
+    void Function(PointerExitEvent)? onExit,
+    void Function(PointerHoverEvent)? onHover,
+    MouseCursor cursor = MouseCursor.defer,
+    bool opaque = true,
+  }) =>
+      MouseRegion(
+        key: key,
+        onEnter: onEnter,
+        onExit: onExit,
+        onHover: onHover,
+        cursor: cursor,
+        opaque: opaque,
+        child: this,
+      );
 }
