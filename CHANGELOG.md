@@ -1,3 +1,7 @@
+## 0.5.0
+* Added padding parameter to `scrollable`
+* ...
+
 ## 0.4.0
 * Added key parameter to all widget methods
 * Added `Styled.builder()` method
