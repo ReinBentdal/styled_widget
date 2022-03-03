@@ -4,13 +4,15 @@
   </a>
 </p>
 
-<br />
-
 <p align="center" >
   <strong>Simplifying your widget tree structure by defining widgets using methods.</strong>
   <br />
   <br />
-  <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget?color=blue" /></a>&nbsp;&nbsp;
+  <a href="https://pub.dev/packages/styled_widget"><img src="https://img.shields.io/pub/v/styled_widget?color=blue" /></a>
+  <a href="https://github.com/ReinBentdal/styled_widget"><img src="https://img.shields.io/github/stars/ReinBentdal/styled_widget" /></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
+  <br />
+  <br />
   <a href="https://www.buymeacoffee.com/tOTWBs7" target="_blank"><img width="150px" src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 </p>
 
