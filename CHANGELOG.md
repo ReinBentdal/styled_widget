@@ -1,5 +1,6 @@
 ## 0.4.1
 * Added `toWrap`
+* Added padding parameter to `scrollable`
 
 ## 0.4.0
 * Added key parameter to all widget methods
