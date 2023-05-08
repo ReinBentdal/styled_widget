@@ -2,13 +2,18 @@ part of '../styled_widget.dart';
 
 // TODO: why extend icon
 class _StyledAnimatedIconContainer extends Icon {
+  @override
   final IconData? icon;
+  @override
   final double? size;
+  @override
   final Color? color;
+  @override
   final String? semanticLabel;
+  @override
   final TextDirection? textDirection;
 
-  _StyledAnimatedIconContainer(
+  const _StyledAnimatedIconContainer(
     this.icon, {
     this.color,
     this.semanticLabel,
@@ -24,7 +29,7 @@ class _StyledAnimatedIconContainer extends Icon {
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel? animation =
+    final _StyledAnimatedModel? animation =
         _StyledInheritedAnimation.of(context)?.animation;
     if (animation == null) {
       return super.build(context);
@@ -47,7 +52,7 @@ class _AnimatedIcon extends ImplicitlyAnimatedWidget {
   /// Creates a container that animates its parameters implicitly.
   ///
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedIcon(
+  const _AnimatedIcon(
     this.icon, {
     Key? key,
     this.color,
@@ -70,12 +75,6 @@ class _AnimatedIcon extends ImplicitlyAnimatedWidget {
 
   @override
   _AnimatedIconState createState() => _AnimatedIconState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    // TODO: debug
-  }
 }
 
 class _AnimatedIconState extends AnimatedWidgetBaseState<_AnimatedIcon> {

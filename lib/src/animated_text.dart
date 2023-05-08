@@ -2,20 +2,32 @@ part of '../styled_widget.dart';
 
 // TODO: why extend text
 class _StyledAnimatedTextContainer extends Text {
+  @override
   final String data;
+  @override
   final TextStyle? style;
+  @override
   final StrutStyle? strutStyle;
+  @override
   final TextAlign? textAlign;
+  @override
   final TextDirection? textDirection;
+  @override
   final Locale? locale;
+  @override
   final bool? softWrap;
+  @override
   final TextOverflow? overflow;
+  @override
   final double? textScaleFactor;
+  @override
   final int? maxLines;
+  @override
   final String? semanticsLabel;
+  @override
   final TextWidthBasis? textWidthBasis;
 
-  _StyledAnimatedTextContainer(
+  const _StyledAnimatedTextContainer(
     this.data, {
     this.locale,
     this.maxLines,
@@ -45,7 +57,7 @@ class _StyledAnimatedTextContainer extends Text {
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel? animation =
+    final _StyledAnimatedModel? animation =
         _StyledInheritedAnimation.of(context)?.animation;
     if (animation == null) {
       return super.build(context);
@@ -75,7 +87,7 @@ class _AnimatedText extends ImplicitlyAnimatedWidget {
   /// Creates a container that animates its parameters implicitly.
   ///
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedText(
+  const _AnimatedText(
     this.data, {
     Key? key,
     this.locale,
@@ -109,12 +121,6 @@ class _AnimatedText extends ImplicitlyAnimatedWidget {
 
   @override
   _AnimatedTextState createState() => _AnimatedTextState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    // TODO: denug variables
-  }
 }
 
 class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
@@ -131,21 +137,31 @@ class _AnimatedTextState extends AnimatedWidgetBaseState<_AnimatedText> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _textScaleFactor = visitor(_textScaleFactor, widget.textScaleFactor,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _fontSize = visitor(_fontSize, widget.style?.fontSize,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _letterSpacing = visitor(_letterSpacing, widget.style?.letterSpacing,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _wordSpacing = visitor(_wordSpacing, widget.style?.wordSpacing,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _height = visitor(_height, widget.style?.height,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
+    _textScaleFactor = visitor(
+      _textScaleFactor,
+      widget.textScaleFactor,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _fontSize = visitor(
+      _fontSize,
+      widget.style?.fontSize,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _letterSpacing = visitor(
+      _letterSpacing,
+      widget.style?.letterSpacing,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _wordSpacing = visitor(
+      _wordSpacing,
+      widget.style?.wordSpacing,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
+    _height = visitor(
+      _height,
+      widget.style?.height,
+      (dynamic value) => Tween<double>(begin: value as double),
+    ) as Tween<double>?;
     _decorationThickness = visitor(
       _decorationThickness,
       widget.style?.decorationThickness,

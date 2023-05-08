@@ -46,7 +46,7 @@ extension StyledText<T extends Text> on T {
             )) as T;
 
   T textStyle(TextStyle style) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (this.style ?? const TextStyle()).copyWith(
           background: style.background,
           backgroundColor: style.backgroundColor,
           color: style.color,
@@ -76,43 +76,43 @@ extension StyledText<T extends Text> on T {
       this.copyWith(textScaleFactor: scaleFactor);
 
   T bold() => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           fontWeight: FontWeight.bold,
         ),
       );
 
   T italic() => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           fontStyle: FontStyle.italic,
         ),
       );
 
   T fontWeight(FontWeight? fontWeight) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           fontWeight: fontWeight,
         ),
       );
 
   T fontSize(double? size) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           fontSize: size,
         ),
       );
 
   T fontFamily(String? font) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           fontFamily: font,
         ),
       );
 
   T letterSpacing(double? space) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           letterSpacing: space,
         ),
       );
 
   T wordSpacing(double? space) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           wordSpacing: space,
         ),
       );
@@ -123,7 +123,7 @@ extension StyledText<T extends Text> on T {
     Offset offset = Offset.zero,
   }) =>
       this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           shadows: [
             Shadow(
               color: color,
@@ -140,15 +140,16 @@ extension StyledText<T extends Text> on T {
     Color color = const Color(0x33000000),
     double opacityRatio = 1.0,
   }) {
-    double calculatedOpacity = _elevationOpacityCurve(elevation) * opacityRatio;
+    final double calculatedOpacity =
+        _elevationOpacityCurve(elevation) * opacityRatio;
 
-    Shadow shadow = Shadow(
+    final Shadow shadow = Shadow(
       color: color.withOpacity(calculatedOpacity),
       blurRadius: elevation,
       offset: Offset(sin(angle) * elevation, cos(angle) * elevation),
     );
     return this.copyWith(
-      style: (this.style ?? TextStyle()).copyWith(
+      style: (style ?? const TextStyle()).copyWith(
         shadows: [
           shadow,
         ],
@@ -157,7 +158,7 @@ extension StyledText<T extends Text> on T {
   }
 
   T textColor(Color? color) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           color: color,
         ),
       );
@@ -168,7 +169,7 @@ extension StyledText<T extends Text> on T {
       this.copyWith(textDirection: direction);
 
   T textBaseline(TextBaseline? textBaseline) => this.copyWith(
-        style: (this.style ?? TextStyle()).copyWith(
+        style: (style ?? const TextStyle()).copyWith(
           textBaseline: textBaseline,
         ),
       );
