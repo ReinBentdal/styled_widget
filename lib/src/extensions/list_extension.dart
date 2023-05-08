@@ -65,7 +65,7 @@ extension StyledList<E> on List<Widget> {
         clipBehavior: clipBehavior,
         children: this,
       );
-  
+
   Widget toWrap({
     Key? key,
     Axis direction = Axis.horizontal,
