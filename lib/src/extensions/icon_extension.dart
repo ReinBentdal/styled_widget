@@ -9,14 +9,14 @@ extension StyledIcon<T extends Icon> on T {
   }) =>
       (this is _StyledAnimatedIconContainer
           ? _StyledAnimatedIconContainer(
-              this.icon,
+              icon,
               color: color ?? this.color,
               size: size ?? this.size,
               semanticLabel: semanticLabel ?? this.semanticLabel,
               textDirection: textDirection ?? this.textDirection,
             )
           : Icon(
-              this.icon,
+              icon,
               color: color ?? this.color,
               size: size ?? this.size,
               semanticLabel: semanticLabel ?? this.semanticLabel,

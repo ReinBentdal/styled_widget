@@ -4,10 +4,12 @@ typedef GestureOnTapChangeCallback = void Function(bool tapState);
 
 extension StyledWidget on Widget {
   _StyledAnimatedModel _getAnimation(BuildContext context) {
-    _StyledAnimatedModel? animation =
+    final _StyledAnimatedModel? animation =
         _StyledInheritedAnimation.of(context)?.animation;
-    assert(animation != null,
-        '[styled_widget]: You can`t animate without defining the animation. Call the method animate() higher in your widget hierarchy to define an animation');
+    assert(
+      animation != null,
+      '[styled_widget]: You can`t animate without defining the animation. Call the method animate() higher in your widget hierarchy to define an animation',
+    );
     return animation!;
   }
 
@@ -52,9 +54,8 @@ extension StyledWidget on Widget {
           ? Builder(
               key: key,
               builder: (BuildContext context) {
-                _StyledAnimatedModel animation = this._getAnimation(context);
+                final _StyledAnimatedModel animation = _getAnimation(context);
                 return AnimatedPadding(
-                  child: this,
                   padding: EdgeInsets.only(
                     top: top ?? vertical ?? all ?? 0.0,
                     bottom: bottom ?? vertical ?? all ?? 0.0,
@@ -63,6 +64,7 @@ extension StyledWidget on Widget {
                   ),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -92,9 +94,8 @@ extension StyledWidget on Widget {
           ? Builder(
               key: key,
               builder: (BuildContext context) {
-                _StyledAnimatedModel animation = this._getAnimation(context);
+                final _StyledAnimatedModel animation = _getAnimation(context);
                 return AnimatedPadding(
-                  child: this,
                   padding: EdgeInsetsDirectional.only(
                     top: top ?? vertical ?? all ?? 0.0,
                     bottom: bottom ?? vertical ?? all ?? 0.0,
@@ -103,6 +104,7 @@ extension StyledWidget on Widget {
                   ),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -128,13 +130,14 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return AnimatedOpacity(
-                  child: this,
                   opacity: opacity,
                   alwaysIncludeSemantics: alwaysIncludeSemantics,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
-              })
+              },
+            )
           : Opacity(
               key: key,
               opacity: opacity,
@@ -161,12 +164,12 @@ extension StyledWidget on Widget {
           ? Builder(
               key: key,
               builder: (BuildContext context) {
-                _StyledAnimatedModel animation = this._getAnimation(context);
+                final _StyledAnimatedModel animation = _getAnimation(context);
                 return AnimatedAlign(
-                  child: this,
                   alignment: alignment,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -186,17 +189,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
-                  child: this,
                   decoration: BoxDecoration(color: color),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : DecoratedBox(
               key: key,
-              child: this,
               decoration: BoxDecoration(color: color),
+              child: this,
             );
 
   Widget backgroundImage(
@@ -209,17 +212,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
-                  child: this,
                   decoration: BoxDecoration(image: image),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : DecoratedBox(
               key: key,
-              child: this,
               decoration: BoxDecoration(image: image),
+              child: this,
             );
 
   Widget backgroundGradient(
@@ -232,17 +235,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
-                  child: this,
                   decoration: BoxDecoration(gradient: gradient),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : DecoratedBox(
               key: key,
-              child: this,
               decoration: BoxDecoration(gradient: gradient),
+              child: this,
             );
 
   Widget backgroundLinearGradient({
@@ -255,7 +258,7 @@ extension StyledWidget on Widget {
     GradientTransform? transform,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       gradient: LinearGradient(
         begin: begin,
         end: end,
@@ -270,17 +273,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -296,7 +299,7 @@ extension StyledWidget on Widget {
     GradientTransform? transform,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       gradient: RadialGradient(
         center: center,
         radius: radius,
@@ -313,17 +316,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -338,7 +341,7 @@ extension StyledWidget on Widget {
     GradientTransform? transform,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       gradient: SweepGradient(
         center: center,
         startAngle: startAngle,
@@ -354,17 +357,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -378,17 +381,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedDecorationBox(
-                  child: this,
                   decoration: BoxDecoration(backgroundBlendMode: blendMode),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : DecoratedBox(
               key: key,
-              child: this,
               decoration: BoxDecoration(backgroundBlendMode: blendMode),
+              child: this,
             );
 
   Widget backgroundBlur(
@@ -401,10 +404,10 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedBackgroundBlur(
-                  child: this,
                   sigma: sigma,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -426,7 +429,7 @@ extension StyledWidget on Widget {
     double? bottomRight,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(topLeft ?? all ?? 0.0),
         topRight: Radius.circular(topRight ?? all ?? 0.0),
@@ -439,17 +442,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -462,7 +465,7 @@ extension StyledWidget on Widget {
     double? bottomEnd,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       borderRadius: BorderRadiusDirectional.only(
         topStart: Radius.circular(topStart ?? all ?? 0.0),
         topEnd: Radius.circular(topEnd ?? all ?? 0.0),
@@ -475,17 +478,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -505,7 +508,6 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedClipRRect(
-                  child: this,
                   clipper: clipper,
                   clipBehavior: clipBehavior,
                   topLeft: topLeft ?? all ?? 0.0,
@@ -514,13 +516,13 @@ extension StyledWidget on Widget {
                   bottomRight: bottomRight ?? all ?? 0.0,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : ClipRRect(
               key: key,
-              child: this,
-              clipper: clipper ?? null,
+              clipper: clipper,
               clipBehavior: clipBehavior,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(topLeft ?? all ?? 0.0),
@@ -528,6 +530,7 @@ extension StyledWidget on Widget {
                 bottomLeft: Radius.circular(bottomLeft ?? all ?? 0.0),
                 bottomRight: Radius.circular(bottomRight ?? all ?? 0.0),
               ),
+              child: this,
             );
 
   Widget clipRect({
@@ -558,7 +561,7 @@ extension StyledWidget on Widget {
     BorderStyle style = BorderStyle.solid,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       border: Border(
         left: (left ?? all) == null
             ? BorderSide.none
@@ -579,17 +582,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -606,7 +609,7 @@ extension StyledWidget on Widget {
     DecorationPosition position = DecorationPosition.background,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       color: color,
       image: image,
       border: border,
@@ -621,19 +624,19 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 position: position,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
             position: position,
+            child: this,
           );
   }
 
@@ -649,11 +652,11 @@ extension StyledWidget on Widget {
   }) =>
       Material(
         key: key,
-        child: this,
         color: Colors.transparent,
         elevation: elevation,
         borderRadius: borderRadius,
         shadowColor: shadowColor,
+        child: this,
       );
 
   Widget neumorphism({
@@ -664,17 +667,19 @@ extension StyledWidget on Widget {
     double curve = 0.0,
     bool animate = false,
   }) {
-    double offset = elevation / 2;
-    int colorOffset = (40 * curve).toInt();
-    final int Function(int, int) adjustColor = (int color, int colorOffset) {
-      int colorVal = color + colorOffset;
-      if (colorVal > 255)
+    final double offset = elevation / 2;
+    final int colorOffset = (40 * curve).toInt();
+    int adjustColor(int color, int colorOffset) {
+      final int colorVal = color + colorOffset;
+      if (colorVal > 255) {
         return 255;
-      else if (colorVal < 0) return 0;
+      } else if (colorVal < 0) {
+        return 0;
+      }
       return colorVal;
-    };
+    }
 
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -702,7 +707,7 @@ extension StyledWidget on Widget {
           offset: Offset(-offset, -offset),
         ),
         BoxShadow(
-          color: Color(0xAAA3B1C6),
+          color: const Color(0xAAA3B1C6),
           blurRadius: elevation.abs(),
           offset: Offset(offset, offset),
         ),
@@ -714,17 +719,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -736,7 +741,7 @@ extension StyledWidget on Widget {
     double spreadRadius = 0.0,
     bool animate = false,
   }) {
-    BoxDecoration decoration = BoxDecoration(
+    final BoxDecoration decoration = BoxDecoration(
       boxShadow: [
         BoxShadow(
           color: color,
@@ -751,17 +756,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedDecorationBox(
-                child: this,
                 decoration: decoration,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : DecoratedBox(
             key: key,
-            child: this,
             decoration: decoration,
+            child: this,
           );
   }
 
@@ -789,17 +794,17 @@ extension StyledWidget on Widget {
             key: key,
             builder: (animation) {
               return _AnimatedConstrainedBox(
-                child: this,
                 constraints: constraints,
                 duration: animation.duration,
                 curve: animation.curve,
+                child: this,
               );
             },
           )
         : ConstrainedBox(
             key: key,
-            child: this,
             constraints: constraints,
+            child: this,
           );
   }
 
@@ -813,17 +818,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedConstrainedBox(
-                  child: this,
                   constraints: BoxConstraints.tightFor(width: width),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : ConstrainedBox(
               key: key,
-              child: this,
               constraints: BoxConstraints.tightFor(width: width),
+              child: this,
             );
 
   Widget height(
@@ -836,17 +841,17 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedConstrainedBox(
-                  child: this,
                   constraints: BoxConstraints.tightFor(height: height),
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : ConstrainedBox(
               key: key,
-              child: this,
               constraints: BoxConstraints.tightFor(height: height),
+              child: this,
             );
 
   // TODO: FEATURE: ripple animation
@@ -871,7 +876,7 @@ extension StyledWidget on Widget {
               key: key,
               builder: (BuildContext context) {
                 // TODO: PERFORMANCE: findAncestorWidgetOfExactType vs InheritedWidget performance
-                GestureDetector? gestures =
+                final GestureDetector? gestures =
                     context.findAncestorWidgetOfExactType<GestureDetector>();
                 return Material(
                   color: Colors.transparent,
@@ -913,23 +918,23 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedTransform(
-                  child: this,
                   transform: Matrix4.rotationZ(angle),
                   alignment: alignment,
                   origin: origin,
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
           : Transform.rotate(
               key: key,
-              child: this,
               angle: angle,
               alignment: alignment,
               origin: origin,
               transformHitTests: transformHitTests,
+              child: this,
             );
 
   Widget scale({
@@ -947,13 +952,16 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedTransform(
-                  child: this,
                   transform: Matrix4.diagonal3Values(
-                      x ?? all ?? 0, y ?? all ?? 0, 1.0),
+                    x ?? all ?? 0,
+                    y ?? all ?? 0,
+                    1.0,
+                  ),
                   alignment: alignment,
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -962,9 +970,9 @@ extension StyledWidget on Widget {
               transform:
                   Matrix4.diagonal3Values(x ?? all ?? 0, y ?? all ?? 0, 1.0),
               alignment: alignment,
-              child: this,
               origin: origin,
               transformHitTests: transformHitTests,
+              child: this,
             );
 
   Widget translate({
@@ -978,12 +986,12 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedTransform(
-                  child: this,
                   transform:
                       Matrix4.translationValues(offset.dx, offset.dy, 0.0),
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -1007,13 +1015,13 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedTransform(
-                  child: this,
                   transform: transform,
                   origin: origin,
                   alignment: alignment,
                   transformHitTests: transformHitTests,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -1040,7 +1048,6 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return _AnimatedOverflowBox(
-                  child: this,
                   alignment: alignment,
                   minWidth: minWidth,
                   maxWidth: minWidth,
@@ -1048,6 +1055,7 @@ extension StyledWidget on Widget {
                   maxHeight: maxHeight,
                   duration: animation.duration,
                   curve: animation.curve,
+                  child: this,
                 );
               },
             )
@@ -1073,7 +1081,6 @@ extension StyledWidget on Widget {
   }) =>
       SingleChildScrollView(
         key: key,
-        child: this,
         scrollDirection: scrollDirection,
         reverse: reverse,
         primary: primary,
@@ -1081,6 +1088,7 @@ extension StyledWidget on Widget {
         controller: controller,
         dragStartBehavior: dragStartBehavior,
         padding: padding,
+        child: this,
       );
 
   Widget expanded({
@@ -1089,8 +1097,8 @@ extension StyledWidget on Widget {
   }) =>
       Expanded(
         key: key,
-        child: this,
         flex: flex,
+        child: this,
       );
 
   Widget flexible({
@@ -1100,9 +1108,9 @@ extension StyledWidget on Widget {
   }) =>
       Flexible(
         key: key,
-        child: this,
         flex: flex,
         fit: fit,
+        child: this,
       );
 
   Widget positioned({
@@ -1120,7 +1128,6 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return AnimatedPositioned(
-                  child: this,
                   duration: animation.duration,
                   curve: animation.curve,
                   left: left,
@@ -1129,18 +1136,19 @@ extension StyledWidget on Widget {
                   bottom: bottom,
                   width: width,
                   height: height,
+                  child: this,
                 );
               },
             )
           : Positioned(
               key: key,
-              child: this,
               left: left,
               top: top,
               right: right,
               bottom: bottom,
               width: width,
               height: height,
+              child: this,
             );
 
   Widget positionedDirectional({
@@ -1158,7 +1166,6 @@ extension StyledWidget on Widget {
               key: key,
               builder: (animation) {
                 return AnimatedPositionedDirectional(
-                  child: this,
                   duration: animation.duration,
                   curve: animation.curve,
                   start: start,
@@ -1167,18 +1174,19 @@ extension StyledWidget on Widget {
                   bottom: bottom,
                   width: width,
                   height: height,
+                  child: this,
                 );
               },
             )
           : PositionedDirectional(
               key: key,
-              child: this,
               start: start,
               end: end,
               top: top,
               bottom: bottom,
               width: width,
               height: height,
+              child: this,
             );
 
   Widget safeArea({

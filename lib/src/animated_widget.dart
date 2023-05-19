@@ -12,8 +12,11 @@ class _StyledAnimatedModel {
 class _StyledInheritedAnimation extends InheritedWidget {
   final _StyledAnimatedModel? animation;
 
-  _StyledInheritedAnimation({Key? key, this.animation, required Widget child})
-      : super(key: key, child: child);
+  const _StyledInheritedAnimation({
+    Key? key,
+    this.animation,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(_StyledInheritedAnimation oldAnimation) =>
@@ -25,13 +28,14 @@ class _StyledInheritedAnimation extends InheritedWidget {
 }
 
 class _StyledAnimatedBuilder extends StatelessWidget {
-  _StyledAnimatedBuilder({Key? key, required this.builder}) : super(key: key);
+  const _StyledAnimatedBuilder({Key? key, required this.builder})
+      : super(key: key);
 
   final Widget Function(_StyledAnimatedModel) builder;
 
   @override
   Widget build(BuildContext context) {
-    _StyledAnimatedModel? animation =
+    final _StyledAnimatedModel? animation =
         _StyledInheritedAnimation.of(context)?.animation;
     assert(
       animation != null,
@@ -85,7 +89,8 @@ class _AnimatedDecorationBox extends ImplicitlyAnimatedWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-        DiagnosticsProperty<Decoration>('bg', decoration, defaultValue: null));
+      DiagnosticsProperty<Decoration>('bg', decoration, defaultValue: null),
+    );
     // TODO: debug [position]?
   }
 }
@@ -106,17 +111,22 @@ class _AnimatedDecorationBoxState
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      child: widget.child,
-      decoration: _decoration?.evaluate(animation) ?? BoxDecoration(),
+      decoration: _decoration?.evaluate(animation) ?? const BoxDecoration(),
       position: widget.position ?? DecorationPosition.background,
+      child: widget.child,
     );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
-    description.add(DiagnosticsProperty<DecorationTween>('bg', _decoration,
-        defaultValue: null));
+    description.add(
+      DiagnosticsProperty<DecorationTween>(
+        'bg',
+        _decoration,
+        defaultValue: null,
+      ),
+    );
   }
 }
 
@@ -161,9 +171,14 @@ class _AnimatedConstrainedBox extends ImplicitlyAnimatedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<BoxConstraints>(
-        'constraints', constraints,
-        defaultValue: null, showName: false));
+    properties.add(
+      DiagnosticsProperty<BoxConstraints>(
+        'constraints',
+        constraints,
+        defaultValue: null,
+        showName: false,
+      ),
+    );
   }
 }
 
@@ -183,17 +198,22 @@ class _AnimatedConstrainedBoxState
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
+      constraints: _constraints?.evaluate(animation) ?? const BoxConstraints(),
       child: widget.child,
-      constraints: _constraints?.evaluate(animation) ?? BoxConstraints(),
     );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
-    description.add(DiagnosticsProperty<BoxConstraintsTween>(
-        'constraints', _constraints,
-        showName: false, defaultValue: null));
+    description.add(
+      DiagnosticsProperty<BoxConstraintsTween>(
+        'constraints',
+        _constraints,
+        showName: false,
+        defaultValue: null,
+      ),
+    );
   }
 }
 
@@ -201,7 +221,7 @@ class _AnimatedTransform extends ImplicitlyAnimatedWidget {
   /// Creates a container that animates its parameters implicitly.
   ///
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedTransform({
+  const _AnimatedTransform({
     Key? key,
     this.transform,
     this.origin,
@@ -241,9 +261,14 @@ class _AnimatedTransform extends ImplicitlyAnimatedWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<AlignmentGeometry>(
-        'alignment', alignment,
-        showName: false, defaultValue: null));
+    properties.add(
+      DiagnosticsProperty<AlignmentGeometry>(
+        'alignment',
+        alignment,
+        showName: false,
+        defaultValue: null,
+      ),
+    );
     properties.add(ObjectFlagProperty<Matrix4>.has('transform', transform));
     // TODO: debug [origin], [transformHitTest]?
   }
@@ -275,20 +300,25 @@ class _AnimatedTransformState
   @override
   Widget build(BuildContext context) {
     return Transform(
-      child: widget.child,
       transform: _transform?.evaluate(animation) ?? Matrix4.zero(),
       alignment: _alignment?.evaluate(animation),
       origin: widget.origin,
       transformHitTests: widget.transformHitTests ?? true,
+      child: widget.child,
     );
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
-    description.add(DiagnosticsProperty<AlignmentGeometryTween>(
-        'alignment', _alignment,
-        showName: false, defaultValue: null));
+    description.add(
+      DiagnosticsProperty<AlignmentGeometryTween>(
+        'alignment',
+        _alignment,
+        showName: false,
+        defaultValue: null,
+      ),
+    );
     description
         .add(ObjectFlagProperty<Matrix4Tween>.has('transform', _transform));
   }
@@ -296,7 +326,7 @@ class _AnimatedTransformState
 
 class _AnimatedClipRRect extends ImplicitlyAnimatedWidget {
   /// The [curve] and [duration] arguments must not be null.
-  _AnimatedClipRRect({
+  const _AnimatedClipRRect({
     Key? key,
     this.topLeft,
     this.topRight,
@@ -334,12 +364,6 @@ class _AnimatedClipRRect extends ImplicitlyAnimatedWidget {
 
   @override
   _AnimatedClipRRectState createState() => _AnimatedClipRRectState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    //TODO: debug [topLeft], [topRight], [bottomLeft], [bottomRight]
-  }
 }
 
 class _AnimatedClipRRectState
@@ -376,7 +400,6 @@ class _AnimatedClipRRectState
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      child: widget.child,
       clipper: widget.clipper,
       clipBehavior: widget.clipBehavior ?? Clip.antiAlias,
       borderRadius: BorderRadius.only(
@@ -393,6 +416,7 @@ class _AnimatedClipRRectState
             ? Radius.circular(_bottomRight!.evaluate(animation))
             : Radius.zero,
       ),
+      child: widget.child,
     );
   }
 
@@ -500,12 +524,6 @@ class _AnimatedOverflowBox extends ImplicitlyAnimatedWidget {
 
   @override
   _AnimatedOverflowBoxState createState() => _AnimatedOverflowBoxState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    // TODO: debug
-  }
 }
 
 class _AnimatedOverflowBoxState
@@ -538,11 +556,11 @@ class _AnimatedOverflowBoxState
       (dynamic value) => Tween<double>(begin: value as double),
     ) as Tween<double>?;
     _alignment = visitor(
-            _alignment,
-            widget.alignment,
-            (dynamic value) =>
-                AlignmentGeometryTween(begin: value as AlignmentGeometry))
-        as AlignmentGeometryTween;
+      _alignment,
+      widget.alignment,
+      (dynamic value) =>
+          AlignmentGeometryTween(begin: value as AlignmentGeometry),
+    ) as AlignmentGeometryTween?;
   }
 
   @override

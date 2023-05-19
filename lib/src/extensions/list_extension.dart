@@ -19,8 +19,8 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: separator != null && this.length > 0
-            ? (this.expand((child) => [child, separator]).toList()
+        children: separator != null && isNotEmpty
+            ? (expand((child) => [child, separator]).toList()
               ..removeLast())
             : this,
       );
@@ -43,8 +43,8 @@ extension StyledList<E> on List<Widget> {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: separator != null && this.length > 0
-            ? (this.expand((child) => [child, separator]).toList()
+        children: separator != null && isNotEmpty
+            ? (expand((child) => [child, separator]).toList()
               ..removeLast())
             : this,
       );
@@ -65,7 +65,7 @@ extension StyledList<E> on List<Widget> {
         clipBehavior: clipBehavior,
         children: this,
       );
-  
+
   Widget toWrap({
     Key? key,
     Axis direction = Axis.horizontal,
