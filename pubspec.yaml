@@ -5,7 +5,7 @@ homepage: https://github.com/ReinBentdal/styled_widget
 repository: https://github.com/ReinBentdal/styled_widget
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,4 +15,4 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  lint: ^2.0.0
+  lint: ^2.1.2
