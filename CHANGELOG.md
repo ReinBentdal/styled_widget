@@ -1,3 +1,6 @@
+## 0.5.0
+* Upgrade
+
 ## 0.4.1
 * Added `toWrap`
 * Added padding parameter to `scrollable`
